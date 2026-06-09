@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Repertório</title>
+  <title>Rick e Rô</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -324,7 +324,7 @@
       </div>
       <div class="header-info">
         <p>Playlist</p>
-        <h1>Repertório</h1>
+        <h1>Aniversário da Rô e Adri</h1>
         <p id="track-count">16 faixas</p>
       </div>
     </header>
@@ -345,7 +345,7 @@
       </div>
       <div class="now-playing-info">
         <div class="now-playing-title" id="np-title">Selecione uma faixa</div>
-        <div class="now-playing-artist" id="np-artist">Repertório</div>
+        <div class="now-playing-artist" id="np-artist">Rick e Rô</div>
       </div>
     </div>
 
@@ -500,7 +500,7 @@
       audio.src = track.file;
       audio.play();
       npTitle.textContent = track.title;
-      npArtist.textContent = "Repertório";
+      npArtist.textContent = "Rick e Rô";
       setActive("playlist", index);
       updatePlayIcon(true);
     }
