@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fatiador · Repertório</title>
+  <link rel="stylesheet" href="fatiador.css">
+</head>
+<body>
+  <header class="header">
+    <div>
+      <p class="eyebrow">Repertório · áudio</p>
+      <h1>Fatiador</h1>
+    </div>
+    <nav class="tabs" aria-label="Modos">
+      <button type="button" class="tabs__btn is-active" data-tab="fatiar">Fatiar</button>
+      <button type="button" class="tabs__btn" data-tab="mixar">Mixar</button>
+    </nav>
+    <div class="header__status" id="status">Carregando…</div>
+  </header>
+
+  <main class="layout" id="tabFatiar">
+    <section class="panel panel--player">
+      <div class="field">
+        <label for="sourceSelect">Arquivo de origem</label>
+        <select id="sourceSelect"></select>
+      </div>
+
+      <audio id="player" preload="metadata" controls></audio>
+
+      <div class="time-readout">
+        <div class="time-readout__block">
+          <span class="label">Posição</span>
+          <strong id="currentTime">00:00:00.0</strong>
+        </div>
+        <div class="time-readout__block">
+          <span class="label">Duração</span>
+          <strong id="duration">00:00:00.0</strong>
+        </div>
+        <div class="time-readout__block time-readout__block--accent">
+          <span class="label">Seleção</span>
+          <strong id="selectionDuration">—</strong>
+        </div>
+      </div>
+
+      <div class="timeline-wrap">
+        <div class="timeline" id="timeline" aria-label="Linha do tempo">
+          <div class="timeline__selection" id="timelineSelection"></div>
+          <div class="timeline__marker timeline__marker--in" id="markerIn"></div>
+          <div class="timeline__marker timeline__marker--out" id="markerOut"></div>
+          <div class="timeline__playhead" id="playhead"></div>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" step="0.1" aria-label="Buscar posição">
+      </div>
+
+      <div class="controls">
+        <button type="button" class="btn" id="btnMarkIn" title="Atalho: I">Marcar início <kbd>I</kbd></button>
+        <button type="button" class="btn" id="btnMarkOut" title="Atalho: O">Marcar fim <kbd>O</kbd></button>
+        <button type="button" class="btn btn--primary" id="btnPlaySelection" title="Atalho: L">Ouvir trecho <kbd>L</kbd></button>
+        <button type="button" class="btn" id="btnClear">Limpar</button>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="inTime">Início (hh:mm:ss ou mm:ss)</label>
+          <input id="inTime" type="text" placeholder="00:06:41" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="outTime">Fim (hh:mm:ss ou mm:ss)</label>
+          <input id="outTime" type="text" placeholder="00:11:15" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="filename">Nome do arquivo</label>
+        <input id="filename" type="text" autocomplete="off">
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn btn--accent" id="btnSave">Salvar corte (ffmpeg)</button>
+      </div>
+
+      <p class="hint">
+        Atalhos: <kbd>Espaço</kbd> play/pause · <kbd>←</kbd><kbd>→</kbd> ±1s ·
+        <kbd>Shift</kbd>+<kbd>←</kbd><kbd>→</kbd> ±5s · <kbd>I</kbd> início ·
+        <kbd>O</kbd> fim · <kbd>L</kbd> ouvir trecho
+      </p>
+    </section>
+
+    <section class="panel panel--list">
+      <div class="panel__head">
+        <h2>Cortes salvos</h2>
+        <button type="button" class="btn btn--sm" id="btnRefresh">Atualizar</button>
+      </div>
+      <ul class="corte-list" id="corteList"></ul>
+    </section>
+  </main>
+
+  <main class="layout layout--mix hidden" id="tabMixar">
+    <section class="panel panel--mix">
+      <div class="panel__head">
+        <h2>Mixagem do trecho</h2>
+      </div>
+      <div id="mixPanel"></div>
+    </section>
+
+    <section class="panel panel--list">
+      <div class="panel__head">
+        <h2>Cortes</h2>
+      </div>
+      <ul class="corte-list" id="corteListMix"></ul>
+    </section>
+  </main>
+
+  <script type="module" src="fatiador.js"></script>
+</body>
+</html>
