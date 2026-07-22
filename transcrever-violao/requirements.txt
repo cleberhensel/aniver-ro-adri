@@ -1,0 +1,11 @@
+# Transcrição de violão — dependências isoladas do pipeline vozes/
+# Instalar: ./install.sh
+
+git+https://github.com/xavriley/hf_midi_transcription.git
+torch>=2.0
+librosa>=0.10
+numpy>=1.24
+soundfile>=0.12
+pretty_midi>=0.2.10
+PyGuitarPro>=0.11
+huggingface-hub>=0.20

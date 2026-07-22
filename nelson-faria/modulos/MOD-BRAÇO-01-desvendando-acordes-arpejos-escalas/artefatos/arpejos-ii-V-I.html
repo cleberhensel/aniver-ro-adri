@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arpejos ii–V–I · Maj7 · Dom7 · m7 | Nelson Faria</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #f0a030;
+      --accent2: #4ecdc4;
+      --border: #2d3f54;
+      --arp-i: #69db7c;
+      --arp-ii: #4ecdc4;
+      --arp-v: #f0a030;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding: 1.5rem 1rem 3rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+    header h1 { font-size: 1.45rem; font-weight: 700; }
+    header p { color: var(--muted); font-size: 0.92rem; margin-top: 0.35rem; }
+    nav { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0 1.25rem; }
+    nav a {
+      color: var(--accent); text-decoration: none; font-size: 0.8rem;
+      padding: 0.3rem 0.6rem; border: 1px solid var(--border); border-radius: 5px;
+    }
+    h2 { font-size: 1.12rem; color: var(--accent2); margin: 1.75rem 0 0.65rem; }
+    h3 { font-size: 0.98rem; margin: 1rem 0 0.45rem; }
+    p, li { font-size: 0.92rem; margin-bottom: 0.5rem; }
+    ul, ol { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .callout {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      padding: 0.85rem 1rem;
+      border-radius: 0 6px 6px 0;
+      margin: 0.75rem 0;
+      font-size: 0.88rem;
+    }
+    .callout strong { color: var(--text); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.65rem 0 1rem; }
+    th, td { border: 1px solid var(--border); padding: 0.45rem 0.55rem; text-align: left; }
+    th { background: var(--surface2); color: var(--accent2); }
+    tr:nth-child(even) td { background: var(--surface); }
+    .mono { font-family: "SF Mono", Consolas, monospace; font-size: 0.88em; }
+    .controls {
+      display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;
+      margin-bottom: 1.25rem; padding: 1rem;
+      background: var(--surface); border-radius: 10px; border: 1px solid var(--border);
+    }
+    .control-group label {
+      display: block; font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.35rem;
+    }
+    .key-grid { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .key-btn {
+      min-width: 2.45rem; padding: 0.38rem 0.5rem;
+      border: 1px solid var(--border); background: var(--surface2);
+      color: var(--text); border-radius: 6px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    }
+    .key-btn.active { background: var(--accent); color: #111; border-color: var(--accent); }
+    .legend-arps {
+      display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin: 0.65rem 0;
+      font-size: 0.8rem;
+    }
+    .legend-arps button {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.28rem 0.55rem; border: 1px solid transparent; border-radius: 5px;
+      background: transparent; color: var(--text); cursor: pointer; font-size: inherit;
+    }
+    .legend-arps button:hover { background: var(--surface2); }
+    .legend-arps button.active { border-color: var(--border); background: var(--surface2); }
+    .legend-arps button.dim { opacity: 0.35; }
+    .swatch { width: 11px; height: 11px; border-radius: 50%; }
+    .chain {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.5rem;
+      margin: 1rem 0; font-size: 0.95rem;
+    }
+    .chord-pill {
+      padding: 0.45rem 0.75rem; border-radius: 8px; font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .chord-pill.ii { background: rgba(78,205,196,0.18); color: var(--arp-ii); border-color: var(--arp-ii); }
+    .chord-pill.v { background: rgba(240,160,48,0.15); color: var(--arp-v); border-color: var(--arp-v); }
+    .chord-pill.i { background: rgba(105,219,124,0.15); color: var(--arp-i); border-color: var(--arp-i); }
+    .chain-arrow { color: var(--muted); font-size: 1.1rem; }
+    .neck-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin: 0.65rem 0 1rem;
+    }
+    .arp-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.65rem 0.75rem 0.75rem;
+      border-left: 3px solid var(--card-accent, var(--border));
+    }
+    .arp-row.dim { opacity: 0.28; }
+    .arp-row-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.35rem 0.75rem;
+      margin-bottom: 0.35rem;
+    }
+    .arp-row-head h3 {
+      font-size: 1rem;
+      margin: 0;
+      font-weight: 800;
+    }
+    .arp-range {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .arp-range strong { color: var(--text); font-weight: 700; }
+    .arp-type {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .fretboard-wrap {
+      overflow-x: auto;
+      margin-top: 0.25rem;
+    }
+    .fretboard-wrap svg {
+      display: block;
+      width: 100%;
+      max-width: 720px;
+      height: auto;
+    }
+    .notes-row { font-size: 0.82rem; color: var(--muted); margin: 0.35rem 0 0.15rem; }
+    .notes-row strong { color: var(--text); }
+    .scale-pov { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; }
+    .fret-hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin: 0.35rem 0 0.65rem;
+    }
+    .steps { list-style: none; padding: 0; counter-reset: st; }
+    .steps li {
+      counter-increment: st; padding-left: 2rem; position: relative; margin-bottom: 0.65rem;
+    }
+    .steps li::before {
+      content: counter(st); position: absolute; left: 0;
+      width: 1.4rem; height: 1.4rem; background: var(--accent); color: #111;
+      border-radius: 50%; font-weight: 700; font-size: 0.75rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    footer {
+      margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);
+      font-size: 0.78rem; color: var(--muted);
+    }
+    footer a { color: var(--accent); }
+    .compare-cols {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.75rem; margin: 0.75rem 0;
+    }
+    @media (max-width: 640px) { .compare-cols { grid-template-columns: 1fr; } }
+    .compare-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.75rem; font-size: 0.85rem;
+    }
+    .compare-box h4 { font-size: 0.82rem; color: var(--accent2); margin-bottom: 0.4rem; }
+    .scale-strip {
+      display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.75rem 0;
+      font-size: 0.82rem;
+    }
+    .scale-cell {
+      flex: 1 1 3.2rem; min-width: 3.2rem; text-align: center;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.45rem 0.25rem;
+    }
+    .scale-cell .deg { font-size: 0.68rem; color: var(--muted); }
+    .scale-cell .note { font-weight: 700; font-size: 0.9rem; }
+    .scale-cell.hit-ii { border-color: var(--arp-ii); background: rgba(78,205,196,0.12); }
+    .scale-cell.hit-v  { border-color: var(--arp-v);  background: rgba(240,160,48,0.12); }
+    .scale-cell.hit-i  { border-color: var(--arp-i);  background: rgba(105,219,124,0.12); }
+    .recipe {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1rem; margin: 0.85rem 0;
+    }
+    .recipe h4 { color: var(--accent); font-size: 0.88rem; margin-bottom: 0.5rem; }
+    .recipe ol { margin: 0; padding-left: 1.2rem; }
+    .order-cols {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.75rem; margin: 0.75rem 0;
+    }
+    @media (max-width: 640px) { .order-cols { grid-template-columns: 1fr; } }
+    .order-box {
+      background: var(--surface); border-radius: 8px; padding: 0.75rem;
+      border: 1px solid var(--border); font-size: 0.85rem;
+    }
+    .order-box h4 { font-size: 0.82rem; margin-bottom: 0.4rem; }
+    .order-box.same { border-color: var(--accent2); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Arpejos · ii–V–I em tom maior</h1>
+  <p>Três tipos iniciais (Maj7 · Dom7 · m7) · relação escala ↔ acorde · Nelson Faria / MOD-BRAÇO-01</p>
+</header>
+
+<nav>
+  <a href="#modo-pensar">Como pensar</a>
+  <a href="#conceito">Conceito</a>
+  <a href="#1357">1·3·5·7 e 2·4·6·1</a>
+  <a href="#tipos">3 tipos</a>
+  <a href="#pratica">ii–V–I</a>
+  <a href="#estudo">Como estudar</a>
+  <a href="escalas-shapes-tablatura.html">Escalas</a>
+  <a href="escalas-shapes-tonalidade.html">Tonalidade</a>
+</nav>
+
+<section id="modo-pensar">
+  <h2>Como pensar — uma escala, três recortes</h2>
+  <p>Esqueça números complicados por um instante. Você já sabe a escala de Dó maior num shape. O arpejo é só isto:</p>
+
+  <div class="recipe">
+    <h4>Receita única (vale para ii, V e I)</h4>
+    <ol>
+      <li>Fique <strong>dentro da escala</strong> — não muda de mapa.</li>
+      <li>Escolha um <strong>grau de partida</strong> (2, 5 ou 1 da escala).</li>
+      <li>A partir dele, pegue notas <strong>saltando de terça</strong>: pula um grau, pega o próximo; repete 4 vezes.</li>
+      <li>Pronto — esse conjunto de 4 notas <em>é</em> o arpejo daquele acorde.</li>
+    </ol>
+  </div>
+
+  <p>A escala de Dó como “linha de endereços”:</p>
+  <div class="scale-strip" id="scale-strip"></div>
+
+  <div class="order-cols">
+    <div class="order-box">
+      <h4 style="color:var(--arp-ii)">Arpejo “do 2º grau” → Dm7 (ii)</h4>
+      <p class="mono">Parte do 2 → pula → 4 → pula → 6 → pula → 1</p>
+      <p><strong>Ré · Fá · Lá · Dó</strong></p>
+      <p style="color:var(--muted);font-size:0.8rem">Nelson chama de <span class="mono">2·4·6·1</span> — são posições na escala, não graus do acorde Ré.</p>
+    </div>
+    <div class="order-box">
+      <h4 style="color:var(--arp-v)">Arpejo “do 5º grau” → G7 (V)</h4>
+      <p class="mono">Parte do 5 → pula → 7 → pula → 2 → pula → 4</p>
+      <p><strong>Sol · Si · Ré · Fá</strong></p>
+      <p style="color:var(--muted);font-size:0.8rem">Nelson: <span class="mono">5·7·2·4</span>. Ré e Fá <em>existem</em> — são o 2 e o 4 <em>da escala</em>.</p>
+    </div>
+  </div>
+  <div class="order-box" style="max-width:28rem;margin-bottom:0.75rem">
+    <h4 style="color:var(--arp-i)">Arpejo “do 1º grau” → C Maj7 (I)</h4>
+    <p class="mono">Parte do 1 → pula → 3 → pula → 5 → pula → 7</p>
+    <p><strong>Dó · Mi · Sol · Si</strong></p>
+    <p style="color:var(--muted);font-size:0.8rem">Aqui escala e acorde coincidem: <span class="mono">1·3·5·7</span>.</p>
+  </div>
+
+  <div class="order-cols">
+    <div class="order-box same">
+      <h4 style="color:var(--accent2)">O que Nelson quer dizer com “2, 5 e 1”</h4>
+      <p><strong>Onde começar</strong> cada recorte dentro da escala:</p>
+      <ul style="margin:0.5rem 0 0 1rem">
+        <li>Arpejo <strong>do 2º</strong> grau da escala (Dm7)</li>
+        <li>Arpejo <strong>do 5º</strong> grau da escala (G7)</li>
+        <li>Arpejo <strong>do 1º</strong> grau da escala (C Maj7)</li>
+      </ul>
+    </div>
+    <div class="order-box same">
+      <h4 style="color:var(--accent2)">Ordem de tocar no ii–V–I</h4>
+      <p><strong>ii → V → I</strong> = Dm7 → G7 → C Maj7</p>
+      <p>Na prática você toca na mesma ordem: <span class="mono">2 → 5 → 1</span> como <em>funções</em> — começa no recorte do 2, passa pro do 5, resolve no do 1.</p>
+      <p style="color:var(--muted);font-size:0.8rem">Não são duas ordens diferentes — é a mesma coisa vista de dois ângulos.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Modo de estudo simples:</strong> num shape de escala maior, circule mentalmente 3 grupos de 4 notas (coloridos no diagrama abaixo). Toque só essas notas ao passar por cada acorde da progressão. Quando improvisar com a escala inteira, “pinta” com o arpejo quando o acorde mudar — o resto são notas de passagem.
+  </div>
+</section>
+
+<section id="conceito">
+  <h2>Arpejo ≠ escala</h2>
+  <div class="callout">
+    <strong>Nelson:</strong> arpejo é o <em>som do acorde</em> — nota a nota. A escala é o <strong>mapa</strong>; o arpejo é a <strong>cor harmônica</strong> que você “pinta” ao improvisar ou encadear.
+  </div>
+  <p>Se você já domina a escala maior num shape, o arpejo <strong>já está dentro dela</strong>: basta tocar um subconjunto das notas — as notas do acorde empilhadas em terças.</p>
+</section>
+
+<section id="1357">
+  <h2>1 · 3 · 5 · 7 — e o “pulo do gato” 2 · 4 · 6 · 1</h2>
+  <p>Na escala maior, empilhe terças a partir de um grau:</p>
+  <div class="compare-cols">
+    <div class="compare-box">
+      <h4>Perspectiva do acorde (grau I)</h4>
+      <p class="mono">1 → 3 → 5 → 7</p>
+      <p>Ex. Dó Maj7: <strong>Dó · Mi · Sol · Si</strong></p>
+      <p>São as notas do acorde de tônica com sétima maior.</p>
+    </div>
+    <div class="compare-box">
+      <h4>Perspectiva da escala (mesmas notas, grau ii)</h4>
+      <p class="mono">2 → 4 → 6 → 1</p>
+      <p>Ex. na escala de Dó: <strong>Ré · Fá · Lá · Dó</strong></p>
+      <p>Partindo do <strong>2º grau</strong> da escala — é o arpejo de <strong>Ré m7</strong> (ii).</p>
+    </div>
+  </div>
+  <div class="compare-cols">
+    <div class="compare-box">
+      <h4>Perspectiva do acorde (grau V — Sol7)</h4>
+      <p class="mono">1 → 3 → 5 → ♭7</p>
+      <p>Ex. G7: <strong>Sol · Si · Ré · Fá</strong></p>
+      <p>É o que você canta ao arpejar o dominante — graus <em>em relação a Sol</em>.</p>
+    </div>
+    <div class="compare-box">
+      <h4>Perspectiva da escala (mesmas notas, grau V)</h4>
+      <p class="mono">5 → 7 → 2 → 4</p>
+      <p>Ex. na escala de Dó: <strong>Sol · Si · Ré · Fá</strong></p>
+      <p>Partindo do <strong>5º grau</strong> da escala — Ré e Fá são o <strong>2</strong> e o <strong>4</strong> <em>da escala</em>, não do acorde.</p>
+    </div>
+  </div>
+  <div class="callout">
+    <strong>Resumo Nelson (~51:36):</strong> “Pegar dentro da escala maior o arpejo do <strong>2º</strong>, do <strong>5º</strong> e do <strong>1º</strong> grau.”
+  </div>
+  <div class="callout" style="border-left-color: var(--arp-v);">
+    <strong>Dois tipos de numeração — não confunda:</strong>
+    <ul style="margin: 0.45rem 0 0 1rem;">
+      <li><strong>Graus do acorde</strong> (1·3·5·♭7): o que aparece nos diagramas — relativo à fundamental do acorde (Sol, no G7).</li>
+      <li><strong>Graus da escala</strong> (5·7·2·4): a mesma sequência vista <em>dentro da escala de Dó</em> — onde cada nota “mora” no mapa.</li>
+    </ul>
+    <p style="margin: 0.5rem 0 0;">O dominante <em>tem</em> Ré e Fá — no braço elas aparecem rotuladas como <strong>5</strong> e <strong>♭7</strong> (de Sol7), com escala·<strong>2</strong> e escala·<strong>4</strong> ao lado.</p>
+  </div>
+  <table>
+    <thead>
+      <tr><th>Função</th><th>Acorde (Dó maior)</th><th>Arpejo do acorde</th><th>Graus na escala de Dó</th><th>Notas</th><th>Correspondência (escala → acorde)</th></tr>
+    </thead>
+    <tbody id="theory-table"></tbody>
+  </table>
+</section>
+
+<section id="tipos">
+  <h2>Os 3 primeiros tipos (dos 7)</h2>
+  <table>
+    <thead>
+      <tr><th>Tipo</th><th>Fórmula</th><th>Intervalos</th><th>Usado em (campo harmônico maior)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Sétima maior</strong> (Maj7)</td><td class="mono">1 · 3 · 5 · 7</td><td>Δ7</td><td>Grau <strong>I</strong> (e IV)</td></tr>
+      <tr><td><strong>Dominante</strong> (7)</td><td class="mono">1 · 3 · 5 · ♭7</td><td>7</td><td>Grau <strong>V</strong></td></tr>
+      <tr><td><strong>Menor sétima</strong> (m7)</td><td class="mono">1 · ♭3 · 5 · ♭7</td><td>m7</td><td>Grau <strong>ii</strong> (e vi)</td></tr>
+    </tbody>
+  </table>
+  <p>Depois vêm m7(b5), °7 etc. — mesmo princípio: notas do acorde dentro da escala (ou harmônica, quando aplicável).</p>
+</section>
+
+<section id="pratica">
+  <h2>ii–V–I na prática</h2>
+  <p>Região de estudo: <strong>A shape</strong> (1ª digitação) — mesma janela das escalas. Selecione a tonalidade:</p>
+
+  <div class="controls">
+    <div class="control-group">
+      <label>Tonalidade maior</label>
+      <div class="key-grid" id="key-grid"></div>
+    </div>
+  </div>
+
+  <div class="chain" id="chain-display"></div>
+
+  <p class="callout">Encadeie na ordem <strong>ii → V → I</strong> (Nelson também treina I–ii–V). Cada bolinha = nota do arpejo; branco = fundamental. Número na bolinha = grau <em>do acorde</em>; <span class="mono" style="color:var(--muted)">esc·N</span> = grau <em>da escala</em> (só quando difere).</p>
+
+  <p class="fret-hint">Números acima do braço = <strong>casa absoluta</strong> (onde o dedo aperta). A linha grossa à esquerda é o início da janela A shape — só é pestana/nut se a casa for 0.</p>
+
+  <div class="legend-arps" id="arp-legend"></div>
+  <div class="neck-stack" id="arp-rows"></div>
+</section>
+
+<section id="estudo">
+  <h2>Como estudar (Nelson)</h2>
+  <ol class="steps">
+    <li>Domine cada arpejo <strong>sozinho</strong> — suba e desça 1·3·5·7 cantando os graus do acorde.</li>
+    <li>Encadeie <strong>ii → V → I</strong> numa região (A shape), sem pausa — “segundo grau, quinto, primeiro”.</li>
+    <li>Transponha: <strong>251 em todos os tons</strong>, descendo semitom (ou círculo de quartas).</li>
+    <li>Use <strong>backing track</strong> ii–V–I e improvise alternando arpejo (som do acorde) com escala (mapa).</li>
+    <li>Depois: arpejos dos outros 4 shapes — mesma lógica, outras regiões do braço.</li>
+  </ol>
+</section>
+
+<footer>
+  MOD-BRAÇO-01 · Aula ~0:47–1:11 · Fonte: <a href="https://www.youtube.com/watch?v=pmrCrcwP65A">aulão Nelson Faria</a> ·
+  <a href="escalas-shapes-tablatura.html">Escalas (5 shapes)</a> ·
+  <a href="../../escalas-arpejos-treino/pages/drill-arpejo.html">Treinar ii–V–I →</a> ·
+  <a href="estudo-arpejos/index.html">Estudo profundo de arpejos</a>
+</footer>
+
+<script>
+const STRING_LABELS = ['e','B','G','D','A','E'];
+const OPEN = [4, 11, 7, 2, 9, 4];
+const NOTE_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const FRETS = 5;
+
+const ARP = {
+  maj7: { label: 'Sétima maior', formula: '1 · 3 · 5 · 7', intervals: [0, 4, 7, 11] },
+  dom7: { label: 'Dominante 7', formula: '1 · 3 · 5 · ♭7', intervals: [0, 4, 7, 10] },
+  min7: { label: 'Menor 7', formula: '1 · ♭3 · 5 · ♭7', intervals: [0, 3, 7, 10] }
+};
+
+const MAJOR_SCALE = [0, 2, 4, 5, 7, 9, 11];
+
+const CHORD_DEG_LABEL = { 0: '1', 3: '♭3', 4: '3', 7: '5', 10: '♭7', 11: '7' };
+
+const CHORD_DEG_ORDER = [0, 4, 7, 10, 11, 3];
+
+function pcToScaleDegree(keyRoot, pc) {
+  const interval = (pc - keyRoot + 12) % 12;
+  const idx = MAJOR_SCALE.indexOf(interval);
+  return idx >= 0 ? idx + 1 : null;
+}
+
+function chordDegFromInterval(iv) {
+  return CHORD_DEG_LABEL[iv] || '?';
+}
+
+function buildCorrespondence(keyRoot, chRoot, type, scaleDegList) {
+  const tones = chordTones(chRoot, type);
+  const orderedIv = CHORD_DEG_ORDER.filter(iv => tones.includes((chRoot + iv) % 12));
+  return scaleDegList.map((sd, i) => {
+    const iv = orderedIv[i];
+    const note = noteName((chRoot + iv) % 12);
+    return `esc·${sd}→${chordDegFromInterval(iv)} (${note})`;
+  }).join(' · ');
+}
+
+const PROGRESSION = [
+  { id: 'ii', roman: 'ii', scaleDeg: 2, type: 'min7', color: '#4ecdc4', css: 'ii' },
+  { id: 'V',  roman: 'V',  scaleDeg: 7, type: 'dom7', color: '#f0a030', css: 'v' },
+  { id: 'I',  roman: 'I',  scaleDeg: 0, type: 'maj7', color: '#69db7c', css: 'i' }
+];
+
+const SCALE_DEGREE_ARP = {
+  I:  { pov: '1 · 3 · 5 · 7', degs: [1, 3, 5, 7] },
+  ii: { pov: '2 · 4 · 6 · 1', degs: [2, 4, 6, 1] },
+  V:  { pov: '5 · 7 · 2 · 4', degs: [5, 7, 2, 4] }
+};
+
+let rootPc = 0;
+let highlightArp = null;
+
+function noteName(pc) { return NOTE_NAMES[pc]; }
+
+function scaleNote(root, degreeNum) {
+  const idx = (degreeNum - 1 + 7) % 7;
+  return (root + MAJOR_SCALE[idx]) % 12;
+}
+
+function chordRoot(root, scaleDeg) {
+  return (root + scaleDeg) % 12;
+}
+
+function chordTones(chRoot, type) {
+  return ARP[type].intervals.map(i => (chRoot + i) % 12);
+}
+
+function chordSymbol(chRoot, type) {
+  const n = noteName(chRoot);
+  if (type === 'maj7') return n + ' Maj7';
+  if (type === 'dom7') return n + '7';
+  return n + 'm7';
+}
+
+function findAShapeWindow(root) {
+  for (let ws = 0; ws <= 22; ws++) {
+    if ((OPEN[4] + ws + 1) % 12 === root) return ws;
+  }
+  return 2;
+}
+
+function arpeggioInWindow(chRoot, type, ws, keyRoot) {
+  const tones = new Set(chordTones(chRoot, type));
+  const out = [];
+  for (let si = 0; si < 6; si++) {
+    for (let rel = 1; rel <= FRETS; rel++) {
+      const abs = ws + rel - 1;
+      const pc = (OPEN[si] + abs) % 12;
+      if (!tones.has(pc)) continue;
+      const iv = (pc - chRoot + 12) % 12;
+      out.push({
+        si, rel, abs, pc,
+        degree: CHORD_DEG_LABEL[iv] || '?',
+        scaleDeg: pcToScaleDegree(keyRoot, pc),
+        root: iv === 0
+      });
+    }
+  }
+  return out.sort((a, b) => a.abs - b.abs || a.si - b.si);
+}
+
+/**
+ * Diagrama de janela de 5 casas.
+ * minAbs = primeira casa da janela (número absoluto no braço).
+ * Cada célula = uma casa; o número no topo é a casa em que se aperta.
+ */
+function renderFretboardSVG(notes, minAbs, accent) {
+  const fretCount = FRETS;
+  const padL = 40, padT = 28, padR = 16, padB = 20;
+  const fretW = 76;
+  const strH = 26;
+  const W = padL + fretCount * fretW + padR;
+  const H = padT + 5 * strH + padB;
+  const boardBottom = padT + 5 * strH;
+  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img">`;
+
+  // números absolutos das casas (no centro de cada célula)
+  for (let i = 0; i < fretCount; i++) {
+    const abs = minAbs + i;
+    const x = padL + (i + 0.5) * fretW;
+    svg += `<text x="${x}" y="16" text-anchor="middle" font-size="13" fill="${accent}" font-weight="800" font-family="system-ui">${abs}</text>`;
+  }
+  svg += `<text x="${padL - 4}" y="16" text-anchor="end" font-size="9" fill="#8b9cb3" font-family="system-ui">casa</text>`;
+
+  // borda esquerda: nut só se a janela começa na casa 0; senão só moldura da janela
+  const leftStroke = minAbs === 0 ? 4 : 2.5;
+  const leftColor = minAbs === 0 ? '#aaa' : '#666';
+  svg += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${boardBottom}" stroke="${leftColor}" stroke-width="${leftStroke}"/>`;
+
+  // trastes verticais (limites entre casas)
+  for (let i = 1; i <= fretCount; i++) {
+    const x = padL + i * fretW;
+    svg += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${boardBottom}" stroke="#555" stroke-width="1"/>`;
+  }
+
+  // cordas + rótulos
+  for (let si = 0; si < 6; si++) {
+    const y = padT + si * strH;
+    svg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#666" stroke-width="${si === 5 ? 2.2 : 1.1}"/>`;
+    svg += `<text x="8" y="${y + 4}" font-size="11" fill="#8b9cb3" font-weight="700" font-family="system-ui">${STRING_LABELS[si]}</text>`;
+  }
+
+  notes.forEach(n => {
+    const col = n.color || accent;
+    const cell = n.abs - minAbs; // 0..FRETS-1
+    if (cell < 0 || cell >= fretCount) return;
+    const x = padL + (cell + 0.5) * fretW;
+    const y = padT + n.si * strH;
+    const showEsc = n.scaleDeg != null && String(n.scaleDeg) !== String(n.degree).replace('♭', '');
+    if (n.root) {
+      svg += `<circle cx="${x}" cy="${y}" r="9" fill="#fff" stroke="${col}" stroke-width="2.5"/>`;
+    } else {
+      svg += `<circle cx="${x}" cy="${y}" r="8" fill="${col}"/>`;
+    }
+    svg += `<text x="${x}" y="${y + 4}" text-anchor="middle" font-size="10" fill="${n.root ? col : '#111'}" font-weight="800" font-family="system-ui">${n.degree}</text>`;
+    if (showEsc) {
+      svg += `<text x="${x}" y="${y + 16}" text-anchor="middle" font-size="8" fill="#8b9cb3" font-family="system-ui">esc·${n.scaleDeg}</text>`;
+    }
+  });
+
+  svg += '</svg>';
+  return svg;
+}
+
+function buildScaleStrip() {
+  const root = 0;
+  const usedBy = {
+    1: 'ii + I', 2: 'ii + V', 3: 'I', 4: 'ii + V', 5: 'I + V',
+    6: 'ii', 7: 'I + V'
+  };
+  document.getElementById('scale-strip').innerHTML = [1,2,3,4,5,6,7].map(d => {
+    const name = noteName(scaleNote(root, d));
+    return `<div class="scale-cell" title="Usado nos arpejos: ${usedBy[d]}">
+      <div class="deg">${d}</div>
+      <div class="note">${name}</div>
+    </div>`;
+  }).join('');
+}
+
+function buildTheoryTable() {
+  const root = 0;
+  const rows = PROGRESSION.map(p => {
+    const cr = chordRoot(root, p.scaleDeg);
+    const pov = SCALE_DEGREE_ARP[p.id];
+    const scaleNotes = pov.degs.map(d => noteName(scaleNote(root, d)));
+    const corr = buildCorrespondence(root, cr, p.type, pov.degs);
+    return `<tr>
+      <td><strong>${p.roman}</strong></td>
+      <td>${chordSymbol(cr, p.type)}</td>
+      <td class="mono">${ARP[p.type].formula}</td>
+      <td class="mono">${pov.pov}</td>
+      <td>${scaleNotes.join(' · ')}</td>
+      <td class="mono" style="font-size:0.8em">${corr}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('theory-table').innerHTML = rows;
+}
+
+function buildKeyGrid() {
+  const grid = document.getElementById('key-grid');
+  NOTE_NAMES.forEach((name, pc) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'key-btn' + (pc === rootPc ? ' active' : '');
+    btn.textContent = name;
+    btn.addEventListener('click', () => {
+      rootPc = pc;
+      grid.querySelectorAll('.key-btn').forEach(b => b.classList.toggle('active', NOTE_NAMES[rootPc] === b.textContent));
+      render();
+    });
+    grid.appendChild(btn);
+  });
+}
+
+function buildLegend() {
+  const el = document.getElementById('arp-legend');
+  el.innerHTML = PROGRESSION.map(p => `
+    <button type="button" data-arp="${p.id}" class="legend-btn">
+      <i class="swatch" style="background:${p.color}"></i>${p.roman} · ${ARP[p.type].label}
+    </button>`).join('') + `<button type="button" data-arp="" class="legend-btn active">Todos</button>`;
+
+  el.querySelectorAll('.legend-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      highlightArp = btn.dataset.arp || null;
+      el.querySelectorAll('.legend-btn').forEach(b => {
+        const on = !highlightArp ? !b.dataset.arp : b.dataset.arp === highlightArp;
+        b.classList.toggle('active', on);
+        if (b.dataset.arp) b.classList.toggle('dim', highlightArp && b.dataset.arp !== highlightArp);
+      });
+      render();
+    });
+  });
+}
+
+function render() {
+  const ws = findAShapeWindow(rootPc);
+  const we = ws + FRETS - 1;
+  const keyName = noteName(rootPc);
+
+  const chords = PROGRESSION.map(p => {
+    const cr = chordRoot(rootPc, p.scaleDeg);
+    return {
+      ...p,
+      chRoot: cr,
+      symbol: chordSymbol(cr, p.type),
+      notes: arpeggioInWindow(cr, p.type, ws, rootPc),
+      scaleNotes: SCALE_DEGREE_ARP[p.id].degs.map(d => noteName(scaleNote(rootPc, d)))
+    };
+  });
+
+  document.getElementById('chain-display').innerHTML = chords.map((c, i) => {
+    const arrow = i < chords.length - 1 ? '<span class="chain-arrow">→</span>' : '';
+    return `<span class="chord-pill ${c.css}">${c.roman} ${c.symbol}</span>${arrow}`;
+  }).join('');
+
+  document.getElementById('arp-rows').innerHTML = chords.map(c => {
+    const dim = highlightArp && highlightArp !== c.id ? ' dim' : '';
+    const notesStr = chordTones(c.chRoot, c.type).map(noteName).join(' · ');
+    return `
+      <article class="arp-row${dim}" style="--card-accent:${c.color}" data-arp="${c.id}">
+        <div class="arp-row-head">
+          <h3 style="color:${c.color}">${c.roman} · ${c.symbol}</h3>
+          <span class="arp-type">${ARP[c.type].label}</span>
+          <span class="arp-range">A shape · casas <strong>${ws}</strong>–<strong>${we}</strong></span>
+        </div>
+        <div class="notes-row">Arpejo: <strong class="mono">${ARP[c.type].formula}</strong> → ${notesStr}</div>
+        <div class="scale-pov">Na escala de ${keyName}: <span class="mono">${SCALE_DEGREE_ARP[c.id].pov}</span> → ${c.scaleNotes.join(' · ')}</div>
+        <div class="scale-pov">Correspondência: <span class="mono">${buildCorrespondence(rootPc, c.chRoot, c.type, SCALE_DEGREE_ARP[c.id].degs)}</span></div>
+        <div class="fretboard-wrap">
+          ${renderFretboardSVG(c.notes, ws, c.color)}
+        </div>
+      </article>`;
+  }).join('');
+}
+
+buildTheoryTable();
+buildScaleStrip();
+buildKeyGrid();
+buildLegend();
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+Com a Perna no Mundo — Gonzaguinha
+Tom: Cm (refrão final em Dó maior)
+Transposição +5 da gravação original (Sol menor / Sol maior)
+Acordes entre ( ) = passagem opcional · [ ] = seção
+
+Capotraste 3ª casa: mesmos shapes da cifra em Sol (Gm)
+
+────────────────────────────────────────────────────────────
+[INTRO] — turn-around em Dó maior → entra em Dó menor
+(tocar 2×; na 2ª vez fechar em Fm A7 Cm)
+
+C   A/C#   Bm   Bm7   F   A7  |  C   A7  |
+C   A/C#   Bm   B7/D# F   A7  |  C   A7  |  Fm   A7   Cm
+
+[INTERLÚDIO] (entre estrofes — igual intro, 1×)
+C   A/C#   Bm   Bm7   F   A7  |  C   A7  |
+
+────────────────────────────────────────────────────────────
+[VERSO 1]
+
+Cm                                    Fm
+   Acreditava na vida,    Na alegria de ser
+A7              Cm                    C7
+Nas coisas do coração,   Nas mãos um muito fazer
+              Fm                      Fm
+  Sentava bem lá no alto,  Pivete olhando a cidade
+Ab                    Ab7    A7
+  Sentindo o cheiro do asfalto, Desceu por necessidade
+
+────────────────────────────────────────────────────────────
+[VERSO 2]
+
+Cm              C7              Fm
+O Dina, Teu menino desceu o São Carlos
+               A7     Cm
+Pegou um sonho e  partiu
+                       C7
+Pensava que era um guerreiro
+Gm7(b5)  C7   Fm
+Com terras e gente a conquistar
+          F#°              C7
+ Havia um fogo em seus olhos, Um fogo de não se apagar
+
+────────────────────────────────────────────────────────────
+[PONTE — Dina]
+
+    Fm        A7           Cm
+   Diz lá pra Dina que eu volto,
+Fm    A7    Gm7(b5)  C7
+Que seu guri não fugiu
+Fm        A7      Cm
+Só quis saber como é, Qual é,
+Fm         A7      Cm   A7
+Perna no mundo sumiu
+
+────────────────────────────────────────────────────────────
+[REFRÃO] — modulação: Dó menor → Dó maior
+
+C                            Em
+E hoje,   Depois de tantas batalhas
+         Fm7          C7              F
+A lama dos sapatos É a medalha  Que ele tem pra mostrar
+   Fm                                C
+Passado     É um pé no chão e um sabiá
+    G7               Fm
+Presente  É a porta aberta
+     A7             C          A7
+E futuro é o que virá, mas, e daí?
+
+────────────────────────────────────────────────────────────
+[CODA — ô ô ô e á]
+
+       C                        Em
+     ô ô ô e  a    O moleque acabou de chegar, ê mãe
+  Dm   Eb°   Dm   A7                         C    A7
+ô ô ô e a     Nessa cama é que eu quero sonhar
+  C                         Em        Dm    A7
+ ô ô ô e  a    Amanhã boto a perna no mundo   (e lá vou eu)
+  Dm        A7                              C
+ô ô ô e  a      É que o mundo é que é meu lugar
+
+(final: C  A7  C  ·  ou repete último verso)
+
+────────────────────────────────────────────────────────────
+NOTAS DE ARRANJO
+
+Intro / interlúdio
+  • Baixo: Dó → Lá → Si → Si → Fá → (A7) → Dó — line cliché + turn-around.
+  • B7/D# = dominante secundária (V7/vi); pode trocar por Bm7 se soar denso demais.
+
+Verso (Cm)
+  • C7 antes de Fm = dominante secundária (V7/iv).
+  • Ab → Ab7 → A7 = baixo desce (Lá♭–Sol) antes de voltar à tônica menor.
+
+"Guerreiro"
+  • Gm7(b5) → C7 → Fm = iiø – V7 – iv em Fá menor, clássico MPB.
+
+"Fogo nos olhos"
+  • F#° (= F#dim7) liga Fm → C7 — diminuto de passagem (meio tom entre iv e V).
+
+Ponte
+  • Gm7(b5) C7 = mesma cadência encurtada antes de "não fugiu".
+
+Refrão
+  • Primeiro acorde em Dó maior (C) = modulação homônima (Cm → C).
+  • G7 → Fm = V7/vi (dominante secundária); Fm = "porta aberta" colorida.
+
+Coda
+  • Em → Eb° → Dm → A7 = sequência cromática típica de samba-canção (descida em terças).
+  • Eb° pode ser tocado como Eb7(b9) ou D#° — mesmo trítono, voicing diferente.
+
+Levada (violão)
+  • Verso: batida de samba-canção, tempo 2; 1 acorde por 2 tempos ou troca na melodia.
+  • Intro/coda: semicolcheias no polegar (bossa/samba) ou partido alto simplificado.
+
+────────────────────────────────────────────────────────────
+O QUE A CIFRA ENXUTA OMITIA (agora incluído)
+
+  ✓ Intro e interlúdio completos
+  ✓ C7 / G7 de passagem antes de subdominantes
+  ✓ Ab – Ab7 – A7 (cheiro do asfalto)
+  ✓ Gm7(b5) – C7 (guerreiro / não fugiu)
+  ✓ F#° (fogo nos olhos)
+  ✓ Modulação Cm → C no refrão
+  ✓ Eb° na coda
+  ✓ A7 nos loops finais
+
+Referência: gravação Gonzaguinha (1977) · harmonia alinhada às cifras Cifras.com.br / MVHP

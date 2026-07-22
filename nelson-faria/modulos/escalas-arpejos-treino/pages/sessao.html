@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sessão · Eat</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../vendor/practice-tools.css">
+  <style>
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+    @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .panel h2 { font-size: 0.95rem; color: #4ecdc4; margin-bottom: 0.75rem; }
+    .session-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+    .session-controls button {
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 0.45rem 0.75rem;
+      cursor: pointer;
+      font-size: 0.82rem;
+    }
+    .session-controls button.primary { background: var(--accent); color: #111; border-color: var(--accent); }
+    .session-status { font-size: 0.78rem; color: var(--muted); margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Sessão de treino</h1>
+  <p>Work/rest + metrônomo · <a href="index.html">hub</a></p>
+</header>
+
+<div class="grid-2">
+  <div class="panel"><div id="timer-root"></div></div>
+  <div class="panel"><div id="metro-root"></div></div>
+</div>
+
+<div class="panel">
+  <h2>Rounds</h2>
+  <div class="session-controls">
+    <label>Work (s) <input type="number" id="work-sec" value="120" min="10" max="600" style="width:4rem;margin-left:0.25rem"></label>
+    <label>Rest (s) <input type="number" id="rest-sec" value="15" min="0" max="120" style="width:4rem;margin-left:0.25rem"></label>
+    <label>Rounds <input type="number" id="rounds" value="4" min="1" max="20" style="width:3rem;margin-left:0.25rem"></label>
+    <button type="button" class="primary" id="session-start">Iniciar sessão</button>
+    <button type="button" id="session-stop">Parar</button>
+  </div>
+  <p class="session-status" id="session-status">Pronto</p>
+</div>
+
+<footer>
+  <a href="drill-escala.html">Drill escalas</a> ·
+  <a href="index.html">Hub</a>
+</footer>
+
+<script src="../vendor/practice-tools.js"></script>
+<script>
+(function () {
+  const timer = new PracticeTools.Timer({
+    container: '#timer-root',
+    durationSec: 120,
+    label: 'Work'
+  });
+  const metronome = new PracticeTools.Metronome({
+    container: '#metro-root',
+    bpm: 80
+  });
+  let session = null;
+
+  document.getElementById('session-start').addEventListener('click', () => {
+    session?.stop();
+    session = new PracticeTools.Session({
+      timer,
+      metronome,
+      workSec: Number(document.getElementById('work-sec').value) || 120,
+      restSec: Number(document.getElementById('rest-sec').value) || 15,
+      rounds: Number(document.getElementById('rounds').value) || 4,
+      linkMetronome: true
+    });
+    session.on('roundStart', (d) => {
+      document.getElementById('session-status').textContent =
+        `Round ${d.round}/${d.totalRounds} · ${d.phase}`;
+    });
+    session.on('complete', () => {
+      document.getElementById('session-status').textContent = 'Sessão concluída';
+    });
+    session.start();
+    document.getElementById('session-status').textContent = 'Sessão iniciada';
+  });
+
+  document.getElementById('session-stop').addEventListener('click', () => {
+    session?.stop();
+    document.getElementById('session-status').textContent = 'Parado';
+  });
+})();
+</script>
+</body>
+</html>

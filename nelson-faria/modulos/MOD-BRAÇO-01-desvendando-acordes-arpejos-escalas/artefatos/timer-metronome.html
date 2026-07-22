@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Timer + Metrônomo · treino | MOD-BRAÇO-01</title>
+  <link rel="stylesheet" href="tools/practice-tools.css">
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #f0a030;
+      --accent2: #4ecdc4;
+      --border: #2d3f54;
+      --ok: #69db7c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding: 1.5rem 1rem 3rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 1.25rem; margin-bottom: 1.25rem; }
+    header h1 { font-size: 1.45rem; font-weight: 700; }
+    header p { color: var(--muted); font-size: 0.92rem; margin-top: 0.35rem; }
+    nav { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0 1.25rem; }
+    nav a {
+      color: var(--accent); text-decoration: none; font-size: 0.78rem;
+      padding: 0.3rem 0.55rem; border: 1px solid var(--border); border-radius: 5px;
+    }
+    .callout {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      padding: 0.85rem 1rem;
+      border-radius: 0 6px 6px 0;
+      margin: 0.75rem 0 1rem;
+      font-size: 0.88rem;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .panel h2 {
+      font-size: 0.95rem;
+      color: var(--accent2);
+      margin-bottom: 0.75rem;
+    }
+    .controls {
+      display: flex; flex-wrap: wrap; gap: 0.85rem 1rem; align-items: flex-end;
+    }
+    .control-group { flex: 1 1 10rem; min-width: 0; }
+    .control-group label {
+      display: block; font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.35rem;
+    }
+    select, input[type="number"], input[type="text"] {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 0.5rem 0.6rem;
+      font-size: 0.88rem;
+    }
+    .preset-row { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.35rem; }
+    .preset-btn {
+      padding: 0.38rem 0.65rem;
+      border-radius: 6px; font-size: 0.78rem; font-weight: 700;
+      border: 1px solid var(--border); background: var(--surface2);
+      color: var(--muted); cursor: pointer;
+    }
+    .preset-btn.active {
+      background: var(--accent); color: #111; border-color: var(--accent);
+    }
+    .session-display {
+      text-align: center;
+      padding: 0.85rem 0.5rem;
+      background: var(--surface2);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin-bottom: 0.85rem;
+    }
+    .session-phase {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .session-round {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin: 0.2rem 0;
+    }
+    .session-label { font-size: 0.85rem; color: var(--muted); }
+    .round-track {
+      display: flex; gap: 0.35rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 0.65rem;
+    }
+    .round-dot {
+      width: 0.75rem; height: 0.75rem; border-radius: 50%;
+      background: var(--surface); border: 1px solid var(--border);
+    }
+    .round-dot.done { background: var(--ok); border-color: var(--ok); }
+    .round-dot.current { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 8px rgba(240,160,48,0.5); }
+    .round-dot.rest { background: var(--accent2); border-color: var(--accent2); opacity: 0.5; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+    .btn {
+      flex: 1 1 8rem;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-primary { background: var(--accent2); color: #111; border-color: var(--accent2); }
+    .btn-accent { background: var(--accent); color: #111; border-color: var(--accent); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .toggle-row {
+      display: flex; align-items: center; gap: 0.45rem;
+      font-size: 0.85rem; margin-top: 0.5rem;
+    }
+    .toggle-row input { accent-color: var(--accent2); width: auto; }
+    .log {
+      max-height: 120px; overflow-y: auto;
+      font-family: "SF Mono", Consolas, monospace;
+      font-size: 0.75rem; background: var(--surface2);
+      border-radius: 8px; padding: 0.65rem;
+      border: 1px solid var(--border);
+      margin-top: 0.75rem;
+    }
+    .log div { margin-bottom: 0.2rem; color: var(--muted); }
+    .log .evt { color: var(--accent2); }
+    code {
+      font-family: "SF Mono", Consolas, monospace;
+      font-size: 0.82rem;
+      background: var(--surface2);
+      padding: 0.12rem 0.35rem;
+      border-radius: 4px;
+    }
+    pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      overflow-x: auto;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      margin-top: 0.5rem;
+    }
+    footer {
+      margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);
+      font-size: 0.78rem; color: var(--muted);
+    }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Timer + Metrônomo</h1>
+  <p>Configure rounds de treino · escalas, arpejos ou estudo livre · componentes reutilizáveis</p>
+</header>
+
+<nav>
+  <a href="escala-validador.html">Validador de escala</a>
+  <a href="escalas-shapes-tablatura.html">Escalas</a>
+  <a href="arpejos-ii-V-I.html">Arpejos ii–V–I</a>
+  <a href="monitor-audio.html">Monitor de áudio</a>
+  <a href="#integracao">Integrar</a>
+</nav>
+
+<div class="callout">
+  Os componentes <code>PracticeTools.Timer</code> e <code>PracticeTools.Metronome</code> vivem em
+  <code>tools/practice-tools.js</code> — importe em qualquer artefato HTML para treinar com tempo e pulso.
+  Clique em <strong>Iniciar sessão</strong> para ligar timer + metrônomo em rounds automáticos.
+</div>
+
+<section class="panel">
+  <h2>Sessão de treino</h2>
+
+  <div class="preset-row" id="exercise-presets">
+    <button type="button" class="preset-btn active" data-preset="escalas">Escalas</button>
+    <button type="button" class="preset-btn" data-preset="arpejos">Arpejos</button>
+    <button type="button" class="preset-btn" data-preset="livre">Livre</button>
+    <button type="button" class="preset-btn" data-preset="custom">Personalizado</button>
+  </div>
+
+  <div class="session-display">
+    <div class="session-phase" id="session-phase">Pronto</div>
+    <div class="session-round" id="session-round">—</div>
+    <div class="session-label" id="session-label">Escolha um preset ou configure abaixo</div>
+    <div class="round-track" id="round-track"></div>
+  </div>
+
+  <div class="controls">
+    <div class="control-group">
+      <label for="work-sec">Tempo de trabalho (seg)</label>
+      <input type="number" id="work-sec" min="10" max="3600" value="120">
+    </div>
+    <div class="control-group">
+      <label for="rest-sec">Descanso (seg)</label>
+      <input type="number" id="rest-sec" min="0" max="600" value="15">
+    </div>
+    <div class="control-group">
+      <label for="rounds">Rounds</label>
+      <input type="number" id="rounds" min="1" max="20" value="4">
+    </div>
+    <div class="control-group">
+      <label for="session-bpm">BPM da sessão</label>
+      <input type="number" id="session-bpm" min="30" max="300" value="80">
+    </div>
+  </div>
+
+  <label class="toggle-row">
+    <input type="checkbox" id="link-metro" checked>
+    Ligar metrônomo automaticamente nos rounds de trabalho
+  </label>
+
+  <div class="btn-row">
+    <button type="button" class="btn btn-primary" id="btn-session-start">Iniciar sessão</button>
+    <button type="button" class="btn" id="btn-session-stop" disabled>Parar sessão</button>
+  </div>
+
+  <div class="log" id="event-log"></div>
+</section>
+
+<div class="grid-2">
+  <div id="timer-root"></div>
+  <div id="metro-root"></div>
+</div>
+
+<section class="panel" id="integracao">
+  <h2>Integrar em outras páginas</h2>
+  <p style="font-size:0.88rem;color:var(--muted);margin-bottom:0.5rem">
+    Inclua o CSS + JS e monte os componentes em qualquer container. Eventos customizados sobem pelo DOM (<code>practice:beat</code>, <code>practice:complete</code>, etc.).
+  </p>
+<pre>&lt;link rel="stylesheet" href="tools/practice-tools.css"&gt;
+&lt;div id="metro-root"&gt;&lt;/div&gt;
+&lt;script src="tools/practice-tools.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const metro = new PracticeTools.Metronome({ container: '#metro-root', bpm: 90 });
+  metro.on('beat', ({ beat, accent }) =&gt; { /* sincronizar tab, validador, etc. */ });
+
+  const timer = new PracticeTools.Timer({ container: '#timer-root', durationSec: 180 });
+  timer.on('complete', () =&gt; metro.stop());
+&lt;/script&gt;</pre>
+</section>
+
+<footer>
+  MOD-BRAÇO-01 · Ferramentas em <a href="tools/practice-tools.js">tools/practice-tools.js</a> ·
+  <a href="escala-validador.html">Validador</a> ·
+  <a href="escalas-shapes-tablatura.html">Escalas</a> ·
+  <a href="../../escalas-arpejos-treino/pages/sessao.html">Sessão ginásio →</a>
+</footer>
+
+<script src="tools/practice-tools.js"></script>
+<script>
+(function () {
+  const PRESETS = {
+    escalas: { workSec: 120, restSec: 15, rounds: 4, bpm: 80, label: 'Escalas — 4 rounds × 2 min' },
+    arpejos: { workSec: 90, restSec: 20, rounds: 5, bpm: 70, label: 'Arpejos — 5 rounds × 1:30' },
+    livre:   { workSec: 300, restSec: 0, rounds: 1, bpm: 60, label: 'Estudo livre — 5 min' },
+    custom:  null,
+  };
+
+  const timer = new PracticeTools.Timer({
+    container: '#timer-root',
+    durationSec: 120,
+    presets: [60, 90, 120, 180, 300],
+  });
+
+  const metro = new PracticeTools.Metronome({
+    container: '#metro-root',
+    bpm: 80,
+  });
+
+  let session = null;
+  let activePreset = 'escalas';
+
+  const els = {
+    phase: document.getElementById('session-phase'),
+    round: document.getElementById('session-round'),
+    label: document.getElementById('session-label'),
+    track: document.getElementById('round-track'),
+    workSec: document.getElementById('work-sec'),
+    restSec: document.getElementById('rest-sec'),
+    rounds: document.getElementById('rounds'),
+    sessionBpm: document.getElementById('session-bpm'),
+    linkMetro: document.getElementById('link-metro'),
+    btnStart: document.getElementById('btn-session-start'),
+    btnStop: document.getElementById('btn-session-stop'),
+    log: document.getElementById('event-log'),
+  };
+
+  function log(msg, cls) {
+    const line = document.createElement('div');
+    line.className = cls || '';
+    line.textContent = new Date().toLocaleTimeString('pt-BR') + ' · ' + msg;
+    els.log.prepend(line);
+    while (els.log.children.length > 30) els.log.lastChild.remove();
+  }
+
+  function readConfig() {
+    return {
+      workSec: Number(els.workSec.value) || 120,
+      restSec: Number(els.restSec.value) || 0,
+      rounds: Number(els.rounds.value) || 1,
+      bpm: Number(els.sessionBpm.value) || 80,
+    };
+  }
+
+  function applyPreset(name) {
+    activePreset = name;
+    document.querySelectorAll('[data-preset]').forEach((b) => {
+      b.classList.toggle('active', b.dataset.preset === name);
+    });
+    const p = PRESETS[name];
+    if (!p) {
+      els.label.textContent = 'Configuração personalizada';
+      renderRoundTrack(Number(els.rounds.value));
+      return;
+    }
+    els.workSec.value = p.workSec;
+    els.restSec.value = p.restSec;
+    els.rounds.value = p.rounds;
+    els.sessionBpm.value = p.bpm;
+    els.label.textContent = p.label;
+    timer.setDuration(p.workSec);
+    metro.setBpm(p.bpm);
+    renderRoundTrack(p.rounds);
+  }
+
+  function renderRoundTrack(total, current, phase) {
+    els.track.innerHTML = '';
+    for (let i = 1; i <= total; i++) {
+      const dot = document.createElement('span');
+      dot.className = 'round-dot';
+      if (current != null) {
+        if (i < current) dot.classList.add('done');
+        else if (i === current && phase === 'work') dot.classList.add('current');
+        else if (i === current && phase === 'rest') dot.classList.add('rest');
+      }
+      els.track.appendChild(dot);
+    }
+  }
+
+  function updateSessionUI(snap) {
+    const phaseLabels = { idle: 'Pronto', work: 'Trabalho', rest: 'Descanso', done: 'Concluído' };
+    els.phase.textContent = phaseLabels[snap.phase] || snap.phase;
+    if (snap.phase === 'idle') {
+      els.round.textContent = '—';
+    } else if (snap.phase === 'done') {
+      els.round.textContent = '✓';
+    } else {
+      els.round.textContent = snap.round + ' / ' + snap.totalRounds;
+    }
+    renderRoundTrack(snap.totalRounds, snap.round, snap.phase);
+  }
+
+  function ensureSession() {
+    if (session) return session;
+    session = new PracticeTools.Session({ timer, metronome: metro });
+    session.on('roundStart', (s) => {
+      log('Round ' + s.round + '/' + s.totalRounds + ' — trabalho', 'evt');
+      updateSessionUI(s);
+    });
+    session.on('restStart', (s) => {
+      log('Descanso antes do round ' + (s.round + 1), 'evt');
+      updateSessionUI(s);
+    });
+    session.on('complete', (s) => {
+      log('Sessão concluída!', 'evt');
+      updateSessionUI(s);
+      els.btnStart.disabled = false;
+      els.btnStop.disabled = true;
+    });
+    session.on('stop', (s) => {
+      updateSessionUI({ ...s, phase: 'idle', round: 0, totalRounds: Number(els.rounds.value) });
+      els.btnStart.disabled = false;
+      els.btnStop.disabled = true;
+    });
+    return session;
+  }
+
+  document.querySelectorAll('[data-preset]').forEach((btn) => {
+    btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
+  });
+
+  ['work-sec', 'rest-sec', 'rounds', 'session-bpm'].forEach((id) => {
+    document.getElementById(id).addEventListener('change', () => {
+      if (activePreset !== 'custom') applyPreset('custom');
+      document.querySelector('[data-preset="custom"]').classList.add('active');
+      document.querySelectorAll('[data-preset]:not([data-preset="custom"])').forEach((b) => b.classList.remove('active'));
+      renderRoundTrack(Number(els.rounds.value));
+      els.label.textContent = 'Configuração personalizada';
+    });
+  });
+
+  els.btnStart.addEventListener('click', () => {
+    const cfg = readConfig();
+    const s = ensureSession();
+    s.linkMetronome = els.linkMetro.checked;
+    s.configure(cfg);
+    metro.setBpm(cfg.bpm);
+    s.start();
+    els.btnStart.disabled = true;
+    els.btnStop.disabled = false;
+    log('Sessão iniciada', 'evt');
+  });
+
+  els.btnStop.addEventListener('click', () => {
+    session?.stop();
+    log('Sessão interrompida');
+  });
+
+  timer.on('tick', () => {
+    if (session?.phase === 'rest') {
+      els.phase.textContent = 'Descanso';
+    } else if (session?.phase === 'work') {
+      els.phase.textContent = 'Trabalho';
+    }
+  });
+
+  metro.on('beat', ({ beat, accent }) => {
+    document.getElementById('metro-root').dataset.lastBeat = beat;
+    document.getElementById('metro-root').dataset.accent = accent ? '1' : '0';
+  });
+
+  applyPreset('escalas');
+  renderRoundTrack(4);
+})();
+</script>
+</body>
+</html>

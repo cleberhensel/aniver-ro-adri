@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playlist Bossa · Tons importantes</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/hub.css">
+  <link rel="stylesheet" href="../css/playlist.css">
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Playlist · Bossa Nova</h1>
+    <p>Tons importantes · I–vi–ii–V + bônus Quist / menores</p>
+  </div>
+  <a href="backing-tracks.html">← Backing tracks</a>
+</header>
+
+<nav class="hub-nav">
+  <a href="#player">Player</a>
+  <a href="#maiores">Maiores</a>
+  <a href="#menores">Menores</a>
+  <a href="drill-escala.html">Drill escala</a>
+  <a href="drill-arpejo.html">Drill arpejo</a>
+  <a id="yt-open" href="#" target="_blank" rel="noopener">Abrir no YouTube ↗</a>
+</nav>
+
+<div class="hub-intro">
+  <strong>Série principal:</strong> Studio Closet — Bossanova <em>I–vi–ii–V</em> (1-6-2-5) nos 9 tons prioritários
+  (C → F → Bb → Eb → Ab → G → D → A → E). Ideal para escala maior, arpejos Maj7/m7/Dom7 e turnaround.
+  <br><strong>Bônus:</strong> Quist (Jobim blues, 2-5-1 bossa) + menores (Cm, Dm, Em, Gm…).
+</div>
+
+<section class="pl-layout" id="player">
+  <div class="pl-stage">
+    <div class="pl-embed-wrap">
+      <iframe id="pl-iframe" title="Backing track" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    <div class="pl-now">
+      <span class="badge ready" id="pl-badge">—</span>
+      <h2 id="pl-title">Escolhe uma faixa</h2>
+      <p id="pl-meta"></p>
+      <p id="pl-prog" class="pl-prog"></p>
+      <div class="pl-controls">
+        <button type="button" id="pl-prev" class="pl-btn">← Anterior</button>
+        <button type="button" id="pl-next" class="pl-btn primary">Próxima →</button>
+        <a id="pl-yt" class="pl-btn" href="#" target="_blank" rel="noopener">YouTube</a>
+        <a id="pl-drill" class="pl-btn" href="drill-escala.html?family=major">Drill</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="pl-lists">
+    <section class="hub-section" id="maiores">
+      <h2>Maiores · ciclo de 4ªs</h2>
+      <ol class="pl-tracklist" id="list-major"></ol>
+    </section>
+    <section class="hub-section" id="menores">
+      <h2>Menores · bônus</h2>
+      <ol class="pl-tracklist" id="list-minor"></ol>
+    </section>
+  </div>
+</section>
+
+<footer>
+  <a href="index.html">Hub</a> ·
+  <a href="backing-tracks.html">Catálogo completo</a> ·
+  Playlist inicial — expandir depois com Samba / Jazz
+</footer>
+
+<script>
+(function () {
+  /** Playlist inicial — bossa nos tons importantes */
+  const TRACKS = [
+    // —— Maiores (Studio Closet I-vi-ii-V) ——
+    {
+      id: 'J2xKOMvwmb0', key: 'C', mode: 'major', group: 'main',
+      title: 'Bossanova I–vi–ii–V', channel: 'Studio Closet',
+      prog: 'Cmaj7 · Am7 · Dm7 · G7',
+      tip: 'Tom-casa. Escala C maior em todos os graus; arpejo de cada acorde.'
+    },
+    {
+      id: 'QtYtIH6vvGY', key: 'F', mode: 'major', group: 'main',
+      title: 'Bossanova I–vi–ii–V', channel: 'Studio Closet',
+      prog: 'Fmaj7 · Dm7 · Gm7 · C7',
+      tip: '1♭. Tom de Ipanema/Desafinado — prioridade BR.'
+    },
+    {
+      id: '8_H4SbVqfr8', key: 'Bb', mode: 'major', group: 'main',
+      title: 'Bossanova I–vi–ii–V', channel: 'Studio Closet',
+      prog: 'Bbmaj7 · Gm7 · Cm7 · F7',
+      tip: '2♭. Tom de sopro / One Note Samba territory.'
+    },
+    {
+      id: 'u51w_8LtT2k', key: 'Eb', mode: 'major', group: 'main',
+      title: 'Bossanova I–vi–ii–V', channel: 'Studio Closet',
+      prog: 'Ebmaj7 · Cm7 · Fm7 · Bb7',
+      tip: '3♭. Meta de fluência — shapes menos “automáticos”.'
+    },
+    {
+      id: 'nv1Hilymegk', key: 'Ab', mode: 'major', group: 'main',
+      title: 'Bossanova I–vi–ii–V', channel: 'Studio Closet',
+      prog: 'Abmaj7 · Fm7 · Bbm7 · Eb7',
+      tip: '4♭. Força CAGED em bemóis.'
+    },
+    {
+      id: 'cC7LluQmtLw', key: 'G', mode: 'major', group: 'main',
+      title: 'Bossanova I–vi–ii–V', channel: 'Studio Closet',
+      prog: 'Gmaj7 · Em7 · Am7 · D7',
+      tip: '1#. Depois ouve o Jobim Blues (Quist) no mesmo tom.'
+    },
+    {
+      id: 'jdRbmN-isHQ', key: 'D', mode: 'major', group: 'main',
+      title: 'Bossanova I–vi–ii–V', channel: 'Studio Closet',
+      prog: 'Dmaj7 · Bm7 · Em7 · A7',
+      tip: 'Tom de Wave. Experimenta Lídio (D E F# G# A B C#) no I.'
+    },
+    {
+      id: 'DlACb5XYupU', key: 'A', mode: 'major', group: 'main',
+      title: 'Bossanova I–vi–ii–V', channel: 'Studio Closet',
+      prog: 'Amaj7 · F#m7 · Bm7 · E7',
+      tip: 'MPB/bossa em A — cordas abertas + jazz voicings.'
+    },
+    {
+      id: 'TanfCjDgQZU', key: 'E', mode: 'major', group: 'main',
+      title: 'Bossanova I–vi–ii–V', channel: 'Studio Closet',
+      prog: 'Emaj7 · C#m7 · F#m7 · B7',
+      tip: '4#. Fecha o ciclo dos tons “de violão”.'
+    },
+
+    // —— Bônus groove / 2-5-1 ——
+    {
+      id: 'hzFozbN3uk0', key: 'C', mode: 'major', group: 'bonus',
+      title: '2-5-1 Bossa Style', channel: 'Quist',
+      prog: 'Dm7 · G7 · Cmaj7',
+      tip: 'Mesmo tom C, foco só em ii–V–I — liga ao drill de arpejo.'
+    },
+    {
+      id: 'Zl-MNlp9pKY', key: 'G', mode: 'major', group: 'bonus',
+      title: 'Jobim Style Blues', channel: 'Quist',
+      prog: 'Gmaj7 · C9 · D9',
+      tip: 'Sabor Jobim. Escala G + dórico/melódica no C9.'
+    },
+    {
+      id: 'u1MEuEBhIaw', key: 'F', mode: 'major', group: 'bonus',
+      title: 'Bossa 2-5-1-6', channel: 'HW MUSIC',
+      prog: 'Gm7 · C7 · Fmaj7 · Dm7',
+      tip: 'Variante 2516 em F — boa para turnaround.'
+    },
+    {
+      id: 'ul4Fc3zzfRE', key: 'G', mode: 'major', group: 'bonus',
+      title: 'Bossa 2-5-1-6', channel: 'HW MUSIC',
+      prog: 'Am7 · D7 · Gmaj7 · Em7',
+      tip: '2516 em G — compara com Studio Closet e Quist.'
+    },
+
+    // —— Menores ——
+    {
+      id: 'H0j_xIm4fW0', key: 'Cm', mode: 'minor', group: 'minor',
+      title: 'Jazz Bossa Nova', channel: 'AUsher Jam Tracks',
+      prog: 'centro em Cm',
+      tip: 'Território Blue Bossa. Menor harmônica no V7.'
+    },
+    {
+      id: 'B_WDba8tk04', key: 'Cm', mode: 'minor', group: 'minor',
+      title: 'Blue Bossa', channel: 'Quist',
+      prog: 'Cm · Fm · Dm7b5 · G7 · Db…',
+      tip: 'Standard obrigatório. Bridge em Db maior.'
+    },
+    {
+      id: '9bjmb4B3V1s', key: 'Dm', mode: 'minor', group: 'minor',
+      title: 'Bossa Nova Blues Jam', channel: 'Quist',
+      prog: 'centro em Dm',
+      tip: 'How Insensitive territory. D eólia / harmônica.'
+    },
+    {
+      id: 'Io2J3XhRu5w', key: 'Em', mode: 'minor', group: 'minor',
+      title: 'Bossa Nova Blues Jam', channel: 'Quist',
+      prog: 'centro em Em',
+      tip: 'Relativa de G — bom dia após treinar G maior.'
+    },
+    {
+      id: 'gh_CY6b_3iw', key: 'Gm', mode: 'minor', group: 'minor',
+      title: 'Bossa Nova Jazz Blues', channel: 'Quist',
+      prog: 'centro em Gm',
+      tip: 'Relativa de Bb. Blues + bossa.'
+    },
+    {
+      id: '-UlzqKpuvVE', key: 'Gm', mode: 'minor', group: 'minor',
+      title: '2-5-1 Bossa Style', channel: 'Quist',
+      prog: 'Am7b5 · D7 · Gm7',
+      tip: 'iiø–V–i — arpejos m7b5 / Dom7 / m7.'
+    },
+    {
+      id: 'kbZRkPpALAc', key: 'Am', mode: 'minor', group: 'minor',
+      title: 'Easy Bossa — A Dorian', channel: 'Quist',
+      prog: 'modo A dórico',
+      tip: 'Dórico (6ª maior) — não é eólio puro. Relaciona a G maior.'
+    },
+    {
+      id: 'Nkzp72LYMOc', key: 'Bm', mode: 'minor', group: 'minor',
+      title: 'Bossa Nova Blues', channel: 'Quist',
+      prog: 'centro em Bm',
+      tip: 'Relativa de D. Bom para shapes no final do braço.'
+    },
+    {
+      id: 'PjblJFGiJk8', key: 'Fm', mode: 'minor', group: 'minor',
+      title: 'II–V–I Bossa Style', channel: 'Quist',
+      prog: 'Gm7b5 · C7 · Fm',
+      tip: 'Menor com bemóis — liga ao dia de Ab/Eb.'
+    }
+  ];
+
+  let index = 0;
+  const iframe = document.getElementById('pl-iframe');
+  const titleEl = document.getElementById('pl-title');
+  const metaEl = document.getElementById('pl-meta');
+  const progEl = document.getElementById('pl-prog');
+  const badgeEl = document.getElementById('pl-badge');
+  const ytEl = document.getElementById('pl-yt');
+  const drillEl = document.getElementById('pl-drill');
+  const listMajor = document.getElementById('list-major');
+  const listMinor = document.getElementById('list-minor');
+
+  const ytPlaylistUrl = 'https://www.youtube.com/watch_videos?video_ids=' +
+    TRACKS.map((t) => t.id).join(',');
+  document.getElementById('yt-open').href = ytPlaylistUrl;
+
+  function ytEmbed(id) {
+    return 'https://www.youtube.com/embed/' + id + '?rel=0&modestbranding=1';
+  }
+
+  function play(i) {
+    index = (i + TRACKS.length) % TRACKS.length;
+    const t = TRACKS[index];
+    iframe.src = ytEmbed(t.id);
+    badgeEl.textContent = t.key;
+    titleEl.textContent = t.title;
+    metaEl.textContent = t.channel + ' · ' + t.key + (t.mode === 'major' ? ' maior' : '') +
+      (t.group === 'bonus' ? ' · bônus' : '');
+    progEl.textContent = t.prog + ' — ' + t.tip;
+    ytEl.href = 'https://www.youtube.com/watch?v=' + t.id;
+    drillEl.href = t.mode === 'major'
+      ? 'drill-escala.html?family=major'
+      : 'drill-escala.html?family=natural-minor';
+    document.querySelectorAll('.pl-track').forEach((el) => {
+      el.classList.toggle('active', Number(el.dataset.i) === index);
+    });
+  }
+
+  function addItem(t, i, parent) {
+    const li = document.createElement('li');
+    li.className = 'pl-track';
+    li.dataset.i = String(i);
+    li.innerHTML = `
+      <button type="button" class="pl-track-btn">
+        <span class="pl-key">${t.key}</span>
+        <span class="pl-info">
+          <strong>${t.title}</strong>
+          <span>${t.channel}${t.group === 'bonus' ? ' · bônus' : ''} · ${t.prog}</span>
+        </span>
+      </button>`;
+    li.querySelector('button').addEventListener('click', () => play(i));
+    parent.appendChild(li);
+  }
+
+  TRACKS.forEach((t, i) => {
+    if (t.mode === 'minor') addItem(t, i, listMinor);
+    else addItem(t, i, listMajor);
+  });
+
+  document.getElementById('pl-prev').addEventListener('click', () => play(index - 1));
+  document.getElementById('pl-next').addEventListener('click', () => play(index + 1));
+
+  play(0);
+})();
+</script>
+</body>
+</html>

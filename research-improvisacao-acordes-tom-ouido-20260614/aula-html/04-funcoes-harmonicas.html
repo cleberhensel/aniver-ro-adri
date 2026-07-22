@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Módulo 04 — Funções harmônicas T · SD · D</title>
+  <link rel="stylesheet" href="css/curso.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h1>Harmonia Funcional</h1>
+      <p>Tocar de ouvido — técnica, não magia</p>
+    </div>
+    <nav id="sidebar-nav"></nav>
+    <div style="padding:0 1.25rem 1rem">
+      <div id="course-progress-label" style="font-size:0.8rem;color:var(--text-muted)">0/11 módulos</div>
+      <div class="progress-bar-wrap"><div id="course-progress-bar" class="progress-bar-fill" style="width:0"></div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="hero">
+      <h1>Funções harmônicas: Tônica, Subdominante e Dominante</h1>
+      <p class="lead">O coração do curso. Três funções explicam por que um acorde repousa, outro abre e outro tensiona — e permitem prever o próximo acorde antes de ouvi-lo.</p>
+    </header>
+
+    <h2>Por que funções existem</h2>
+    <p>Harmonia funcional não é uma lista de acordes permitidos. É um <strong>sistema de expectativas auditivas</strong> construído ao longo de séculos de música tonal — do barroco ao jazz, do rock à MPB. Cada acorde dentro de uma tonalidade exerce um papel: repousar (<span class="fn-badge fn-badge-T">T</span>), preparar movimento (<span class="fn-badge fn-badge-SD">SD</span>) ou criar tensão que pede resolução (<span class="fn-badge fn-badge-D">D</span>).</p>
+    <p>Quando você internaliza essas três funções, deixa de memorizar progressões em letras (C, G, Am, F) e passa a pensar em <strong>graus e papéis</strong> — o mesmo raciocínio que session musicians usam com o Nashville Number System.</p>
+
+    <blockquote>A função harmônica não é uma propriedade intrínseca do acorde isolado, mas uma <strong>relação contextual</strong> determinada retrospectivamente pela progressão e pela tonalidade. — Hugo Riemann (séc. XIX), pai da terminologia T–SD–D</blockquote>
+
+    <div class="warn">
+      <strong>Implicação prática:</strong> você só sabe se um acorde é dominante <em>depois</em> de ouvir para onde ele vai. Um G maior pode ser V em Dó, bVII em Lá menor ou I em Sol. O contexto — baixo, melodia, acorde anterior e posterior — define a função.
+    </div>
+
+    <h2>As três funções em detalhe</h2>
+
+    <div class="card card-fn-T">
+      <h3 style="margin-top:0"><span class="fn-badge fn-badge-T">T</span> Tônica — repouso e centro</h3>
+      <p>A função tônica é o <strong>lar tonal</strong>. Acordes tônicos soam estáveis, completos, como fim de frase ou ponto de chegada. Não "pedem" ir a lugar nenhum com urgência — embora a música possa continuar a partir deles.</p>
+      <h4>Graus tônicos principais</h4>
+      <table>
+        <tr><th>Grau</th><th>Em Dó</th><th>Em Sol</th><th>Em Lá</th><th>Qualidade</th><th>Papel</th></tr>
+        <tr><td><strong>I</strong></td><td>C</td><td>G</td><td>A</td><td>Maior</td><td>Tônica plena — repouso absoluto</td></tr>
+        <tr><td><strong>vi</strong></td><td>Am</td><td>Em</td><td>F#m</td><td>Menor</td><td>Tônica relativa — repouso melancólico, substituto de I</td></tr>
+        <tr><td>iii</td><td>Em</td><td>Bm</td><td>C#m</td><td>Menor</td><td>Tônica fraca (T*) — passagem, raramente repouso forte</td></tr>
+      </table>
+      <p><strong>Sensação auditiva:</strong> "chegamos em casa", "frase terminou", "pode respirar". Em pop, vi substitui I com frequência (ex.: refrão termina em Am em tom Dó).</p>
+      <div class="chord-pills">
+        <span class="chord-pill">C</span>
+        <span class="chord-pill">Am</span>
+        <span class="chord-pill">Cmaj7</span>
+        <span class="chord-pill">Am7</span>
+      </div>
+      <p style="font-size:0.85rem;color:var(--text-muted)">Exemplos em Dó: I, vi, Imaj7, vim7</p>
+    </div>
+
+    <div class="card card-fn-SD">
+      <h3 style="margin-top:0"><span class="fn-badge fn-badge-SD">SD</span> Subdominante — movimento e abertura</h3>
+      <p>A subdominante <strong>afasta da tônica</strong> sem criar tensão dominante plena. É o acorde de "partida", de abertura de frase, de preparação. Historicamente, a subdominante estava a uma quinta <em>abaixo</em> da tônica (daí o nome: "sub-dominante").</p>
+      <h4>Graus subdominantes</h4>
+      <table>
+        <tr><th>Grau</th><th>Em Dó</th><th>Em Sol</th><th>Em Lá</th><th>Qualidade</th><th>Papel</th></tr>
+        <tr><td><strong>IV</strong></td><td>F</td><td>C</td><td>D</td><td>Maior</td><td>Subdominante plena — abertura clássica</td></tr>
+        <tr><td><strong>ii</strong></td><td>Dm</td><td>Am</td><td>Bm</td><td>Menor</td><td>Subdominante menor — preparação suave para V</td></tr>
+      </table>
+      <p><strong>Sensação auditiva:</strong> "algo está se movendo", "abriu uma porta", "preparando algo". O ii soa mais suave que IV; ambos levam naturalmente à dominante.</p>
+      <p><strong>Confusão comum:</strong> IV não é tônica — embora seja maior e soe "feliz", ela <em>quer</em> ir para V ou voltar a I, não repousa como I.</p>
+      <div class="chord-pills">
+        <span class="chord-pill">F</span>
+        <span class="chord-pill">Dm</span>
+        <span class="chord-pill">Fmaj7</span>
+        <span class="chord-pill">Dm7</span>
+      </div>
+      <p style="font-size:0.85rem;color:var(--text-muted)">Exemplos em Dó: IV, ii, IVmaj7, iim7</p>
+    </div>
+
+    <div class="card card-fn-D">
+      <h3 style="margin-top:0"><span class="fn-badge fn-badge-D">D</span> Dominante — tensão e resolução</h3>
+      <p>A dominante cria <strong>tensão máxima</strong> dentro do campo harmônico. O ouvido espera resolução — quase sempre para I (ou vi como substituto). A tríade de V contém a sensible (7ª escala) que resolve meio tom acima para a tônica; o vii° contém a mesma tensão em forma diminuta.</p>
+      <h4>Graus dominantes</h4>
+      <table>
+        <tr><th>Grau</th><th>Em Dó</th><th>Em Sol</th><th>Em Lá</th><th>Qualidade</th><th>Papel</th></tr>
+        <tr><td><strong>V</strong></td><td>G</td><td>D</td><td>E</td><td>Maior</td><td>Dominante plena — tensão clássica</td></tr>
+        <tr><td><strong>vii°</strong></td><td>Bdim</td><td>F#dim</td><td>G#dim</td><td>Diminuta</td><td>Dominante diminuta — passagem, instável</td></tr>
+      </table>
+      <p><strong>Sensação auditiva:</strong> "precisa resolver", "pergunta retórica", "cadência chegando". V7 intensifica ainda mais — a 7ª menor (ex.: Fá em G7) é a "nota mais dominante" de todas.</p>
+      <div class="chord-pills">
+        <span class="chord-pill">G</span>
+        <span class="chord-pill">G7</span>
+        <span class="chord-pill">Bdim</span>
+        <span class="chord-pill">Bm7b5</span>
+      </div>
+      <p style="font-size:0.85rem;color:var(--text-muted)">Exemplos em Dó: V, V7, vii°, viiø7</p>
+    </div>
+
+    <h2>Mapa completo do campo harmônico</h2>
+    <table>
+      <tr><th>Grau</th><th>Rom.</th><th>NNS</th><th>Função</th><th>Em Dó</th><th>Sensação</th></tr>
+      <tr><td>1</td><td>I</td><td>1</td><td><span class="fn-badge fn-badge-T">T</span></td><td>C</td><td>Repouso, casa</td></tr>
+      <tr><td>2</td><td>ii</td><td>2-</td><td><span class="fn-badge fn-badge-SD">SD</span></td><td>Dm</td><td>Preparação suave</td></tr>
+      <tr><td>3</td><td>iii</td><td>3-</td><td><span class="fn-badge fn-badge-T">T*</span></td><td>Em</td><td>Passagem fraca</td></tr>
+      <tr><td>4</td><td>IV</td><td>4</td><td><span class="fn-badge fn-badge-SD">SD</span></td><td>F</td><td>Abertura, movimento</td></tr>
+      <tr><td>5</td><td>V</td><td>5</td><td><span class="fn-badge fn-badge-D">D</span></td><td>G</td><td>Tensão, quer I</td></tr>
+      <tr><td>6</td><td>vi</td><td>6-</td><td><span class="fn-badge fn-badge-T">T</span></td><td>Am</td><td>Repouso relativo</td></tr>
+      <tr><td>7</td><td>vii°</td><td>7°</td><td><span class="fn-badge fn-badge-D">D</span></td><td>Bdim</td><td>Instável, passagem</td></tr>
+    </table>
+
+    <div class="tip">Memorize por sensação, não por nome: toque I → "casa"; SD → "saiu de casa"; D → "quero voltar". Cante os graus em voz alta enquanto toca.</div>
+
+    <h2>A cadeia SD → D → T</h2>
+    <p>A progressão mais fundamental da música ocidental tonal segue um arco narrativo: <strong>partida</strong> (subdominante) → <strong>conflito</strong> (dominante) → <strong>resolução</strong> (tônica). Essa cadeia aparece em cadências clássicas, jazz, pop, samba e bossa — com variações de qualidade (triades, 7ªs, inversões).</p>
+
+    <div class="pipeline">
+      <div class="pipeline-step card-fn-SD"><strong>SD</strong><br>ii ou IV<br><em>movimento</em></div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-step card-fn-D"><strong>D</strong><br>V ou vii°<br><em>tensão</em></div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-step card-fn-T"><strong>T</strong><br>I ou vi<br><em>repouso</em></div>
+    </div>
+
+    <h3>Exemplos em três tons</h3>
+
+    <h4>Tom Dó (C major)</h4>
+    <table>
+      <tr><th>Cadeia</th><th>Acordes</th><th>Função</th><th>Contexto típico</th></tr>
+      <tr><td>ii → V → I</td><td>Dm → G → C</td><td>SD → D → T</td><td>Jazz, bossa, MPB — cadência autêntica</td></tr>
+      <tr><td>IV → V → I</td><td>F → G → C</td><td>SD → D → T</td><td>Pop, rock, hino — cadência clássica</td></tr>
+      <tr><td>IV → V → vi</td><td>F → G → Am</td><td>SD → D → T*</td><td>Pop melancólico — "decepção" (não resolve plenamente)</td></tr>
+      <tr><td>ii → V → vi</td><td>Dm → G → Am</td><td>SD → D → T</td><td>Decepção jazz — ii–V sem resolução maior</td></tr>
+      <tr><td>IV → I</td><td>F → C</td><td>SD → T</td><td>Plagal ("Amém") — resolução suave</td></tr>
+    </table>
+    <div class="chord-pills">
+      <span class="chord-pill">Dm</span><span class="chord-pill">→</span>
+      <span class="chord-pill">G</span><span class="chord-pill">→</span>
+      <span class="chord-pill">C</span>
+    </div>
+    <div class="progression-diagram" data-chords="Dm,G,C"></div>
+
+    <h4>Tom Sol (G major)</h4>
+    <table>
+      <tr><th>Cadeia</th><th>Acordes</th><th>Função</th><th>Contexto típico</th></tr>
+      <tr><td>ii → V → I</td><td>Am → D → G</td><td>SD → D → T</td><td>Standards, sertanejo, gospel</td></tr>
+      <tr><td>IV → V → I</td><td>C → D → G</td><td>SD → D → T</td><td>Rock, country</td></tr>
+      <tr><td>IV → V → vi</td><td>C → D → Em</td><td>SD → D → T*</td><td>Axis invertida — vi como "pseudo-repouso"</td></tr>
+      <tr><td>ii → V → vi</td><td>Am → D → Em</td><td>SD → D → T</td><td>Balada — cadência menor</td></tr>
+    </table>
+    <div class="chord-pills">
+      <span class="chord-pill">Am</span><span class="chord-pill">→</span>
+      <span class="chord-pill">D</span><span class="chord-pill">→</span>
+      <span class="chord-pill">G</span>
+    </div>
+    <div class="progression-diagram" data-chords="Am,D,G"></div>
+
+    <h4>Tom Lá (A major)</h4>
+    <table>
+      <tr><th>Cadeia</th><th>Acordes</th><th>Função</th><th>Contexto típico</th></tr>
+      <tr><td>ii → V → I</td><td>Bm → E → A</td><td>SD → D → T</td><td>MPB em Lá (ex.: repertório Tom Jobim)</td></tr>
+      <tr><td>IV → V → I</td><td>D → E → A</td><td>SD → D → T</td><td>Pop brasileiro, axé</td></tr>
+      <tr><td>IV → V → vi</td><td>D → E → F#m</td><td>SD → D → T*</td><td>Refrão emocional</td></tr>
+      <tr><td>ii → V → vi</td><td>Bm → E → F#m</td><td>SD → D → T</td><td>Balada romântica</td></tr>
+    </table>
+    <div class="chord-pills">
+      <span class="chord-pill">Bm</span><span class="chord-pill">→</span>
+      <span class="chord-pill">E</span><span class="chord-pill">→</span>
+      <span class="chord-pill">A</span>
+    </div>
+    <div class="progression-diagram" data-chords="Bm,E,A"></div>
+
+    <div class="tip">Quando ouvir tensão crescente, aposte dominante (V). Quando ouvir resolução, tônica (I ou vi). Quando ouvir abertura sem tensão forte, subdominante (IV ou ii).</div>
+
+    <h2>Função é contextual — perspectiva de Riemann</h2>
+    <p>Hugo Riemann (1849–1919) sistematizou a teoria funcional que ainda usamos hoje. Sua contribuição central: acordes não têm função fixa — a função emerge da <strong>relação entre acordes consecutivos</strong> dentro de uma tonalidade estabelecida.</p>
+    <ul>
+      <li><strong>Retrospectiva:</strong> só classifique a função depois de ouvir o acorde seguinte. G → C confirma G como V; G → Am confirma G como V indo para vi.</li>
+      <li><strong>Prospectiva:</strong> conhecendo a função atual, você <em>prevê</em> destinos prováveis — SD tende a D, D tende a T.</li>
+      <li><strong>Dualidade T/SD/D:</strong> cada função define-se pelo contraste com as outras. Tônica só "repousa" porque dominante "tensionou" antes.</li>
+    </ul>
+    <blockquote>"A função de um acorde harmônico depende inteiramente de sua relação com a tônica e com os acordes vizinhos na progressão." — Adaptado de Riemann, <em>Vereinfachte Harmonielehre</em> (1893)</blockquote>
+
+    <h3>Exemplos de ambiguidade resolvida pelo contexto</h3>
+    <table>
+      <tr><th>Acorde</th><th>Progressão</th><th>Função em Dó</th><th>Por quê</th></tr>
+      <tr><td>G</td><td>C → G → C</td><td><span class="fn-badge fn-badge-D">D</span></td><td>Resolve em I — quinta acima de C</td></tr>
+      <tr><td>G</td><td>Em → G → C</td><td><span class="fn-badge fn-badge-D">D</span></td><td>Precede I após iii</td></tr>
+      <tr><td>F</td><td>C → F → G</td><td><span class="fn-badge fn-badge-SD">SD</span></td><td>Precede V — clássica SD→D</td></tr>
+      <tr><td>Am</td><td>F → G → Am</td><td><span class="fn-badge fn-badge-T">T</span></td><td>Repouso relativo após D</td></tr>
+      <tr><td>Am</td><td>C → Am → F</td><td><span class="fn-badge fn-badge-T">T</span></td><td>Alternativa tônica, não SD</td></tr>
+      <tr><td>D7</td><td>D7 → G → C</td><td>D sec. (V/V)</td><td>Fora do campo — dominante de G</td></tr>
+    </table>
+
+    <h2>Protocolo de inferência em 5 passos</h2>
+    <p>Use este pipeline sempre que precisar identificar ou prever acordes ao vivo — é o mesmo processo que músicos experientes executam em frações de segundo, automatizado com treino.</p>
+
+    <div class="card">
+      <h3 style="margin-top:0">Passo 1 — Estabelecer a tônica</h3>
+      <p>Antes de classificar funções, você precisa saber <strong>em qual tom</strong> está a música.</p>
+      <ul>
+        <li>Último acorde de refrão ou verso (onde a frase "descansa")</li>
+        <li>Nota mais repetida e enfatizada na melodia vocal</li>
+        <li>Primeiro acorde se a música soa "completa" nele</li>
+        <li>Confirme: cante a escala maior a partir dessa nota — soa certo?</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Passo 2 — Ouvir o baixo</h3>
+      <p>O baixo é o atalho mais confiável para reconhecer progressões na música popular.</p>
+      <ul>
+        <li>Na pop, MPB e rock: a nota mais grave ≈ <strong>raiz do acorde</strong> (~80% dos casos)</li>
+        <li>Isole mentalmente a linha de baixo — ignore voicings do violão por enquanto</li>
+        <li>Se o baixo se move por graus conjuntos (Dó→Ré→Mi), pense escala, não cromatismo</li>
+        <li>Baixo cromático (Mi→Ré#→Ré) sugere passagem diminuta ou dominante alterada</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Passo 3 — Mapear baixo → grau</h3>
+      <p>Com a tônica definida, converta cada nota de baixo em grau da escala.</p>
+      <table>
+        <tr><th>Se tônica = Dó e baixo = …</th><th>Grau</th><th>Função provável</th></tr>
+        <tr><td>Dó</td><td>I</td><td><span class="fn-badge fn-badge-T">T</span></td></tr>
+        <tr><td>Ré</td><td>ii</td><td><span class="fn-badge fn-badge-SD">SD</span></td></tr>
+        <tr><td>Mi</td><td>iii</td><td><span class="fn-badge fn-badge-T">T*</span></td></tr>
+        <tr><td>Fá</td><td>IV</td><td><span class="fn-badge fn-badge-SD">SD</span></td></tr>
+        <tr><td>Sol</td><td>V</td><td><span class="fn-badge fn-badge-D">D</span></td></tr>
+        <tr><td>Lá</td><td>vi</td><td><span class="fn-badge fn-badge-T">T</span></td></tr>
+        <tr><td>Si</td><td>vii°</td><td><span class="fn-badge fn-badge-D">D</span></td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Passo 4 — Determinar qualidade</h3>
+      <p>O grau diz <em>qual</em> acorde; a qualidade diz <em>como</em> ele soa.</p>
+      <ul>
+        <li><strong>Maior, brilhante, estável</strong> → triade maior (I, IV, V) ou maj7</li>
+        <li><strong>Menor, melancólico, fechado</strong> → triade menor (ii, iii, vi) ou m7</li>
+        <li><strong>Bluesy, tensão forte</strong> → dominante com 7ª menor (V7)</li>
+        <li><strong>Instável, suspense</strong> → diminuta (vii°) ou meio-diminuta (viiø7)</li>
+        <li><strong>Sofisticado, repouso jazz</strong> → maj7 na tônica</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Passo 5 — Prever o próximo acorde</h3>
+      <p>Combine função atual + estatística de progressões (ver Módulo 06).</p>
+      <ul>
+        <li>Após <span class="fn-badge fn-badge-SD">SD</span> → aposte <span class="fn-badge fn-badge-D">D</span> (V) ou <span class="fn-badge fn-badge-T">T</span> (I) — ~70% dos casos</li>
+        <li>Após <span class="fn-badge fn-badge-D">D</span> → aposte <span class="fn-badge fn-badge-T">T</span> (I ou vi) — ~85% dos casos</li>
+        <li>Após <span class="fn-badge fn-badge-T">T</span> → aposte <span class="fn-badge fn-badge-SD">SD</span> (IV, ii) ou <span class="fn-badge fn-badge-D">D</span> (V) — depende do estilo</li>
+        <li>Confirme ou corrija pelo ouvido — estatística é aposta inicial, não lei</li>
+      </ul>
+    </div>
+
+    <div class="pipeline">
+      <div class="pipeline-step"><strong>1</strong><br>Tônica</div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-step"><strong>2</strong><br>Baixo</div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-step"><strong>3</strong><br>Grau</div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-step"><strong>4</strong><br>Qualidade</div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-step"><strong>5</strong><br>Prever</div>
+    </div>
+
+    <h2>Dominantes secundárias — V7/x</h2>
+    <p>Quando um acorde de 7ª dominante <strong>não pertence</strong> ao campo harmônico da tonalidade, mas resolve em um acorde que pertence, trata-se de uma <strong>dominante secundária</strong>: V7 do acorde alvo (V7/x).</p>
+    <p><strong>Som característico:</strong> tensão "de passagem" — o acorde parece estranho isolado, mas faz sentido porque "empurra" para o acorde seguinte com lógica dominante.</p>
+
+    <table>
+      <tr><th>Acorde</th><th>Em Dó</th><th>Resolve em</th><th>Nome funcional</th><th>Uso comum</th></tr>
+      <tr><td>V7/V</td><td>D7</td><td>G (V)</td><td>Dominante de dominante</td><td>Blues, rock, preparação forte para V</td></tr>
+      <tr><td>V7/ii</td><td>A7</td><td>Dm (ii)</td><td>Dominante de ii</td><td>Jazz, turnaround</td></tr>
+      <tr><td>V7/iii</td><td>E7</td><td>Em (iii)</td><td>Dominante de iii</td><td>Pop sofisticado</td></tr>
+      <tr><td>V7/IV</td><td>C7</td><td>F (IV)</td><td>Backdoor / blues</td><td>Rock, MPB, "Sweet Home Alabama"</td></tr>
+      <tr><td>V7/VI</td><td>E7</td><td>Am (vi)</td><td>Dominante de vi</td><td>Balada, modulação aparente</td></tr>
+      <tr><td>V7/I</td><td>C7</td><td>F (IV) ou I</td><td>Borrowed / blues</td><td>Rock'n'roll clássico</td></tr>
+    </table>
+
+    <div class="warn">
+      <strong>Teste rápido:</strong> se ouvir um 7ª dominante "estranho", pergunte: "qual acorde vem depois?" Se o próximo acorde for alvo lógico de dominante (especialmente ii, IV, V ou vi), provavelmente é V7/x.
+    </div>
+
+    <h2>Variações e casos especiais</h2>
+
+    <h3>vi como substituto de I</h3>
+    <p>Em pop moderno, muitos refrões terminam em vi em vez de I (ex.: F → G → Am em Dó). Funcionalmente, vi funciona como <strong>tônica relativa</strong> — repouso em tonalidade menor paralela, sensação melancólica. Não confunda com subdominante.</p>
+
+    <h3>Cadências nomeadas</h3>
+    <table>
+      <tr><th>Nome</th><th>Progressão</th><th>Função</th><th>Exemplo em Dó</th></tr>
+      <tr><td>Autêntica</td><td>V → I</td><td>D → T</td><td>G → C</td></tr>
+      <tr><td>Autêntica completa</td><td>ii → V → I</td><td>SD → D → T</td><td>Dm → G → C</td></tr>
+      <tr><td>Plagal</td><td>IV → I</td><td>SD → T</td><td>F → C ("Amém")</td></tr>
+      <tr><td>Decepção</td><td>V → vi</td><td>D → T*</td><td>G → Am</td></tr>
+      <tr><td>Half cadence</td><td>… → V</td><td>… → D</td><td>… → G (frase incompleta)</td></tr>
+    </table>
+
+    <h3>Inversões e baixo não-fundamental</h3>
+    <p>Quando o baixo não é a fundamental do acorde, o mapeamento grau→função complica:</p>
+    <ul>
+      <li><strong>1ª inversão</strong> (3ª no baixo): som mais suave, frequentemente passagem</li>
+      <li><strong>2ª inversão</strong> (5ª no baixo): cadencial, instável — comum antes de resolução</li>
+      <li><strong>Slash chords</strong> (C/G): o baixo indica G, mas o acorde é C — pense função de C, não de G</li>
+    </ul>
+
+    <h2>Quiz interativo — classifique a função</h2>
+    <div class="interactive" id="function-quiz">
+      <h3 style="margin-top:0">Qual a função harmônica?</h3>
+      <p id="quiz-question" style="font-size:1.15rem;font-weight:600;margin-bottom:1rem">Carregando…</p>
+      <div id="quiz-options"></div>
+      <p id="quiz-score" style="margin-top:1rem;font-weight:600;color:var(--accent)">Acertos: 0</p>
+    </div>
+
+    <h2>Exercícios práticos</h2>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">1</span> Classificação por sensação</div>
+      <p>Em tom Dó, toque cada acorde abaixo e cante o grau + função antes de olhar a resposta.</p>
+      <div class="chord-pills">
+        <span class="chord-pill">C</span><span class="chord-pill">Dm</span><span class="chord-pill">Em</span>
+        <span class="chord-pill">F</span><span class="chord-pill">G</span><span class="chord-pill">Am</span><span class="chord-pill">Bdim</span>
+      </div>
+      <details style="margin-top:0.75rem">
+        <summary style="cursor:pointer;font-weight:600;color:var(--accent)">Ver respostas</summary>
+        <p>C=T · Dm=SD · Em=T* · F=SD · G=D · Am=T · Bdim=D</p>
+      </details>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">2</span> Cadeia SD → D → T em 3 tons</div>
+      <p>Toque ii–V–I nos tons Dó, Sol e Lá. Cante "dois, cinco, um" (ou "sub, dom, tônica") em cada transposição. Meta: 30 segundos por tom sem hesitar.</p>
+      <table>
+        <tr><th>Tom</th><th>ii</th><th>V</th><th>I</th></tr>
+        <tr><td>Dó</td><td>Dm</td><td>G</td><td>C</td></tr>
+        <tr><td>Sol</td><td>Am</td><td>D</td><td>G</td></tr>
+        <tr><td>Lá</td><td>Bm</td><td>E</td><td>A</td></tr>
+      </table>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">3</span> Dominantes secundárias de ouvido</div>
+      <p>Toque estas progressões em Dó e identifique o acorde "estranho" como V7/x:</p>
+      <ol>
+        <li>C → <strong>D7</strong> → G → C — qual é D7? <em>(V7/V)</em></li>
+        <li>C → <strong>A7</strong> → Dm → G → C — qual é A7? <em>(V7/ii)</em></li>
+        <li>C → <strong>C7</strong> → F → G → C — qual é C7? <em>(V7/IV)</em></li>
+      </ol>
+      <p>Repita em Sol e Lá transpondo mentalmente.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">4</span> Pipeline completo ao vivo</div>
+      <p>Peça a alguém para tocar uma progressão simples de 4 acordes em tom aleatório (sem dizer qual). Execute os 5 passos em voz alta:</p>
+      <ol>
+        <li>"A tônica parece ser…"</li>
+        <li>"O baixo está em…"</li>
+        <li>"Isso é grau…"</li>
+        <li>"Soa maior/menor/7…"</li>
+        <li>"O próximo provavelmente é…"</li>
+      </ol>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">5</span> Decepção cadencial</div>
+      <p>Toque IV → V → vi (F → G → Am em Dó) e compare com IV → V → I (F → G → C). Descreva a diferença emocional. Repita em Sol e Lá. Internalize: V → vi é dominante que "falha" em resolver plenamente — comum no pop.</p>
+    </div>
+
+    <div class="tip">Grave-se tocando progressões e nomeie funções em voz alta. Se errar, volte ao acorde anterior e reclassifique — exatamente o processo retrospectivo de Riemann.</div>
+
+    <h2>Checklist de domínio</h2>
+    <div class="card" data-checklist="mod04">
+      <div class="checklist-item"><input type="checkbox" id="c04-1"><label for="c04-1">Classifico qualquer acorde diatônico como T, SD ou D instantaneamente</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c04-2"><label for="c04-2">Toque ii–V–I em Dó, Sol e Lá sem cifra</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c04-3"><label for="c04-3">Reconheço dominante secundária pelo som + resolução</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c04-4"><label for="c04-4">Executo o protocolo de 5 passos em música real</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c04-5"><label for="c04-5">Score ≥ 5/7 no quiz acima</label></div>
+    </div>
+
+    <p style="margin-top:2rem">
+      <button id="mark-module-complete" class="btn" data-module="04">Marcar módulo como concluído</button>
+    </p>
+
+    <div class="nav-footer">
+      <a href="03-campo-harmonico.html">← Módulo 03: Campo harmônico</a>
+      <a href="05-acordes-qualidades.html">Módulo 05: Acordes e 7ªs →</a>
+    </div>
+  </main>
+</div>
+<script src="js/chords-dict.js"></script>
+<script src="js/chord-diagrams.js"></script>
+<script src="js/chord-auto.js"></script>
+<script src="js/theory-data.js"></script>
+<script src="js/curso.js"></script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+/* Practice Tools — Timer + Metronome (componentes reutilizáveis) */
+
+.pt-root {
+  --pt-bg: #1a2332;
+  --pt-surface: #243044;
+  --pt-text: #e8edf4;
+  --pt-muted: #8b9cb3;
+  --pt-accent: #f0a030;
+  --pt-accent2: #4ecdc4;
+  --pt-border: #2d3f54;
+  --pt-ok: #69db7c;
+  --pt-bad: #ff6b6b;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: var(--pt-text);
+}
+
+.pt-panel {
+  background: var(--pt-bg);
+  border: 1px solid var(--pt-border);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+}
+
+.pt-panel h3 {
+  font-size: 0.95rem;
+  color: var(--pt-accent2);
+  margin: 0 0 0.75rem;
+  font-weight: 700;
+}
+
+.pt-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1rem;
+  align-items: flex-end;
+}
+
+.pt-control {
+  flex: 1 1 8rem;
+  min-width: 0;
+}
+
+.pt-control label {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pt-muted);
+  margin-bottom: 0.35rem;
+}
+
+.pt-control input[type="number"],
+.pt-control select {
+  width: 100%;
+  border: 1px solid var(--pt-border);
+  background: var(--pt-surface);
+  color: var(--pt-text);
+  border-radius: 8px;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.88rem;
+}
+
+.pt-control input[type="range"] {
+  width: 100%;
+  accent-color: var(--pt-accent2);
+}
+
+.pt-range-val {
+  font-size: 0.82rem;
+  color: var(--pt-muted);
+  margin-top: 0.25rem;
+}
+
+.pt-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.pt-btn {
+  flex: 1 1 6rem;
+  border: 1px solid var(--pt-border);
+  background: var(--pt-surface);
+  color: var(--pt-text);
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pt-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pt-btn-primary {
+  background: var(--pt-accent2);
+  color: #111;
+  border-color: var(--pt-accent2);
+}
+
+.pt-btn-accent {
+  background: var(--pt-accent);
+  color: #111;
+  border-color: var(--pt-accent);
+}
+
+.pt-btn-danger {
+  background: rgba(255, 107, 107, 0.15);
+  color: var(--pt-bad);
+  border-color: var(--pt-bad);
+}
+
+.pt-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+}
+
+.pt-chip {
+  padding: 0.32rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid var(--pt-border);
+  background: var(--pt-surface);
+  color: var(--pt-muted);
+  cursor: pointer;
+}
+
+.pt-chip.active {
+  background: var(--pt-accent);
+  color: #111;
+  border-color: var(--pt-accent);
+}
+
+/* Timer display */
+.pt-timer-display {
+  text-align: center;
+  padding: 1.1rem 0.5rem 0.85rem;
+}
+
+.pt-timer-time {
+  font-size: 3.2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--pt-accent2);
+}
+
+.pt-timer-time.warning {
+  color: var(--pt-accent);
+}
+
+.pt-timer-time.done {
+  color: var(--pt-ok);
+}
+
+.pt-timer-meta {
+  font-size: 0.82rem;
+  color: var(--pt-muted);
+  margin-top: 0.4rem;
+}
+
+.pt-timer-progress {
+  height: 6px;
+  background: var(--pt-surface);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 0.75rem;
+  border: 1px solid var(--pt-border);
+}
+
+.pt-timer-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--pt-accent2), var(--pt-accent));
+  transition: width 0.25s linear;
+}
+
+/* Metronome beat viz */
+.pt-beat-viz {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.85rem 0 0.5rem;
+  min-height: 3.5rem;
+}
+
+.pt-beat-dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--pt-surface);
+  border: 1px solid var(--pt-border);
+  transition: transform 0.08s ease, background 0.08s ease;
+}
+
+.pt-beat-dot.accent {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-color: var(--pt-accent);
+}
+
+.pt-beat-dot.active {
+  transform: scale(1.45);
+  background: var(--pt-accent2);
+  border-color: var(--pt-accent2);
+  box-shadow: 0 0 12px rgba(78, 205, 196, 0.55);
+}
+
+.pt-beat-dot.active.accent {
+  background: var(--pt-accent);
+  border-color: var(--pt-accent);
+  box-shadow: 0 0 14px rgba(240, 160, 48, 0.55);
+}
+
+.pt-bpm-display {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--pt-accent);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.pt-bpm-label {
+  text-align: center;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pt-muted);
+  margin-bottom: 0.25rem;
+}
+
+.pt-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  font-size: 0.82rem;
+  color: var(--pt-muted);
+  margin-top: 0.65rem;
+}
+
+.pt-status strong {
+  color: var(--pt-accent2);
+}
+
+.pt-status-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--pt-muted);
+  margin-right: 0.3rem;
+}
+
+.pt-status-dot.live {
+  background: var(--pt-ok);
+  box-shadow: 0 0 8px var(--pt-ok);
+}
+
+.pt-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.pt-toggle-row input {
+  accent-color: var(--pt-accent2);
+}

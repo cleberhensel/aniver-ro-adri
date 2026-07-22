@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Treino CAGED · colunas | Nelson Faria</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #f0a030;
+      --border: #2d3f54;
+      --shape-a: #4ecdc4;
+      --shape-g: #a78bfa;
+      --shape-e: #f0a030;
+      --shape-d: #ff6b6b;
+      --shape-c: #69db7c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.4;
+      padding: 0.65rem 0.75rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.35rem 1rem;
+      margin-bottom: 0.55rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 { font-size: 1.05rem; font-weight: 700; }
+    header p { color: var(--muted); font-size: 0.72rem; }
+    header a { color: var(--accent); }
+
+    /* ── Cockpit: tom | shapes | pulso ── */
+    .cockpit {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: grid;
+      grid-template-columns: 12.5rem minmax(0, 1fr) 14rem;
+      gap: 0.4rem;
+      margin-bottom: 0.5rem;
+      align-items: stretch;
+    }
+
+    @media (max-width: 780px) {
+      .cockpit {
+        grid-template-columns: 1fr 1fr;
+        position: relative;
+      }
+      .col-shapes { grid-column: 1 / -1; order: -1; }
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.4rem 0.45rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+      min-width: 0;
+      height: 100%;
+    }
+
+    .panel-label {
+      font-size: 0.55rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    /* Coluna tonalidade — mais larga, grid 4×3 */
+    .col-key {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      height: 100%;
+    }
+
+    .col-key .key-grid { margin-top: auto; }
+
+    .tonic-big {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .tonic-big small {
+      display: inline;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0;
+      margin-left: 0.25rem;
+    }
+
+    .key-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.18rem;
+    }
+
+    .key-btn {
+      padding: 0.28rem 0;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 1.15;
+    }
+
+    .key-btn:hover { border-color: var(--accent); }
+    .key-btn.active {
+      background: var(--accent);
+      color: #111;
+      border-color: var(--accent);
+    }
+
+    /* Coluna shapes — agora + próximo lado a lado, mesma altura */
+    .col-shapes {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      grid-template-rows: auto 1fr auto;
+      gap: 0.35rem;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    .col-shapes .panel-label {
+      grid-column: 1 / -1;
+      margin-bottom: 0;
+    }
+
+    .shape-slot {
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      align-items: center;
+      gap: 0.35rem 0.45rem;
+      border-radius: 6px;
+      padding: 0.4rem 0.5rem;
+      min-height: 100%;
+      align-self: stretch;
+      transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, opacity 0.25s;
+    }
+
+    .shape-slot.now {
+      background: color-mix(in srgb, var(--drill-accent, var(--border)) 18%, var(--surface2));
+      border: 1px solid color-mix(in srgb, var(--drill-accent, var(--border)) 55%, var(--border));
+    }
+
+    .shape-slot.now.idle {
+      opacity: 0.55;
+      background: var(--surface2);
+      border-color: var(--border);
+    }
+
+    .shape-slot.next {
+      background: var(--bg);
+      border: 1px dashed var(--border);
+    }
+
+    .shape-slot.next.empty { opacity: 0.45; }
+
+    /* Urgência: perto de trocar */
+    .shape-slot.now.urgency-soft {
+      animation: nowFade 1.1s ease-in-out infinite;
+    }
+
+    .shape-slot.now.urgency-hard {
+      animation: nowPulse 0.55s ease-in-out infinite;
+      border-color: #ff6b6b !important;
+      box-shadow: 0 0 0 1px #ff6b6b66, 0 0 18px #ff6b6b44;
+    }
+
+    .shape-slot.next.urgency-soft {
+      border-style: solid;
+      animation: nextGlow 1.1s ease-in-out infinite;
+    }
+
+    .shape-slot.next.urgency-hard {
+      border-style: solid;
+      border-color: color-mix(in srgb, var(--next-accent, var(--accent)) 80%, #fff) !important;
+      background: color-mix(in srgb, var(--next-accent, var(--accent)) 22%, var(--bg));
+      animation: nextRise 0.55s ease-in-out infinite;
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--next-accent, var(--accent)) 50%, transparent),
+                  0 0 20px color-mix(in srgb, var(--next-accent, var(--accent)) 35%, transparent);
+    }
+
+    .shape-slot.swap-flash {
+      animation: swapFlash 0.45s ease-out 1;
+    }
+
+    @keyframes nowFade {
+      0%, 100% { opacity: 1; filter: saturate(1); }
+      50% { opacity: 0.72; filter: saturate(0.75); }
+    }
+
+    @keyframes nowPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.55; transform: scale(0.985); }
+    }
+
+    @keyframes nextGlow {
+      0%, 100% {
+        box-shadow: 0 0 0 0 transparent;
+        border-color: color-mix(in srgb, var(--next-accent, var(--accent)) 45%, var(--border));
+      }
+      50% {
+        box-shadow: 0 0 14px color-mix(in srgb, var(--next-accent, var(--accent)) 40%, transparent);
+        border-color: var(--next-accent, var(--accent));
+        background: color-mix(in srgb, var(--next-accent, var(--accent)) 14%, var(--bg));
+      }
+    }
+
+    @keyframes nextRise {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    @keyframes swapFlash {
+      0% { filter: brightness(1.55); }
+      100% { filter: brightness(1); }
+    }
+
+    .slot-tag {
+      font-size: 0.52rem;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      line-height: 1;
+    }
+
+    .shape-slot.now .slot-tag { color: var(--drill-accent, var(--muted)); }
+
+    .slot-letter {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+      min-width: 1.1ch;
+    }
+
+    .shape-slot.now .slot-letter {
+      font-size: 2.55rem;
+      text-shadow: 0 0 18px color-mix(in srgb, var(--drill-accent, transparent) 45%, transparent);
+    }
+
+    .shape-slot.next .slot-letter { font-size: 1.85rem; }
+
+    .slot-copy { min-width: 0; }
+
+    .slot-name {
+      font-size: 0.92rem;
+      font-weight: 800;
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .shape-slot.now .slot-name { font-size: 1.05rem; }
+
+    .slot-meta {
+      font-size: 0.66rem;
+      color: var(--muted);
+      margin-top: 0.08rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .slot-meta strong { color: var(--text); }
+
+    .queue-extra {
+      display: flex;
+      gap: 0.18rem;
+      flex-wrap: wrap;
+      margin-top: 0.12rem;
+    }
+
+    .queue-chip {
+      min-width: 1.15rem;
+      text-align: center;
+      padding: 0.06rem 0.22rem;
+      border-radius: 3px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      background: var(--surface2);
+      opacity: 0.6;
+    }
+
+    .drill-status {
+      grid-column: 1 / -1;
+      font-size: 0.62rem;
+      color: var(--muted);
+    }
+
+    /* Coluna metrônomo — compacta, mesma altura dos outros */
+    .col-metro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.3rem 0.35rem;
+      align-content: space-between;
+      height: 100%;
+    }
+
+    .col-metro .panel-label { margin-bottom: 0; }
+
+    .metro-head {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.35rem;
+    }
+
+    .vol-pot {
+      display: flex;
+      align-items: center;
+      gap: 0.28rem;
+      flex: 1 1 auto;
+      min-width: 0;
+      justify-content: flex-end;
+    }
+
+    .vol-pot-btn {
+      display: grid;
+      place-items: center;
+      width: 1.45rem;
+      height: 1.45rem;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 0;
+      flex: 0 0 auto;
+    }
+
+    .vol-pot-btn svg {
+      width: 0.8rem;
+      height: 0.8rem;
+      display: block;
+    }
+
+    .vol-pot-btn svg[hidden] { display: none; }
+    .vol-pot-btn:hover { border-color: var(--accent); }
+    .vol-pot-btn.muted { color: var(--muted); border-color: #ff6b6b55; }
+
+    .vol-pot input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 4.5rem;
+      max-width: 100%;
+      height: 0.28rem;
+      border-radius: 999px;
+      background: linear-gradient(
+        to right,
+        var(--accent) 0%,
+        var(--accent) var(--vol-pct, 70%),
+        var(--surface2) var(--vol-pct, 70%),
+        var(--surface2) 100%
+      );
+      outline: none;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+
+    .vol-pot input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 0.85rem;
+      height: 0.85rem;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid #111;
+      box-shadow: 0 0 0 1px var(--accent);
+      cursor: pointer;
+    }
+
+    .vol-pot input[type="range"]::-moz-range-thumb {
+      width: 0.85rem;
+      height: 0.85rem;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid #111;
+      cursor: pointer;
+    }
+
+    .vol-pct {
+      font-size: 0.62rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+      min-width: 2.2ch;
+      text-align: right;
+    }
+
+    .metro-block {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+      padding: 0.15rem 0.1rem;
+    }
+
+    .metro-viz {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .drill-pulse {
+      width: 1.15rem;
+      height: 1.15rem;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 2px solid var(--border);
+      flex: 0 0 auto;
+      transition: background 0.05s, transform 0.05s, border-color 0.05s, box-shadow 0.05s;
+    }
+
+    .drill-pulse.on {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: scale(1.12);
+      box-shadow: 0 0 10px rgba(240, 160, 48, 0.55);
+    }
+
+    .drill-pulse.on.accent {
+      background: #4ecdc4;
+      border-color: #4ecdc4;
+      box-shadow: 0 0 12px rgba(78, 205, 196, 0.65);
+    }
+
+    .drill-beats { display: flex; gap: 0.18rem; }
+
+    .drill-beat {
+      width: 0.38rem;
+      height: 0.38rem;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+    }
+
+    .drill-beat.active {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .drill-beat.active.accent {
+      background: #4ecdc4;
+      border-color: #4ecdc4;
+    }
+
+    .drill-timer {
+      font-size: 1.45rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      color: var(--accent);
+      min-width: 2.2ch;
+      text-align: right;
+    }
+
+    .drill-timer.warn { color: #ff6b6b; }
+
+    .icon-btns {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.22rem;
+    }
+
+    .icon-btn {
+      display: grid;
+      place-items: center;
+      height: 2rem;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .icon-btn svg {
+      width: 0.95rem;
+      height: 0.95rem;
+      display: block;
+    }
+
+    .icon-btn:hover { border-color: var(--accent); }
+    .icon-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .icon-btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #111;
+    }
+
+    .icon-btn.danger {
+      background: transparent;
+      color: #ff6b6b;
+      border-color: #ff6b6b55;
+    }
+
+    .drill-controls {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.22rem;
+    }
+
+    .drill-controls select {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      border-radius: 5px;
+      padding: 0.2rem 0.28rem;
+      font-size: 0.66rem;
+    }
+
+    /* ── Braço ── */
+    .neck-section {
+      margin-top: 0.15rem;
+    }
+
+    .neck-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem 0.65rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .neck-head h2 {
+      font-size: 0.85rem;
+      color: #4ecdc4;
+      margin: 0;
+    }
+
+    .neck-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45rem 0.4rem;
+      overflow-x: auto;
+    }
+
+    .neck-wrap svg { display: block; min-width: 100%; height: auto; }
+
+    .legend-shapes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.15rem 0.3rem;
+      font-size: 0.7rem;
+    }
+
+    .legend-shapes button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.28rem;
+      padding: 0.15rem 0.35rem;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      font-size: inherit;
+    }
+
+    .legend-shapes button:hover { background: var(--surface2); }
+    .legend-shapes button.dim { opacity: 0.35; }
+    .legend-shapes button.active { border-color: var(--border); background: var(--surface2); }
+
+    .swatch { width: 10px; height: 10px; border-radius: 50%; }
+
+    footer {
+      margin-top: 0.85rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Treino CAGED · colunas</h1>
+  <p>Layout experimental · <a href="escalas-shapes-tonalidade.html">versão linha</a> · <a href="escalas-menor-shapes-treino-colunas.html">menor</a></p>
+</header>
+
+<div class="cockpit" id="cockpit">
+  <aside class="panel col-key">
+    <div class="panel-label">Tom</div>
+    <div class="tonic-big" id="tonic-display">C<small>maior</small></div>
+    <div class="key-grid" id="key-grid" role="group" aria-label="Tonalidade"></div>
+  </aside>
+
+  <section class="panel col-shapes" id="drill" aria-label="Treino de shapes">
+    <div class="panel-label">Shapes</div>
+    <div class="shape-slot now idle" id="drill-current">
+      <span class="slot-tag">agora</span>
+      <span class="slot-letter" id="drill-letter">—</span>
+      <div class="slot-copy">
+        <div class="slot-name" id="drill-shape-name">shape</div>
+        <div class="slot-meta" id="drill-meta">Aguardando…</div>
+      </div>
+    </div>
+    <div class="shape-slot next empty" id="drill-next" aria-live="polite">
+      <span class="slot-tag">próx</span>
+      <span class="slot-letter" id="drill-next-letter">?</span>
+      <div class="slot-copy">
+        <div class="slot-name" id="drill-next-name">—</div>
+        <div class="slot-meta" id="drill-next-meta">surpresa</div>
+        <div class="queue-extra" id="drill-queue"></div>
+      </div>
+    </div>
+    <div class="drill-status" id="drill-status">parado</div>
+  </section>
+
+  <aside class="panel col-metro">
+    <div class="metro-head">
+      <div class="panel-label">Pulso</div>
+      <div class="vol-pot" title="Volume do metrônomo">
+        <button type="button" class="vol-pot-btn" id="drill-mute" title="Mudo / restaurar" aria-label="Mudo ou restaurar volume" aria-pressed="false">
+          <svg class="ico-sound" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+          </svg>
+          <svg class="ico-mute" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden>
+            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+          </svg>
+        </button>
+        <input type="range" id="drill-volume" min="0" max="100" value="70" step="1" aria-label="Volume do metrônomo">
+        <span class="vol-pct" id="drill-volume-pct">70</span>
+      </div>
+    </div>
+    <div class="metro-block" title="Metrônomo">
+      <div class="metro-viz">
+        <div class="drill-pulse" id="drill-pulse" aria-hidden="true"></div>
+        <div class="drill-beats" id="drill-beats">
+          <span class="drill-beat" data-beat="1"></span>
+          <span class="drill-beat" data-beat="2"></span>
+          <span class="drill-beat" data-beat="3"></span>
+          <span class="drill-beat" data-beat="4"></span>
+        </div>
+      </div>
+      <div class="drill-timer" id="drill-timer">—</div>
+    </div>
+    <div class="icon-btns">
+      <button type="button" class="icon-btn primary" id="drill-start" title="Iniciar" aria-label="Iniciar">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button type="button" class="icon-btn" id="drill-next-btn" title="Próximo shape" aria-label="Próximo" disabled>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zm9-12v12h2V6h-2z"/></svg>
+      </button>
+      <button type="button" class="icon-btn danger" id="drill-stop" title="Parar" aria-label="Parar" disabled>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg>
+      </button>
+    </div>
+    <div class="drill-controls">
+      <select id="drill-mode" title="Modo de sorteio" aria-label="Modo">
+        <option value="bag" selected>Saco</option>
+        <option value="pure">Aleatório</option>
+        <option value="neighbor">Vizinhos</option>
+      </select>
+      <select id="drill-seconds" title="Tempo por shape" aria-label="Tempo">
+        <option value="0">Manual</option>
+        <option value="20">20s</option>
+        <option value="30" selected>30s</option>
+        <option value="45">45s</option>
+        <option value="60">60s</option>
+        <option value="90">90s</option>
+      </select>
+      <select id="drill-bpm" title="BPM" aria-label="BPM">
+        <option value="60">60</option>
+        <option value="70">70</option>
+        <option value="80" selected>80</option>
+        <option value="90">90</option>
+        <option value="100">100</option>
+        <option value="110">110</option>
+        <option value="120">120</option>
+      </select>
+      <select id="drill-preview" title="Prévia" aria-label="Prévia">
+        <option value="0">Surpresa</option>
+        <option value="1" selected>Ver 1</option>
+        <option value="3">Ver 3</option>
+      </select>
+    </div>
+  </aside>
+</div>
+
+<section class="neck-section">
+  <div class="neck-head">
+    <h2>Braço</h2>
+    <div class="legend-shapes" id="shape-legend"></div>
+  </div>
+  <div class="neck-wrap" id="neck-map"></div>
+</section>
+
+<footer>
+  Base: <a href="escalas-shapes-tonalidade.html">escalas-shapes-tonalidade.html</a> ·
+  Menor: <a href="escalas-menor-shapes-treino-colunas.html">treino-colunas menor</a> ·
+  Molde: <a href="escalas-shapes-tablatura.html">tablatura</a> ·
+  <a href="../../escalas-arpejos-treino/pages/drill-escala.html">Treinar no ginásio →</a> ·
+  Sistema 5: A → G → E → D → C · Espaço = próximo
+</footer>
+
+<script>
+const STRING_LABELS = ['e','B','G','D','A','E'];
+const OPEN = [4, 11, 7, 2, 9, 4];
+const NOTE_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const FRETS = 5;
+
+const SHAPE_HEX = { A:'#4ecdc4', G:'#a78bfa', E:'#f0a030', D:'#ff6b6b', C:'#69db7c' };
+
+const SHAPE_ANCHORS = {
+  A: { si: 4, rel: 2, hint: 'tônica na 5ª corda (A)' },
+  G: { si: 2, rel: 2, hint: 'tônica na 3ª corda (G)' },
+  E: { si: 5, rel: 3, hint: 'tônica na 6ª corda (E)' },
+  D: { si: 3, rel: 2, hint: 'tônica na 4ª corda (D)' },
+  C: { si: 4, rel: 5, hint: 'tônica na 5ª corda (A) · casa rel 5' }
+};
+
+const SHAPE_DATA = [
+  {
+    id:'A', order:1, name:'Digitação 1 · A shape',
+    notes: [
+      [{f:2,g:5},{f:4,g:6}],[{f:2,g:2},{f:4,g:3},{f:5,g:4}],
+      [{f:1,g:6},{f:3,g:7},{f:4,g:1,r:1}],[{f:1,g:3},{f:2,g:4},{f:4,g:5}],
+      [{f:1,g:7},{f:2,g:1,r:1},{f:4,g:2}],[{f:2,g:5},{f:4,g:6}]
+    ]
+  },
+  {
+    id:'G', order:2, name:'Digitação 2 · G shape',
+    notes: [
+      [{f:2,g:6},{f:4,g:7},{f:5,g:1,r:1}],[{f:2,g:3},{f:3,g:4},{f:5,g:5}],
+      [{f:1,g:7},{f:2,g:1,r:1},{f:4,g:2}],[{f:2,g:5},{f:4,g:6}],
+      [{f:2,g:2},{f:4,g:3},{f:5,g:4}],[{f:2,g:6},{f:3,g:7},{f:5,g:1,r:1}]
+    ]
+  },
+  {
+    id:'E', order:3, name:'Digitação 3 · E shape',
+    notes: [
+      [{f:2,g:7},{f:3,g:1,r:1},{f:5,g:2}],[{f:3,g:5},{f:5,g:6}],
+      [{f:2,g:2},{f:4,g:3},{f:5,g:4}],[{f:2,g:6},{f:4,g:7},{f:5,g:1,r:1}],
+      [{f:2,g:3},{f:3,g:4},{f:5,g:5}],[{f:2,g:7},{f:3,g:1,r:1},{f:5,g:2}]
+    ]
+  },
+  {
+    id:'D', order:4, name:'Digitação 4 · D shape',
+    notes: [
+      [{f:2,g:2},{f:4,g:3},{f:5,g:4}],[{f:2,g:6},{f:4,g:7},{f:5,g:1,r:1}],
+      [{f:1,g:3},{f:2,g:4},{f:4,g:5}],[{f:1,g:7},{f:2,g:1,r:1},{f:4,g:2}],
+      [{f:2,g:5},{f:4,g:6}],[{f:2,g:2},{f:4,g:3},{f:5,g:4}]
+    ]
+  },
+  {
+    id:'C', order:5, name:'Digitação 5 · C shape',
+    notes: [
+      [{f:2,g:3},{f:3,g:4},{f:5,g:5}],[{f:2,g:7},{f:3,g:1,r:1},{f:5,g:2}],
+      [{f:2,g:5},{f:4,g:6}],[{f:2,g:2},{f:4,g:3},{f:5,g:4}],
+      [{f:2,g:6},{f:4,g:7},{f:5,g:1,r:1}],[{f:2,g:3},{f:3,g:4},{f:5,g:5}]
+    ]
+  }
+];
+
+let rootPc = 0;
+let highlightShape = null;
+
+const CAGED_RING = ['A', 'G', 'E', 'D', 'C'];
+
+const drill = {
+  running: false,
+  mode: 'bag',
+  seconds: 30,
+  preview: 1,
+  bpm: 80,
+  beatsPerBar: 4,
+  beat: 0,
+  volume: 0.7,
+  lastVolume: 0.7,
+  audioCtx: null,
+  current: null,
+  history: [],
+  bag: [],
+  queue: [],
+  round: 0,
+  timerId: null,
+  metroId: null,
+  endsAt: 0,
+  remainingSec: 0
+};
+
+function noteAt(si, absFret) {
+  return (OPEN[si] + absFret) % 12;
+}
+
+function findWindowStart(si, relFret, root) {
+  for (let ws = 0; ws <= 22; ws++) {
+    if (noteAt(si, ws + relFret - 1) === root) return ws;
+  }
+  return 0;
+}
+
+function shapePlacement(shape, root) {
+  const anchor = SHAPE_ANCHORS[shape.id];
+  const ws = findWindowStart(anchor.si, anchor.rel, root);
+  const absNotes = [];
+  shape.notes.forEach((stringNotes, si) => {
+    stringNotes.forEach(n => {
+      absNotes.push({
+        si,
+        abs: ws + n.f - 1,
+        rel: n.f,
+        root: !!n.r,
+        g: n.g
+      });
+    });
+  });
+  return {
+    ws,
+    we: ws + FRETS - 1,
+    absNotes,
+    anchorAbs: ws + anchor.rel - 1,
+    hint: anchor.hint
+  };
+}
+
+/** Opacidade do próximo shape no braço (0 = oculto). Sobe nos segundos finais. */
+function neckGhostOpacity() {
+  if (!drill.running || !drill.seconds || drill.remainingSec <= 0) return 0;
+  const softAt = Math.max(8, Math.ceil(drill.seconds * 0.3));
+  if (drill.remainingSec > softAt) return 0;
+  const t = 1 - drill.remainingSec / softAt; // 0 → 1
+  return 0.14 + t * 0.55; // ~0.14 no início do aviso → ~0.69 no fim
+}
+
+function neckFocus() {
+  if (drill.running && drill.current) {
+    return {
+      primary: drill.current,
+      ghost: drill.queue[0] || null,
+      ghostOp: neckGhostOpacity()
+    };
+  }
+  return { primary: highlightShape, ghost: null, ghostOp: 0 };
+}
+
+function renderNeckMap(placements) {
+  const focus = neckFocus();
+  const minWs = Math.min(...placements.map(p => p.ws));
+  const maxWe = Math.max(...placements.map(p => p.we));
+  const minFret = minWs;
+  const maxFret = maxWe;
+  const fretCount = maxFret - minFret + 1;
+
+  const padL = 36, padT = 28, padR = 16, padB = 22;
+  const fretW = 44;
+  const strH = 14;
+  const W = padL + fretCount * fretW + padR;
+  const H = padT + 5 * strH + padB;
+
+  const layerOf = (id) => {
+    if (!focus.primary && !focus.ghost) return { show: true, noteOp: 1, bandOp: 0.12, ghost: false };
+    if (id === focus.primary) return { show: true, noteOp: 1, bandOp: 0.16, ghost: false };
+    if (id === focus.ghost && focus.ghostOp > 0.01) {
+      return { show: true, noteOp: focus.ghostOp, bandOp: focus.ghostOp * 0.45, ghost: true };
+    }
+    return { show: false };
+  };
+
+  // Fantasma primeiro, shape atual por cima
+  const ordered = placements.slice().sort((a, b) => {
+    const ag = a.shape.id === focus.ghost ? 0 : a.shape.id === focus.primary ? 1 : 2;
+    const bg = b.shape.id === focus.ghost ? 0 : b.shape.id === focus.primary ? 1 : 2;
+    return ag - bg;
+  });
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+
+  ordered.forEach(p => {
+    const layer = layerOf(p.shape.id);
+    if (!layer.show) return;
+    const x0 = padL + (p.ws - minFret) * fretW;
+    const x1 = padL + (p.we - minFret + 1) * fretW;
+    const col = SHAPE_HEX[p.shape.id];
+    const dash = layer.ghost ? ` stroke="${col}" stroke-width="1.5" stroke-dasharray="4 3" stroke-opacity="${Math.min(1, layer.noteOp + 0.25)}"` : '';
+    svg += `<rect x="${x0}" y="${padT - 4}" width="${x1 - x0}" height="${5 * strH + 8}" fill="${col}" opacity="${layer.bandOp}" rx="3"${dash}/>`;
+  });
+
+  if (minFret === 0) {
+    svg += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT + 5 * strH}" stroke="#888" stroke-width="4"/>`;
+  }
+
+  for (let f = minFret; f <= maxFret; f++) {
+    const x = padL + (f - minFret) * fretW;
+    if (f > 0) {
+      svg += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + 5 * strH}" stroke="#555" stroke-width="1"/>`;
+    }
+    svg += `<text x="${x + fretW * 0.5}" y="${padT - 8}" text-anchor="middle" font-size="10" fill="#888" font-family="system-ui">${f}</text>`;
+  }
+
+  for (let s = 0; s < 6; s++) {
+    const y = padT + s * strH;
+    svg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#666" stroke-width="${s === 5 ? 2 : 1}"/>`;
+    svg += `<text x="8" y="${y + 4}" font-size="10" fill="#888" font-weight="600" font-family="system-ui">${STRING_LABELS[s]}</text>`;
+  }
+
+  ordered.forEach(p => {
+    const layer = layerOf(p.shape.id);
+    if (!layer.show) return;
+    const col = SHAPE_HEX[p.shape.id];
+    p.absNotes.forEach(n => {
+      const x = padL + (n.abs - minFret + 0.5) * fretW;
+      const y = padT + n.si * strH;
+      if (layer.ghost) {
+        const r = n.root ? 5.5 : 4.5;
+        if (n.root) {
+          svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${col}" stroke-width="2" opacity="${layer.noteOp}"/>`;
+        } else {
+          svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="${col}" opacity="${layer.noteOp * 0.85}"/>`;
+        }
+      } else if (n.root) {
+        svg += `<circle cx="${x}" cy="${y}" r="6" fill="#fff" stroke="${col}" stroke-width="2.5"/>`;
+      } else {
+        svg += `<circle cx="${x}" cy="${y}" r="5" fill="${col}"/>`;
+      }
+    });
+  });
+
+  svg += '</svg>';
+  return svg;
+}
+
+function refreshNeckMap() {
+  const placements = SHAPE_DATA.map(shape => ({
+    shape,
+    ...shapePlacement(shape, rootPc)
+  }));
+  document.getElementById('neck-map').innerHTML = renderNeckMap(placements);
+
+  // Legenda: destaca atual + próximo quando o fantasma aparece
+  if (drill.running && drill.current) {
+    const ghost = drill.queue[0];
+    const ghostOn = neckGhostOpacity() > 0.01;
+    document.querySelectorAll('.legend-btn').forEach(b => {
+      const id = b.dataset.shape;
+      if (!id) {
+        b.classList.toggle('active', false);
+        return;
+      }
+      const isCur = id === drill.current;
+      const isNext = ghostOn && id === ghost;
+      b.classList.toggle('active', isCur || isNext);
+      b.classList.toggle('dim', !isCur && !isNext);
+    });
+  }
+}
+
+function buildLegend() {
+  const el = document.getElementById('shape-legend');
+  el.innerHTML = SHAPE_DATA.map(s => `
+    <button type="button" data-shape="${s.id}" class="legend-btn">
+      <i class="swatch" style="background:${SHAPE_HEX[s.id]}"></i>
+      ${s.id}
+    </button>
+  `).join('') + `
+    <button type="button" data-shape="" class="legend-btn active">Todos</button>`;
+
+  el.querySelectorAll('.legend-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      highlightShape = btn.dataset.shape || null;
+      el.querySelectorAll('.legend-btn').forEach(b => b.classList.toggle('active', b === btn));
+      el.querySelectorAll('.legend-btn').forEach(b => {
+        if (b.dataset.shape) b.classList.toggle('dim', highlightShape && b.dataset.shape !== highlightShape);
+      });
+      render();
+    });
+  });
+}
+
+function buildKeyGrid() {
+  const grid = document.getElementById('key-grid');
+  NOTE_NAMES.forEach((name, pc) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'key-btn' + (pc === rootPc ? ' active' : '');
+    btn.textContent = name;
+    btn.dataset.pc = pc;
+    btn.addEventListener('click', () => {
+      rootPc = pc;
+      grid.querySelectorAll('.key-btn').forEach(b => b.classList.toggle('active', +b.dataset.pc === rootPc));
+      render();
+    });
+    grid.appendChild(btn);
+  });
+}
+
+function render() {
+  const name = NOTE_NAMES[rootPc];
+  document.getElementById('tonic-display').innerHTML = `${name}<small>maior</small>`;
+
+  if (drill.running && drill.current) {
+    highlightShape = drill.current;
+  }
+
+  const placements = SHAPE_DATA.map(shape => ({
+    shape,
+    ...shapePlacement(shape, rootPc)
+  }));
+
+  refreshNeckMap();
+  updateDrillPanel(placements);
+}
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function refillBag(avoid) {
+  let next = shuffle(CAGED_RING);
+  if (avoid && next[0] === avoid && next.length > 1) {
+    const swap = 1 + Math.floor(Math.random() * (next.length - 1));
+    [next[0], next[swap]] = [next[swap], next[0]];
+  }
+  drill.bag = next;
+}
+
+function pickNextShape(from) {
+  if (drill.mode === 'bag') {
+    if (!drill.bag.length) refillBag(from);
+    return drill.bag.shift();
+  }
+  if (drill.mode === 'neighbor') {
+    if (!from) return CAGED_RING[Math.floor(Math.random() * CAGED_RING.length)];
+    const i = CAGED_RING.indexOf(from);
+    const opts = [
+      CAGED_RING[(i + 1) % CAGED_RING.length],
+      CAGED_RING[(i - 1 + CAGED_RING.length) % CAGED_RING.length]
+    ];
+    return opts[Math.floor(Math.random() * opts.length)];
+  }
+  const pool = CAGED_RING.filter(s => s !== from);
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function buildPreviewQueue() {
+  const need = Math.max(3, drill.preview + 2);
+  while (drill.queue.length < need) {
+    const from = drill.queue.length
+      ? drill.queue[drill.queue.length - 1]
+      : drill.current;
+    drill.queue.push(pickNextShape(from));
+  }
+}
+
+function advanceDrill() {
+  if (!drill.queue.length) buildPreviewQueue();
+  const id = drill.queue.shift();
+  drill.current = id;
+  drill.history.push(id);
+  drill.round++;
+  buildPreviewQueue();
+  startDrillCountdown();
+  render();
+  flashShapeSwap();
+}
+
+function flashShapeSwap() {
+  const cur = document.getElementById('drill-current');
+  const next = document.getElementById('drill-next');
+  [cur, next].forEach(el => {
+    el.classList.remove('swap-flash');
+    void el.offsetWidth;
+    el.classList.add('swap-flash');
+  });
+  clearTimeout(flashShapeSwap._t);
+  flashShapeSwap._t = setTimeout(() => {
+    cur.classList.remove('swap-flash');
+    next.classList.remove('swap-flash');
+  }, 450);
+}
+
+function startDrillCountdown() {
+  clearInterval(drill.timerId);
+  drill.timerId = null;
+
+  if (!drill.seconds) {
+    drill.remainingSec = 0;
+    drill.endsAt = 0;
+    updateDrillTimerUI();
+    return;
+  }
+
+  drill.remainingSec = drill.seconds;
+  drill.endsAt = performance.now() + drill.seconds * 1000;
+  updateDrillTimerUI();
+
+  drill.timerId = setInterval(() => {
+    const left = Math.max(0, Math.ceil((drill.endsAt - performance.now()) / 1000));
+    drill.remainingSec = left;
+    updateDrillTimerUI();
+    if (left <= 0) {
+      clearInterval(drill.timerId);
+      drill.timerId = null;
+      advanceDrill();
+    }
+  }, 200);
+}
+
+function updateDrillTimerUI() {
+  const el = document.getElementById('drill-timer');
+  const cur = document.getElementById('drill-current');
+  const next = document.getElementById('drill-next');
+
+  if (!drill.running) {
+    el.textContent = '—';
+    el.classList.remove('warn');
+    setUrgency(cur, next, null);
+    if (drill._lastGhostOp) {
+      drill._lastGhostOp = 0;
+      refreshNeckMap();
+    }
+    return;
+  }
+  if (!drill.seconds) {
+    el.textContent = '∞';
+    el.classList.remove('warn');
+    setUrgency(cur, next, null);
+    return;
+  }
+  el.textContent = String(drill.remainingSec);
+  const warn = drill.remainingSec <= 5 && drill.remainingSec > 0;
+  el.classList.toggle('warn', warn);
+
+  // Soft nos últimos ~8s (ou 30% do tempo), hard nos últimos 5s
+  const softAt = Math.max(8, Math.ceil(drill.seconds * 0.3));
+  let level = null;
+  if (drill.remainingSec > 0 && drill.remainingSec <= 5) level = 'hard';
+  else if (drill.remainingSec > 0 && drill.remainingSec <= softAt) level = 'soft';
+  setUrgency(cur, next, level);
+
+  const ghostOp = neckGhostOpacity();
+  const prev = drill._lastGhostOp || 0;
+  if (ghostOp > 0 || prev > 0) refreshNeckMap();
+  drill._lastGhostOp = ghostOp;
+}
+
+function setUrgency(cur, next, level) {
+  ['urgency-soft', 'urgency-hard'].forEach(c => {
+    cur?.classList.remove(c);
+    next?.classList.remove(c);
+  });
+  if (!level || !drill.running) return;
+  // No hard: agora some, próximo sobe; no soft: ambos pulsam
+  if (level === 'soft') {
+    cur?.classList.add('urgency-soft');
+    next?.classList.add('urgency-soft');
+  } else {
+    cur?.classList.add('urgency-hard');
+    next?.classList.add('urgency-hard');
+  }
+}
+
+async function ensureMetroAudio() {
+  if (!drill.audioCtx) {
+    drill.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (drill.audioCtx.state === 'suspended') {
+    await drill.audioCtx.resume();
+  }
+  return drill.audioCtx;
+}
+
+function playMetroClick(accent) {
+  if (!drill.audioCtx || drill.volume <= 0.001) return;
+  const ctx = drill.audioCtx;
+  const t = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.frequency.value = accent ? 1200 : 880;
+  const vol = (accent ? 0.32 : 0.2) * drill.volume;
+  gain.gain.setValueAtTime(0.001, t);
+  gain.gain.exponentialRampToValueAtTime(Math.max(0.001, vol), t + 0.002);
+  gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+  osc.start(t);
+  osc.stop(t + 0.06);
+}
+
+function persistVolume() {
+  try {
+    localStorage.setItem('caged-drill-volume', String(Math.round(drill.volume * 100)));
+  } catch (_) { /* ignore */ }
+}
+
+function syncVolumeUI() {
+  const slider = document.getElementById('drill-volume');
+  const pct = document.getElementById('drill-volume-pct');
+  const btn = document.getElementById('drill-mute');
+  const muted = drill.volume <= 0.001;
+  const pctVal = Math.round(drill.volume * 100);
+
+  if (slider) {
+    slider.value = String(pctVal);
+    slider.parentElement?.style.setProperty('--vol-pct', pctVal + '%');
+  }
+  if (pct) pct.textContent = String(pctVal);
+
+  if (btn) {
+    btn.classList.toggle('muted', muted);
+    btn.setAttribute('aria-pressed', muted ? 'true' : 'false');
+    btn.title = muted ? 'Volume zero — clique para restaurar' : 'Clique para mutar (só pulso)';
+    const icoSound = btn.querySelector('.ico-sound');
+    const icoMute = btn.querySelector('.ico-mute');
+    if (icoSound) icoSound.hidden = muted;
+    if (icoMute) icoMute.hidden = !muted;
+  }
+}
+
+function setVolume(pct) {
+  const v = Math.max(0, Math.min(100, Number(pct) || 0)) / 100;
+  drill.volume = v;
+  if (v > 0.001) drill.lastVolume = v;
+  persistVolume();
+  syncVolumeUI();
+}
+
+function flashMetroBeat() {
+  drill.beat = (drill.beat % drill.beatsPerBar) + 1;
+  const accent = drill.beat === 1;
+  playMetroClick(accent);
+  const pulse = document.getElementById('drill-pulse');
+  pulse.classList.add('on');
+  pulse.classList.toggle('accent', accent);
+  document.querySelectorAll('#drill-beats .drill-beat').forEach(dot => {
+    const on = Number(dot.dataset.beat) === drill.beat;
+    dot.classList.toggle('active', on);
+    dot.classList.toggle('accent', on && accent);
+  });
+  clearTimeout(flashMetroBeat._t);
+  flashMetroBeat._t = setTimeout(() => {
+    pulse.classList.remove('on', 'accent');
+  }, 90);
+}
+
+async function startVisualMetro() {
+  stopVisualMetro();
+  drill.beat = 0;
+  if (drill.volume > 0.001) await ensureMetroAudio();
+  const ms = 60000 / Math.max(30, drill.bpm);
+  flashMetroBeat();
+  drill.metroId = setInterval(flashMetroBeat, ms);
+}
+
+function stopVisualMetro() {
+  clearInterval(drill.metroId);
+  drill.metroId = null;
+  drill.beat = 0;
+  const pulse = document.getElementById('drill-pulse');
+  pulse?.classList.remove('on', 'accent');
+  document.querySelectorAll('#drill-beats .drill-beat').forEach(d => {
+    d.classList.remove('active', 'accent');
+  });
+}
+
+function placeRange(placements, id) {
+  const place = placements.find(p => p.shape.id === id);
+  if (!place) return '?';
+  return place.ws === place.we ? `${place.ws}` : `${place.ws}–${place.we}`;
+}
+
+function updateDrillPanel(placements) {
+  const curEl = document.getElementById('drill-current');
+  const letterEl = document.getElementById('drill-letter');
+  const nameEl = document.getElementById('drill-shape-name');
+  const metaEl = document.getElementById('drill-meta');
+  const nextEl = document.getElementById('drill-next');
+  const nextLetter = document.getElementById('drill-next-letter');
+  const nextName = document.getElementById('drill-next-name');
+  const nextMeta = document.getElementById('drill-next-meta');
+  const statusEl = document.getElementById('drill-status');
+  const queueEl = document.getElementById('drill-queue');
+  const name = NOTE_NAMES[rootPc];
+
+  if (!drill.running || !drill.current) {
+    curEl.classList.add('idle');
+    curEl.style.setProperty('--drill-accent', 'var(--border)');
+    nextEl.style.removeProperty('--next-accent');
+    letterEl.textContent = '—';
+    letterEl.style.color = '';
+    nameEl.textContent = 'shape';
+    nameEl.style.color = '';
+    metaEl.textContent = 'Aguardando…';
+    nextEl.classList.add('empty');
+    nextLetter.textContent = '?';
+    nextLetter.style.color = '';
+    nextName.textContent = '—';
+    nextName.style.color = '';
+    nextMeta.textContent = 'surpresa';
+    statusEl.textContent = 'parado';
+    queueEl.innerHTML = '';
+    updateDrillTimerUI();
+    return;
+  }
+
+  const place = placements.find(p => p.shape.id === drill.current);
+  const col = SHAPE_HEX[drill.current];
+
+  curEl.classList.remove('idle');
+  curEl.style.setProperty('--drill-accent', col);
+  letterEl.textContent = drill.current;
+  letterEl.style.color = col;
+  nameEl.textContent = `${drill.current} shape`;
+  nameEl.style.color = col;
+  metaEl.innerHTML =
+    `<strong>${name}</strong> · casas <strong>${placeRange(placements, drill.current)}</strong>` +
+    ` · tônica ${place?.anchorAbs ?? '—'}`;
+
+  statusEl.innerHTML = `#${drill.round} · ${drill.history.slice(-5).join('→')}`;
+
+  const upcoming = drill.queue.slice(0, Math.max(drill.preview, 0));
+  if (!drill.preview || !upcoming.length) {
+    nextEl.classList.add('empty');
+    nextEl.style.removeProperty('--next-accent');
+    nextLetter.textContent = '?';
+    nextLetter.style.color = '';
+    nextName.textContent = 'surpresa';
+    nextName.style.color = '';
+    nextMeta.textContent = 'fila oculta';
+    queueEl.innerHTML = '';
+  } else {
+    const nextId = upcoming[0];
+    const nextCol = SHAPE_HEX[nextId];
+    nextEl.classList.remove('empty');
+    nextEl.style.setProperty('--next-accent', nextCol);
+    nextLetter.textContent = nextId;
+    nextLetter.style.color = nextCol;
+    nextName.textContent = `${nextId} shape`;
+    nextName.style.color = nextCol;
+    nextMeta.innerHTML = `casas <strong>${placeRange(placements, nextId)}</strong>`;
+    queueEl.innerHTML = upcoming.slice(1).map(id =>
+      `<span class="queue-chip" style="background:${SHAPE_HEX[id]}22;color:${SHAPE_HEX[id]}">${id}</span>`
+    ).join('');
+  }
+
+  updateDrillTimerUI();
+}
+
+function syncDrillControls() {
+  drill.mode = document.getElementById('drill-mode').value;
+  drill.seconds = Number(document.getElementById('drill-seconds').value);
+  drill.preview = Number(document.getElementById('drill-preview').value);
+  drill.bpm = Number(document.getElementById('drill-bpm').value) || 80;
+
+  document.getElementById('drill-start').disabled = drill.running;
+  document.getElementById('drill-next-btn').disabled = !drill.running;
+  document.getElementById('drill-stop').disabled = !drill.running;
+  document.getElementById('drill-mode').disabled = drill.running;
+  document.getElementById('drill-seconds').disabled = drill.running;
+}
+
+async function startDrill() {
+  syncDrillControls();
+  drill.running = true;
+  drill.history = [];
+  drill.bag = [];
+  drill.queue = [];
+  drill.round = 0;
+  drill.current = null;
+  refillBag(null);
+  buildPreviewQueue();
+  syncDrillControls();
+  await startVisualMetro();
+  advanceDrill();
+}
+
+function stopDrill() {
+  clearInterval(drill.timerId);
+  drill.timerId = null;
+  stopVisualMetro();
+  drill.running = false;
+  drill.current = null;
+  drill.queue = [];
+  drill.bag = [];
+  drill.remainingSec = 0;
+  highlightShape = null;
+  document.querySelectorAll('.legend-btn').forEach(b => {
+    b.classList.toggle('active', !b.dataset.shape);
+    b.classList.remove('dim');
+  });
+  syncDrillControls();
+  render();
+}
+
+function bindDrillUI() {
+  document.getElementById('drill-start').addEventListener('click', startDrill);
+  document.getElementById('drill-stop').addEventListener('click', stopDrill);
+  document.getElementById('drill-next-btn').addEventListener('click', () => {
+    if (!drill.running) return;
+    advanceDrill();
+  });
+
+  const volSlider = document.getElementById('drill-volume');
+  volSlider.addEventListener('input', () => setVolume(volSlider.value));
+  volSlider.addEventListener('change', async () => {
+    if (drill.volume > 0.001 && drill.running) await ensureMetroAudio();
+  });
+
+  document.getElementById('drill-mute').addEventListener('click', async () => {
+    if (drill.volume > 0.001) {
+      drill.lastVolume = drill.volume;
+      setVolume(0);
+    } else {
+      setVolume(Math.round((drill.lastVolume || 0.7) * 100));
+      if (drill.running) await ensureMetroAudio();
+    }
+  });
+
+  document.getElementById('drill-bpm').addEventListener('change', () => {
+    drill.bpm = Number(document.getElementById('drill-bpm').value) || 80;
+    if (drill.running) startVisualMetro();
+  });
+
+  ['drill-mode', 'drill-seconds', 'drill-preview'].forEach(id => {
+    document.getElementById(id).addEventListener('change', () => {
+      if (!drill.running) syncDrillControls();
+      else if (id === 'drill-preview') {
+        drill.preview = Number(document.getElementById('drill-preview').value);
+        buildPreviewQueue();
+        render();
+      }
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.code !== 'Space' && e.key !== ' ') return;
+    if (!drill.running) return;
+    const tag = (e.target && e.target.tagName) || '';
+    if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA' || e.target.isContentEditable) return;
+    e.preventDefault();
+    advanceDrill();
+  });
+
+  syncDrillControls();
+  try {
+    const saved = localStorage.getItem('caged-drill-volume');
+    if (saved != null) {
+      const n = Number(saved);
+      if (!Number.isNaN(n)) {
+        drill.volume = Math.max(0, Math.min(100, n)) / 100;
+        if (drill.volume > 0.001) drill.lastVolume = drill.volume;
+      }
+    }
+  } catch (_) { /* ignore */ }
+  syncVolumeUI();
+}
+
+buildKeyGrid();
+buildLegend();
+bindDrillUI();
+render();
+</script>
+
+</body>
+</html>

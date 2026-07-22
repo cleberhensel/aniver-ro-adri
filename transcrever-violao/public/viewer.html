@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transcrição</title>
+  <script src="/vendor/alphatab/alphaTab.js"></script>
+  <style>
+    :root {
+      --bg: #12141a; --panel: #1c2030; --border: #2e3548;
+      --text: #e8ecf4; --muted: #8b95ab; --accent: #6ea8fe; --warn: #f0ad4e;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
+    header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; gap: 1rem; align-items: flex-start; flex-wrap: wrap; }
+    header a { color: var(--accent); text-decoration: none; font-size: .9rem; margin-top: .2rem; }
+    h1 { margin: 0 0 .25rem; font-size: 1.35rem; flex: 1; }
+    .sub { color: var(--muted); font-size: .9rem; }
+    main { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1.5rem 3rem; }
+    section { background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1rem 1.25rem; margin-bottom: 1rem; }
+    h2 { margin: 0 0 .75rem; font-size: 1rem; color: var(--accent); }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: .75rem; }
+    .stat { background: #151925; border-radius: 8px; padding: .65rem .8rem; }
+    .stat b { display: block; font-size: 1.2rem; }
+    .stat span { color: var(--muted); font-size: .78rem; }
+    .warn { background: #2a2218; border: 1px solid #5c4a2a; color: var(--warn);
+      border-radius: 8px; padding: .65rem .85rem; font-size: .88rem; margin-bottom: 1rem; }
+    .controls { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+    button { background: #2a3550; color: var(--text); border: 1px solid var(--border);
+      border-radius: 6px; padding: .45rem .85rem; cursor: pointer; font-size: .88rem; }
+    button:hover { background: #354261; }
+    button.primary { background: #2d4a7a; border-color: #4a6fa5; }
+    button:disabled { opacity: .45; cursor: wait; }
+    audio { width: 100%; margin-top: .5rem; }
+    #roll { width: 100%; height: 220px; background: #0e1018; border-radius: 8px;
+      border: 1px solid var(--border); display: block; }
+    #tab { font-family: ui-monospace, Menlo, monospace; font-size: 11px; white-space: pre;
+      overflow: auto; background: #0e1018; border-radius: 8px; padding: .75rem;
+      border: 1px solid var(--border); max-height: 480px; }
+    .files { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .files a { color: var(--accent); }
+    #status { color: var(--muted); font-size: .85rem; }
+    .at-wrap {
+      border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+      background: #0e1018; display: flex; flex-direction: column;
+    }
+    .at-viewport {
+      height: 420px; width: 100%; overflow: auto; background: #f4f4f4; position: relative;
+    }
+    .at-main { width: 100%; min-height: 400px; }
+    .at-bar {
+      display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
+      padding: .5rem .75rem; background: #151925; border-top: 1px solid var(--border);
+    }
+    #gp5Status, #gp5Time { color: var(--muted); font-size: .85rem; }
+    .at-cursor-bar { background: rgba(255, 242, 0, 0.25); }
+    .at-cursor-beat { background: rgba(64, 64, 255, 0.75); width: 3px; }
+    .at-highlight * { fill: #0078ff; stroke: #0078ff; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/">← Voltar</a>
+    <div>
+      <h1 id="title">…</h1>
+      <div class="sub" id="meta"></div>
+    </div>
+  </header>
+  <main>
+    <div class="warn">
+      Rascunho automático (GAPS). Compare com o stem original. Revise no ouvido.
+    </div>
+
+    <section>
+      <h2>Resumo</h2>
+      <div class="stats" id="stats"></div>
+    </section>
+
+    <section>
+      <h2>Reprodução</h2>
+      <p class="sub">Stem original + MIDI transcrito (sintetizador embutido, sem internet).</p>
+      <div class="controls">
+        <button class="primary" id="playAll">▶ Tocar stem + MIDI</button>
+        <button id="playStem">▶ Só stem</button>
+        <button id="playMidi">▶ Só MIDI</button>
+        <button id="stopAll">■ Parar</button>
+        <span id="status">A carregar…</span>
+      </div>
+      <audio id="stem" controls preload="metadata"></audio>
+    </section>
+
+    <section id="gp5Section" class="hidden">
+      <h2>Tab + player (arranjo)</h2>
+      <p class="sub">Tablatura interativa via alphaTab (equivalente ao GP5). Soundfont servido localmente.</p>
+      <div class="at-wrap">
+        <div class="at-viewport" id="atViewport"><div id="atMain" class="at-main"></div></div>
+        <div class="at-bar">
+          <button class="primary" id="gp5Play" disabled>▶ Play</button>
+          <button id="gp5Pause" disabled>⏸ Pausar</button>
+          <button id="gp5Stop" disabled>■ Parar</button>
+          <span id="gp5Status">A carregar…</span>
+          <span id="gp5Time"></span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Piano roll</h2>
+      <canvas id="roll"></canvas>
+    </section>
+
+    <section>
+      <h2>Tablatura</h2>
+      <pre id="tab"></pre>
+    </section>
+
+    <section>
+      <h2>Ficheiros</h2>
+      <div class="files" id="files"></div>
+    </section>
+  </main>
+
+  <script>
+    const stemId = decodeURIComponent(location.pathname.replace(/^\/view\/?/, "").split("/")[0] || "");
+    const base = `/stems/${encodeURIComponent(stemId)}`;
+    const txBase = `${base}/transcricao`;
+
+    let SUMMARY = {};
+    let ROLL_EVENTS = [];
+    let PLAYBACK_NOTES = [];
+    let gp5Api = null;
+
+    const stemEl = document.getElementById("stem");
+    const statusEl = document.getElementById("status");
+
+    async function loadData() {
+      const [resumo, analise, playback, tabText, alphatex] = await Promise.all([
+        fetch(`${txBase}/resumo.json`).then(r => { if (!r.ok) throw new Error("resumo.json"); return r.json(); }),
+        fetch(`${txBase}/analise.json`).then(r => r.ok ? r.json() : {}),
+        fetch(`${txBase}/playback.json`).then(r => r.ok ? r.json() : []),
+        fetch(`${txBase}/arranjo.tab.txt`).then(r => r.ok ? r.text() : ""),
+        fetch(`${txBase}/arranjo.alphatex.txt`).then(r => r.ok ? r.text() : ""),
+      ]);
+
+      SUMMARY = { ...resumo, title: resumo.title || stemId };
+      ROLL_EVENTS = analise.events || [];
+      PLAYBACK_NOTES = playback || [];
+
+      document.getElementById("title").textContent = SUMMARY.title;
+      document.title = SUMMARY.title;
+      document.getElementById("meta").textContent =
+        `Modelo: ${SUMMARY.model || "—"} · ${SUMMARY.generated_at || ""}`;
+
+      document.getElementById("stats").innerHTML = [
+        ["BPM", SUMMARY.bpm],
+        ["Duração", `${SUMMARY.duration_sec}s`],
+        ["Notas MIDI", SUMMARY.notes_raw],
+        ["Eventos", SUMMARY.events_quantized],
+        ["Polifonia máx.", SUMMARY.polyphony?.max ?? "—"],
+      ].map(([k, v]) => `<div class="stat"><b>${v ?? "—"}</b><span>${k}</span></div>`).join("");
+
+      document.getElementById("tab").textContent = tabText || "(sem tab)";
+
+      const audio = SUMMARY.audio || "guitar.mp3";
+      stemEl.innerHTML = `<source src="${base}/${audio}" type="${audio.endsWith(".mp3") ? "audio/mpeg" : "audio/wav"}">`;
+      stemEl.load();
+      stemEl.addEventListener("loadedmetadata", () => {
+        statusEl.textContent = `Stem: ${audio} (${stemEl.duration.toFixed(0)}s)`;
+      });
+      stemEl.addEventListener("error", () => {
+        statusEl.textContent = "Stem não carregou";
+      });
+
+      document.getElementById("files").innerHTML = [
+        ["arranjo.mid", "MIDI"],
+        ["arranjo.tab.txt", "Tab"],
+        ["arranjo.gp5", "GP5"],
+        ["arranjo.alphatex.txt", "alphaTex"],
+        ["analise.json", "Análise"],
+      ].map(([f, label]) =>
+        `<a href="${txBase}/${f}" download>${label}</a>`
+      ).join("");
+
+      drawRoll();
+
+      document.getElementById("gp5Section").classList.remove("hidden");
+      initAlphaTab(alphatex, `${txBase}/arranjo.gp5`);
+    }
+
+    function drawRoll() {
+      const canvas = document.getElementById("roll");
+      const ctx = canvas.getContext("2d");
+      const dpr = window.devicePixelRatio || 1;
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.scale(dpr, dpr);
+      ctx.fillStyle = "#0e1018"; ctx.fillRect(0, 0, w, h);
+      if (!ROLL_EVENTS.length) return;
+      const times = ROLL_EVENTS.map(e => e.time);
+      const t0 = Math.min(...times), t1 = Math.max(...times);
+      const pitches = ROLL_EVENTS.flatMap(e => e.pitches);
+      const p0 = Math.min(...pitches) - 2, p1 = Math.max(...pitches) + 2;
+      const pad = 24;
+      ctx.strokeStyle = "#252a3a";
+      for (let i = 0; i <= 8; i++) {
+        const y = pad + (h - pad * 2) * (i / 8);
+        ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(w - pad, y); ctx.stroke();
+      }
+      ROLL_EVENTS.forEach(ev => {
+        const x = pad + ((ev.time - t0) / (t1 - t0 || 1)) * (w - pad * 2);
+        ev.pitches.forEach(p => {
+          const y = h - pad - ((p - p0) / (p1 - p0 || 1)) * (h - pad * 2);
+          ctx.fillStyle = "#7ee787";
+          ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+        });
+      });
+    }
+
+    let audioCtx = null;
+    let activeNodes = [];
+    let stopTimer = null;
+
+    function midiFreq(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+
+    async function ensureCtx() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === "suspended") await audioCtx.resume();
+      return audioCtx;
+    }
+
+    function stopMidi() {
+      activeNodes.forEach(n => { try { n.stop(); n.disconnect(); } catch (_) {} });
+      activeNodes = [];
+      if (stopTimer) { clearTimeout(stopTimer); stopTimer = null; }
+    }
+
+    async function playMidi() {
+      if (!PLAYBACK_NOTES.length) {
+        statusEl.textContent = "Sem notas MIDI";
+        return;
+      }
+      const ctx = await ensureCtx();
+      stopMidi();
+      const t0 = ctx.currentTime + 0.08;
+      const maxEnd = PLAYBACK_NOTES.reduce((m, n) => Math.max(m, n.s + n.d), 0);
+      PLAYBACK_NOTES.forEach(({ s, d, p }) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.value = midiFreq(p);
+        const start = t0 + s;
+        const dur = Math.max(0.06, Math.min(d, 1.2));
+        gain.gain.setValueAtTime(0.0001, start);
+        gain.gain.exponentialRampToValueAtTime(0.15, start + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+        osc.connect(gain).connect(ctx.destination);
+        osc.start(start);
+        osc.stop(start + dur + 0.05);
+        activeNodes.push(osc, gain);
+      });
+      statusEl.textContent = `MIDI a tocar (~${maxEnd.toFixed(0)}s)`;
+      stopTimer = setTimeout(() => { stopMidi(); statusEl.textContent = "MIDI terminou"; }, (maxEnd + 1) * 1000);
+    }
+
+    document.getElementById("playMidi").onclick = () => playMidi();
+    document.getElementById("playStem").onclick = async () => {
+      stopMidi();
+      try { await stemEl.play(); statusEl.textContent = "Stem a tocar"; }
+      catch (e) { statusEl.textContent = "Erro stem: " + e.message; }
+    };
+    document.getElementById("playAll").onclick = async () => {
+      stopMidi();
+      try {
+        stemEl.currentTime = 0;
+        await stemEl.play();
+        await playMidi();
+        statusEl.textContent = "Stem + MIDI (comparar)";
+      } catch (e) { statusEl.textContent = "Erro: " + e.message; }
+    };
+    document.getElementById("stopAll").onclick = () => {
+      stopMidi();
+      stemEl.pause();
+      if (gp5Api) gp5Api.stop();
+      statusEl.textContent = "Parado";
+    };
+
+    function initAlphaTab(tex, gp5Url) {
+      const AT_BASE = `${location.origin}/vendor/alphatab/`;
+      const gp5Status = document.getElementById("gp5Status");
+      const gp5Time = document.getElementById("gp5Time");
+      const gp5Play = document.getElementById("gp5Play");
+      const gp5Pause = document.getElementById("gp5Pause");
+      const gp5Stop = document.getElementById("gp5Stop");
+      const viewport = document.getElementById("atViewport");
+      const main = document.getElementById("atMain");
+
+      function fmtMs(ms) {
+        const s = (ms / 1000) | 0; const m = (s / 60) | 0;
+        return String(m).padStart(2, "0") + ":" + String(s - m * 60).padStart(2, "0");
+      }
+      function enableGp5Controls(on) {
+        gp5Play.disabled = !on; gp5Pause.disabled = !on; gp5Stop.disabled = !on;
+      }
+
+      if (typeof alphaTab === "undefined") {
+        gp5Status.textContent = "alphaTab não carregou — verifique internet";
+        return;
+      }
+
+      gp5Api = new alphaTab.AlphaTabApi(main, {
+        core: {
+          resourceBaseUrl: AT_BASE,
+          workerFile: AT_BASE + "alphaTab.worker.min.mjs",
+        },
+        player: {
+          enablePlayer: true,
+          soundFont: AT_BASE + "soundfont/sonivox.sf2",
+          scrollElement: viewport,
+        },
+        display: {
+          scale: 0.85,
+          layoutMode: alphaTab.LayoutMode.Page,
+          staveProfile: alphaTab.StaveProfile.ScoreTab,
+        },
+      });
+
+      gp5Api.error.on(e => {
+        gp5Status.textContent = "Erro: " + (e.message || e);
+      });
+      gp5Api.renderStarted.on(() => { gp5Status.textContent = "A renderizar tab…"; });
+      gp5Api.renderFinished.on(() => {
+        gp5Status.textContent = "Tab pronta — aguarda soundfont";
+        setTimeout(() => gp5Api.resizeRender?.(), 50);
+      });
+      window.addEventListener("resize", () => gp5Api?.resizeRender?.());
+      gp5Api.soundFontLoad.on(e => {
+        const pct = e.total ? Math.floor((e.loaded / e.total) * 100) : 0;
+        gp5Status.textContent = "Soundfont " + pct + "%";
+      });
+      gp5Api.playerReady.on(() => { enableGp5Controls(true); gp5Status.textContent = "GP5 pronto"; });
+      gp5Api.playerPositionChanged.on(e => {
+        gp5Time.textContent = fmtMs(e.currentTime) + " / " + fmtMs(e.endTime);
+      });
+      gp5Api.playerStateChanged.on(e => {
+        const playing = e.state === alphaTab.synth.PlayerState.Playing;
+        gp5Play.disabled = playing; gp5Pause.disabled = !playing;
+      });
+
+      gp5Play.onclick = () => { stopMidi(); stemEl.pause(); gp5Api.play(); gp5Status.textContent = "GP5 a tocar"; };
+      gp5Pause.onclick = () => gp5Api.pause();
+      gp5Stop.onclick = () => { gp5Api.stop(); gp5Status.textContent = "GP5 parado"; };
+
+      // api.load(string) trata string como URL — alphaTex inline precisa de ScoreLoader
+      const loadAlphaTex = (text) => {
+        try {
+          const score = alphaTab.importer.ScoreLoader.loadAlphaTex(text);
+          gp5Api.load(score);
+        } catch (e) {
+          gp5Status.textContent = "alphaTex inválido: " + e.message;
+          if (gp5Url) {
+            gp5Status.textContent = "alphaTex falhou — a tentar GP5…";
+            gp5Api.load(gp5Url);
+          }
+        }
+      };
+      requestAnimationFrame(() => {
+        if (tex && tex.trim()) {
+          loadAlphaTex(tex);
+        } else if (gp5Url) {
+          gp5Status.textContent = "A carregar GP5…";
+          gp5Api.load(gp5Url);
+        } else {
+          gp5Status.textContent = "Sem alphaTex/GP5 — rode transcrever.sh";
+        }
+      });
+    }
+
+    loadData().catch(e => {
+      statusEl.textContent = "Erro: " + e.message;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Los Hermanos — Sentimental · De → Para (Rock → Bossa/Samba-Rock)</title>
+  <link rel="stylesheet" href="../research-improvisacao-acordes-tom-ouido-20260614/aula-html/css/curso.css">
+  <style>
+    .nav-back { display:block; padding:0.5rem 1.25rem; font-size:0.85rem; color:var(--accent); text-decoration:none; }
+    .nav-back:hover { text-decoration:underline; }
+    .toc a { display:block; padding:0.35rem 1.25rem; font-size:0.85rem; color:var(--text-muted); text-decoration:none; }
+    .toc a:hover { color:var(--accent); background:var(--accent-soft); }
+    .toc .toc-section { font-weight:700; color:var(--text); padding:0.75rem 1.25rem 0.25rem; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin:1rem 0; }
+    .badge { padding:0.25rem 0.65rem; border-radius:20px; font-size:0.78rem; font-weight:600; }
+    .badge-rock { background:#fde8e8; color:#9b2226; }
+    .badge-bossa { background:#dbeafe; color:#1d4e89; }
+    .badge-capo { background:var(--accent-soft); color:var(--accent); }
+    .de-para-block {
+      margin:2rem 0;
+      padding:1.25rem 1.5rem;
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .de-para-block h3 { margin:0 0 0.35rem; font-size:1.1rem; }
+    .de-para-block .func { font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem; }
+    .de-para-row {
+      display:grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap:1rem;
+      align-items:start;
+    }
+    @media (max-width: 720px) {
+      .de-para-row { grid-template-columns: 1fr; }
+      .de-para-arrow { transform: rotate(90deg); justify-self:center; }
+    }
+    .de-para-col h4 {
+      margin:0 0 0.5rem;
+      font-size:0.8rem;
+      text-transform:uppercase;
+      letter-spacing:0.05em;
+    }
+    .de-para-col--de h4 { color:#9b2226; }
+    .de-para-col--para h4 { color:#1d4e89; }
+    .de-para-arrow {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.75rem;
+      color:var(--accent);
+      padding-top:2rem;
+      font-weight:700;
+    }
+    .de-para-note {
+      margin-top:1rem;
+      padding:0.75rem 1rem;
+      background:var(--bg);
+      border-left:3px solid var(--accent);
+      border-radius:0 8px 8px 0;
+      font-size:0.9rem;
+      color:var(--text-muted);
+    }
+    .chord-seq { display:flex; flex-wrap:wrap; gap:0.5rem; align-items:flex-end; }
+    .chord-seq .seq-arrow { color:var(--text-muted); font-weight:700; align-self:center; padding:0 0.15rem; }
+    .legend-table { width:100%; border-collapse:collapse; font-size:0.9rem; margin:1rem 0; }
+    .legend-table th, .legend-table td { border:1px solid var(--border); padding:0.5rem 0.75rem; text-align:left; }
+    .legend-table th { background:var(--accent-soft); }
+    .groove-box {
+      background:var(--bg);
+      border:1px dashed var(--border);
+      border-radius:8px;
+      padding:1rem 1.25rem;
+      margin:1.5rem 0;
+      font-size:0.92rem;
+    }
+    .groove-box h4 { margin:0 0 0.5rem; font-size:0.95rem; }
+    .capo-callout {
+      margin:1.5rem 0;
+      padding:1.25rem 1.5rem;
+      background:linear-gradient(135deg, #fff8f0 0%, #f4e4d9 100%);
+      border:2px solid var(--accent);
+      border-radius:var(--radius);
+    }
+    .capo-callout h2 { margin:0 0 0.75rem; font-size:1.15rem; color:var(--accent); }
+    .capo-callout p { margin:0.5rem 0; font-size:0.92rem; }
+    .capo-callout strong { color:var(--text); }
+    .chord-card--capo .chord-som {
+      font-size:0.68rem;
+      color:var(--tonic);
+      font-weight:600;
+      margin-top:0.15rem;
+      text-align:center;
+    }
+    .chord-card--capo .chord-forma {
+      font-size:0.65rem;
+      color:var(--text-muted);
+      text-align:center;
+    }
+    .capo-table { font-size:0.82rem; }
+    .capo-table code { font-size:0.78rem; }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h1>Sentimental</h1>
+      <p>Los Hermanos · De → Para</p>
+    </div>
+    <a class="nav-back" href="Los Hermanos - Sentimental.txt">← Cifra original (.txt)</a>
+    <nav class="toc">
+      <div class="toc-section">Seções</div>
+      <a href="#visao">Visão geral</a>
+      <a href="#capo">Capotraste</a>
+      <a href="#legenda">Legenda harmônica</a>
+      <a href="#intro">Intro / Verso</a>
+      <a href="#pre">Pré-refrão</a>
+      <a href="#refrao">Refrão</a>
+      <a href="#ponte">Ponte</a>
+      <a href="#terceira">Terceira parte</a>
+      <a href="#final">Final</a>
+      <a href="#groove">Groove samba-rock</a>
+      <a href="#mapa">Mapa completo</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="hero" id="visao">
+      <h1>Sentimental — Rock → Bossa / Samba-Rock</h1>
+      <p class="lead">Harmonia funcional em <strong>Fá♯ maior</strong> (som ouvido). A cifra usa <strong>nomes das formas com capo na 1ª casa</strong> — um semitom abaixo do que soa (ex.: escreve <strong>F</strong>, toca a forma e ouve-se <strong>F#</strong>). Os diagramas mostram as <em>digitações com capo</em>, iguais ao rodapé da cifra original.</p>
+      <div class="badge-row">
+        <span class="badge badge-capo">Capo 1ª casa — formas ≠ som</span>
+        <span class="badge badge-rock">De: estética rock Los Hermanos</span>
+        <span class="badge badge-bossa">Para: bossa / samba-rock</span>
+      </div>
+    </header>
+
+    <section class="capo-callout" id="capo">
+      <h2>⚠️ Capotraste na 1ª casa</h2>
+      <p>Na convenção desta cifra (CifraClub / Los Hermanos), o símbolo é o <strong>nome da forma</strong> que você dedilha <em>com o capo na casa 1</em>. O <strong>som real</strong> sobe meio tom — vide tabela do rodapé da cifra (<code>F#*</code>, <code>A#m/F*</code>, etc.).</p>
+      <p><strong>Tom ouvido:</strong> Fá♯ maior · <strong>Funções:</strong> I = F#, vi = Bbm, ii = D#m7, IV = B, V = C# / A#7</p>
+      <p><strong>Diagramas abaixo:</strong> dedos exatamente como na cifra (relativos ao capo). Legenda em cada card: <em>forma → soa</em>.</p>
+      <table class="legend-table capo-table">
+        <thead>
+          <tr><th>Cifra (forma)</th><th>Som ouvido</th><th>Shape (rodapé)</th></tr>
+        </thead>
+        <tbody id="capo-map-body"></tbody>
+      </table>
+    </section>
+
+    <section id="legenda">
+      <h2>Legenda funcional — som ouvido em F# maior</h2>
+      <table class="legend-table">
+        <thead>
+          <tr><th>Função</th><th>Graus</th><th>Rock — forma (cifra)</th><th>Rock — som</th><th>Bossa — forma</th><th>Bossa — som</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Tônica</td><td>I, vi</td><td>F, Am/E, F7M/A</td><td>F#, Bbm/F, F#7M/C</td><td>F6/9, Am9/E, Fmaj7/A</td><td>F#6/9, Bbm9/F, F#7M/C</td></tr>
+          <tr><td>Subdominante</td><td>ii, IV</td><td>Bb2, Dm7, Dm</td><td>B, D#m7, D#m</td><td>Bb6/9, Dm9, Dm11</td><td>B6/9, D#m9, D#m11</td></tr>
+          <tr><td>Dominante</td><td>V</td><td>A7, A, C, C9, C6</td><td>A#7, A#, C#, C#9, C#6</td><td>A7(9), C13, C7(9)</td><td>A#9, C#13, C#9</td></tr>
+        </tbody>
+      </table>
+      <blockquote>O refrão (forma <strong>Dm7 → A7</strong>) soa <strong>D#m7 → A#7</strong> (ii–V em F#). O final (<strong>Bb7M – Dm9/A</strong>) soa <strong>B7M – D#m9/A#</strong> — já bossa na gravação.</blockquote>
+    </section>
+
+    <div id="sections-root"></div>
+
+    <section id="groove">
+      <h2>Groove no violão (samba-rock)</h2>
+      <div class="groove-box">
+        <h4>Verso / intro</h4>
+        <p>Partido alto leve em <strong>F6/9 | Am9/E</strong> (forma) — soa <strong>F#6/9 | Bbm9/F</strong>. Mesmas posições de dedos que F | Am/E na cifra, com extensões.</p>
+      </div>
+      <div class="groove-box">
+        <h4>Refrão</h4>
+        <p>Andamento tipo Jorge Ben — batidas 2 e 4 mais surdas. No <strong>Dm9 → A7(9)</strong>, antecipe o baixo (andamento de ii–V bossa).</p>
+      </div>
+      <div class="groove-box">
+        <h4>Ponte</h4>
+        <p>Trocar <strong>A</strong> maior por <strong>A7(9)</strong> recupera a 7ª sem perder energia. Palhetada mais seca; repetir figura rítmica como na tab original.</p>
+      </div>
+      <div class="groove-box">
+        <h4>Reharm opcional (pré-refrão)</h4>
+        <p><strong>Bbmaj9 → Fmaj7/A → Gm7 → C7(9)</strong> — <em>Gm7</em> como iii substituto de I (método Ozeias). Uma passagem só, antes do refrão.</p>
+        <div class="chord-seq" data-chords="Bbmaj9,F7M/A,Gm7,C7(9)"></div>
+      </div>
+    </section>
+
+    <section id="mapa">
+      <h2>Mapa completo — sequências lado a lado</h2>
+      <div class="de-para-block">
+        <h3>Forma inteira (síntese)</h3>
+        <p class="func">Coluna <strong>forma</strong> = símbolos da cifra (dedos com capo). Som = +1 semitom.</p>
+        <div class="de-para-row">
+          <div class="de-para-col de-para-col--de">
+            <h4>De — rock (forma cifra)</h4>
+            <p style="font-family:var(--font-mono);font-size:0.82rem;line-height:1.8">
+              Intro: F Am/E ×4<br>
+              Verso: F Am/E F Am/E<br>
+              Pré: Bb2 F7M/A Bb2 F7M/A Bb2 | C C9 C C6<br>
+              Refrão: F Am/E | Dm7 A7 | Bb2 F7M/A Bb2 | C<br>
+              Ponte: Dm A ×2 | Dm A Bb2 Am ×2 | Bb2 Am ×3 Bb2 C2<br>
+              Final: Bb7M Dm/A Bb7M Dm9/A ×2
+            </p>
+          </div>
+          <div class="de-para-arrow">→</div>
+          <div class="de-para-col de-para-col--para">
+            <h4>Para — bossa (forma cifra)</h4>
+            <p style="font-family:var(--font-mono);font-size:0.82rem;line-height:1.8">
+              Intro: F6/9 Am9/E ×4<br>
+              Verso: F6/9 Am9/E Fmaj9 Am7/E<br>
+              Pré: Bb6/9 Fmaj7/A Bbmaj9 F6/A Bbmaj9 | C13 C7(9) C7(13) C6/9<br>
+              Refrão: Fmaj9 Am7/E | Dm9 A7(9) | Bbmaj9 Fmaj7/A Bb6/9 | C13<br>
+              Ponte: Dm9 A7(9) ×2 | Dm11 A13 Bbmaj9 Am11 ×2 | Bbmaj9 Am11 ×3 Bbmaj9 C9<br>
+              Final: Bbmaj9 Dm11/A Bbmaj9 Dm9/A ×2
+            </p>
+          </div>
+        </div>
+      </div>
+      <h3>Todos os acordes desta página</h3>
+      <div id="all-chords" class="chord-grid"></div>
+    </section>
+  </main>
+</div>
+
+<script src="../research-improvisacao-acordes-tom-ouido-20260614/aula-html/js/chords-dict.js"></script>
+<script src="../research-improvisacao-acordes-tom-ouido-20260614/aula-html/js/chord-diagrams.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /** Som ouvido com capo 1 — mapeamento do rodapé da cifra original */
+  const CAPO_SOM = {
+    F: 'F#', 'Am/E': 'Bbm/F', Bb2: 'B2', 'F7M/A': 'F#7M/C',
+    Dm7: 'D#m7', A7: 'A#7', A: 'A#', C: 'C#', C9: 'C#9', C6: 'C#6', C2: 'C#2',
+    Dm: 'D#m', Am: 'Bbm', 'Bb7M': 'B7M', 'Dm/A': 'D#m/A#', 'Dm9/A': 'D#m9/A#',
+    'F6/9': 'F#6/9', 'Am9/E': 'Bbm9/F', 'Am7/E': 'Bbm7/F', Fmaj9: 'F#maj9',
+    'Fmaj7/A': 'F#7M/C', 'F6/A': 'F#6/C', 'Bb6/9': 'B6/9', Bbmaj9: 'Bmaj9',
+    Dm9: 'D#m9', Dm11: 'D#m11', 'A7(9)': 'A#9', A13: 'A#13', C13: 'C#13',
+    'C7(9)': 'C#9', 'C7(13)': 'C#13', 'C6/9': 'C#6/9', Am11: 'Bbm11', C9: 'C#9',
+    Gm7: 'G#m7', 'Dm11/A': 'D#m11/A#'
+  };
+
+  /** Shapes com capo — extraídos do rodapé da cifra + voicings bossa */
+  const EXTRA = {
+    F: '1 3 3 2 1 1',
+    'Am/E': '0 0 2 2 1 0',
+    Bb2: 'X 1 3 3 1 1',
+    'F7M/A': 'X 0 3 2 1 0',
+    Dm7: 'X X 0 2 1 1',
+    A7: 'X 0 2 0 2 0',
+    A: 'X 0 2 2 2 0',
+    C: 'X 3 2 0 1 0',
+    C9: 'X 3 2 0 3 0',
+    C6: 'X 3 2 2 1 0',
+    C2: 'X 3 5 5 3 3',
+    Dm: 'X 5 7 7 6 5',
+    Am: 'X 0 2 2 1 0',
+    'Bb7M': 'X 1 3 2 3 1',
+    'Dm/A': 'X 0 3 2 3 X',
+    'Dm9/A': 'X 0 3 2 3 0',
+    'F6/9': '1 X 0 2 3 1',
+    Fmaj9: '1 X 2 2 3 1',
+    'Am9/E': '0 0 2 4 1 0',
+    'Am7/E': '0 0 2 0 1 0',
+    'Bbmaj9': 'X 1 0 2 1 1',
+    'Bb6/9': 'X 1 3 0 3 1',
+    'F6/A': 'X 0 3 2 1 1',
+    'Fmaj7/A': 'X 0 3 2 1 0',
+    Dm9: 'X 5 3 5 5 X',
+    Dm11: 'X 5 5 5 6 5',
+    'A7(9)': 'X 0 2 0 0 0',
+    A13: 'X 0 5 6 7 X',
+    C13: 'X 3 3 3 5 5',
+    'C7(13)': 'X 3 X 3 5 5',
+    C9sus4: 'X 3 3 3 3 3',
+    Am11: 'X 0 3 0 1 0',
+    'Dm11/A': 'X 0 3 2 3 1'
+  };
+
+  Object.entries(EXTRA).forEach(([k, shape]) => {
+    window.CHORD_DICT.chords[k] = { shape };
+  });
+
+  const CAPO_TABLE = [
+    ['F', 'F#', '1 3 3 2 1 1'],
+    ['Am/E', 'Bbm/F', '0 0 2 2 1 0'],
+    ['Bb2', 'B (add2)', 'X 1 3 3 1 1'],
+    ['F7M/A', 'F#7M/C', 'X 0 3 2 1 0'],
+    ['Dm7', 'D#m7', 'X X 0 2 1 1'],
+    ['A7', 'A#7', 'X 0 2 0 2 0'],
+    ['A', 'A#', 'X 0 2 2 2 0'],
+    ['C', 'C#', 'X 3 2 0 1 0'],
+    ['C9', 'C#9', 'X 3 2 0 3 0'],
+    ['C6', 'C#6', 'X 3 2 2 1 0'],
+    ['C2', 'C#2', 'X 3 5 5 3 3'],
+    ['Bb7M', 'B7M', 'X 1 3 2 3 1'],
+    ['Dm9/A', 'D#m9/A#', 'X 0 3 2 3 0']
+  ];
+
+  document.getElementById('capo-map-body').innerHTML = CAPO_TABLE.map(
+    ([forma, som, shape]) =>
+      `<tr><td><strong>${forma}</strong></td><td>${som}</td><td><code>${shape}</code></td></tr>`
+  ).join('');
+
+  function renderChordCardCapo(forma, opts = {}) {
+    const w = opts.width || 68;
+    const som = CAPO_SOM[forma] || '—';
+    const shape = ChordDiagrams.lookupShape(forma);
+    const svg = ChordDiagrams.renderChord(forma, shape, { width: w, hideName: true });
+    const footer = shape ? ChordDiagrams.normalizeShape(shape) : '';
+    return `<figure class="chord-card chord-card--capo" data-chord-name="${forma}">
+      ${svg}
+      <figcaption class="chord-forma">${forma}</figcaption>
+      <div class="chord-som">soa ${som}</div>
+      ${footer ? `<figcaption class="chord-card__shape">${footer}</figcaption>` : ''}
+    </figure>`;
+  }
+
+  function renderSeq(names) {
+    const parts = [];
+    names.forEach((n, i) => {
+      if (i) parts.push('<span class="seq-arrow">|</span>');
+      parts.push(renderChordCardCapo(n, { width: 68 }));
+    });
+    return `<div class="chord-seq">${parts.join('')}</div>`;
+  }
+
+  const SECTIONS = [
+    {
+      id: 'intro',
+      title: 'Intro / Verso',
+      func: 'Tônica com vi invertida — loop sustentado (estética rock)',
+      de: ['F', 'Am/E'],
+      para: ['F6/9', 'Am9/E'],
+      note: 'Substitui tríade por 6/9 na tônica e vi com 9ª. Mesma posição relativa ao capo; baixo em Mi (forma) / Fá (som).'
+    },
+    {
+      id: 'pre',
+      title: 'Pré-refrão',
+      func: 'SD → T(6) → SD → dominante enrolada',
+      de: ['Bb2', 'F7M/A', 'Bb2', 'C', 'C9', 'C6'],
+      para: ['Bb6/9', 'Fmaj7/A', 'Bbmaj9', 'C13', 'C7(9)', 'C6/9'],
+      note: 'Bb2 vira Bb6/9 ou Bbmaj9. C→C9→C6 vira dominantes bossa — soa C#9, C#13 etc.'
+    },
+    {
+      id: 'refrao',
+      title: 'Refrão',
+      func: 'T → ii–V → IV–I6–IV → V',
+      de: ['F', 'Am/E', 'Dm7', 'A7', 'Bb2', 'F7M/A', 'C'],
+      para: ['Fmaj9', 'Am7/E', 'Dm9', 'A7(9)', 'Bbmaj9', 'Fmaj7/A', 'C13'],
+      note: 'Dm7→A7 (forma) soa D#m7→A#7. ii–V em F#; enriquecido com 9ªs na versão bossa.'
+    },
+    {
+      id: 'ponte',
+      title: 'Ponte',
+      func: 'ii–V repetido → IV–iii → V(add9)',
+      de: ['Dm', 'A', 'Bb2', 'Am', 'C2'],
+      para: ['Dm9', 'A7(9)', 'Bbmaj9', 'Am11', 'C9'],
+      note: 'A maior (forma) soa A# — vira A7(9) na bossa. C2→C9 soa C#9.'
+    },
+    {
+      id: 'terceira',
+      title: 'Terceira parte',
+      func: 'Igual ao refrão + desfecho em C2',
+      de: ['F', 'Am/E', 'Dm7', 'A7', 'Bb2', 'Am', 'C2', 'F', 'Am/E'],
+      para: ['Fmaj9', 'Am7/E', 'Dm9', 'A7(9)', 'Bbmaj9', 'Am11', 'C9', 'F6/9', 'Am9/E'],
+      note: '"Mas deixa eu fingir e rir" — C2 vira C9; entrada final com F6/9 em vez de F seco.'
+    },
+    {
+      id: 'final',
+      title: 'Final',
+      func: 'IVΔ → ii9 inv. — já bossa na original',
+      de: ['Bb7M', 'Dm/A', 'Dm9/A'],
+      para: ['Bbmaj9', 'Dm11/A', 'Dm9/A'],
+      note: 'Bb7M soa B7M; Dm9/A soa D#m9/A#. Shapes do rodapé da cifra.'
+    }
+  ];
+
+  function renderBlock(sec) {
+    return `
+      <section class="de-para-block" id="${sec.id}">
+        <h3>${sec.title}</h3>
+        <p class="func">${sec.func}</p>
+        <div class="de-para-row">
+          <div class="de-para-col de-para-col--de">
+            <h4>De — rock (forma)</h4>
+            ${renderSeq(sec.de)}
+          </div>
+          <div class="de-para-arrow" aria-hidden="true">→</div>
+          <div class="de-para-col de-para-col--para">
+            <h4>Para — bossa (forma)</h4>
+            ${renderSeq(sec.para)}
+          </div>
+        </div>
+        <div class="de-para-note">${sec.note}</div>
+      </section>`;
+  }
+
+  document.getElementById('sections-root').innerHTML = SECTIONS.map(renderBlock).join('');
+
+  document.querySelectorAll('[data-chords]').forEach(el => {
+    const names = el.getAttribute('data-chords').split(',');
+    el.innerHTML = names.map((n, i) =>
+      (i ? '<span class="seq-arrow">→</span>' : '') + renderChordCardCapo(n.trim(), { width: 68 })
+    ).join('');
+  });
+
+  const allNames = new Set();
+  SECTIONS.forEach(s => { s.de.forEach(n => allNames.add(n)); s.para.forEach(n => allNames.add(n)); });
+  ['Gm7', 'C7(9)'].forEach(n => allNames.add(n));
+  document.getElementById('all-chords').innerHTML = [...allNames].sort().map(n =>
+    renderChordCardCapo(n, { width: 64 })
+  ).join('');
+})();
+</script>
+</body>
+</html>

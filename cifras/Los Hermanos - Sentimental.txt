@@ -1,0 +1,195 @@
+Los Hermanos - Sentimental
+
+[Intro] F  Am/E  F  Am/E
+        F  Am/E  F  Am/E
+
+
+[Tab - Intro]
+
+   F                 Am/E    
+E|--------------------------------------------| 
+B|-1---1---1---1-----1---1---1---1------------| 
+G|-2---2---2---2-----2---2---2---2------------| 
+D|-3---3---3---3-----2---2---2---2------------| 
+A|--------------------------------------------| 
+E|-1-1---1---1---1---0-0---0---0---0----------| 
+
+[Primeira Parte]
+
+F                   Am/E
+  O quanto eu te falei
+                F
+Que isso vai mudar
+                 Am/E
+Motivo eu nunca dei
+
+[Pré-Refrão]
+
+Bb2             F7M/A       Bb2
+    Você me avisar, me ensinar
+              F7M/A     Bb2
+Falar do que foi pra você
+               C  C9  C
+Não vai me livrar
+    C6
+De viver
+
+[Refrão]
+
+F         Am/E
+  Quem é mais
+      Dm7       A7
+Sentimental que eu?
+Bb2     F7M/A         Bb2
+    Eu disse e nem assim
+    C
+Se pôde evitar
+
+( F  Am/E  F  Am/E )
+
+[Segunda Parte]
+
+F                   Am/E
+  De tanto eu te falar
+            F
+Você subverteu
+                   Am/E
+O que era um sentimento e assim
+
+[Pré-Refrão]
+
+Bb2             F7M/A
+    Fez dele razão
+           Bb2
+Pra se perder no abismo
+    C  C9
+Que é
+ C        C6
+Pensar e sentir
+
+[Refrão]
+
+F        Am/E
+  Ela é mais
+      Dm7       A7
+Sentimental que eu
+Bb2    F7M/A
+    Então fica bem
+Bb2        C
+    Se eu sofro um pouco mais
+
+[Ponte] Dm  A  Dm  A
+        Dm  A  Bb2  Am
+        Dm  A  Bb2  Am
+        Bb2  Am  Bb2  Am  Bb2  C2
+
+
+[Tab - Ponte]
+
+Parte 1 de 4
+   Dm               A
+E|---------5----------------5-----------------|      
+B|-----------6---6------------5---5-----------|      
+G|-----7-------7--------6-------6-------------| (3x) 
+D|---7---7------------7---7-------------------|      
+A|-5------------------------------------------|      
+E|------------------5-------------------------|      
+
+
+Parte 2 de 4
+   Bb2     Am
+E|-1-1-1---0-0-0------------------------------|    
+B|-1-1-1---1-1-1------------------------------|    
+G|-3-3-3---2-2-2------------------------------|    
+D|-3-3-3---2-2-2------------------------------|    
+A|-1-1-1---0-0-0------------------------------|    
+E|--------------------------------------------|    
+   ↓ ↓ ↓    ↓ ↓ ↓                                  
+
+
+Parte 1 de 4
+   Dm               A
+E|---------5----------------5-----------------| 
+B|-----------6---6------------5---5-----------| 
+G|-----7-------7--------6-------6-------------| 
+D|---7---7------------7---7-------------------| 
+A|-5------------------------------------------| 
+E|------------------5-------------------------| 
+
+
+Parte 3 de 4
+   Bb2       Am
+E|-1-1-1-1---0-0-0-0--------------------------|        
+B|-1-1-1-1---1-1-1-1--------------------------|        
+G|-3-3-3-3---2-2-2-2--------------------------| (3x)   
+D|-3-3-3-3---2-2-2-2--------------------------|        
+A|-1-1-1-1---0-0-0-0--------------------------|        
+E|--------------------------------------------|        
+   ↓ ↓ ↓ ↑    ↓ ↓ ↓ ↑                                  
+
+
+Parte 4 de 4
+   Bb2       C2
+E|-1-1-1-1---0-0-0-0--------------------------|    
+B|-1-1-1-1---3-3-3-3--------------------------|    
+G|-3-3-3-3---2-2-2-2--------------------------|    
+D|-3-3-3-3---2-2-2-2--------------------------|    
+A|-1-1-1-1---0-0-0-0--------------------------|    
+E|--------------------------------------------|    
+   ↓ ↓ ↓ ↑    ↓ ↓ ↓ ↑                              
+
+[Terceira Parte]
+
+        F            Am/E
+Eu só aceito a condição
+          Dm7       A7
+De ter você só pra mim
+Bb2     F7M/A        Bb2      C
+    Eu sei, não é assim, mas deixa
+
+        F            Am/E
+Eu só aceito a condição
+          Dm7       A7
+De ter você só pra mim
+Bb2     Am           Bb2
+    Eu sei, não é assim
+     C2          F     Am/E
+Mas deixa eu fingir e rir
+
+( Dm7  A7  Bb2  F7M/A  Bb2  C )
+( F  Am  Dm7  A7 )
+
+[Final] Bb7M  Dm/A  Bb7M  Dm9/A
+        Bb7M  Dm/A  Bb7M  Dm9/A
+
+
+[Tab - Final]
+
+   Bb7M         Dm/A    Bb7M           Dm9/A
+E|------------------------------------------0-|      
+B|------------3-------3-------------3-------3-|      
+G|--------2-----------2---------2-------------|      
+D|------3---3------3----------3---3-------3---|      
+A|-1--1---------0-------1--1-----------0------| (2x) 
+
+E|--------------------------------------------|
+
+
+----------------- Acordes -----------------
+Capotraste na 1ª casa
+A#*  = X 0 2 2 2 0 - (*B na forma de A#)
+A#7*  = X 0 2 0 2 0 - (*B7 na forma de A#7)
+A#m*  = X 0 2 2 1 0 - (*Bm na forma de A#m)
+A#m/F*  = 0 0 2 2 1 0 - (*Bm/F# na forma de A#m/F)
+B2*  = X 1 3 3 1 1 - (*C2 na forma de B2)
+B7M*  = X 1 3 2 3 1 - (*C7M na forma de B7M)
+C#*  = X 3 2 0 1 0 - (*D na forma de C#)
+C#2*  = X 3 5 5 3 3 - (*D2 na forma de C#2)
+C#6*  = X 3 2 2 1 0 - (*D6 na forma de C#6)
+C#9*  = X 3 2 0 3 0 - (*D9 na forma de C#9)
+D#m*  = X 5 7 7 6 5 - (*Em na forma de D#m)
+D#m/A#*  = X 0 3 2 3 X - (*Em/B na forma de D#m/A#)
+D#m7*  = X X 0 2 1 1 - (*Em7 na forma de D#m7)
+D#m9/A#*  = X 0 3 2 3 0 - (*Em9/B na forma de D#m9/A#)
+F#*  = 1 3 3 2 1 1 - (*G na forma de F#)
+F#7M/A#*  = X 0 3 2 1 0 - (*G7M/B na forma de F#7M/A#)

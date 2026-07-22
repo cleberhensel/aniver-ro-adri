@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>5 shapes CAGED · escala menor no braço | Nelson Faria</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #f0a030;
+      --border: #2d3f54;
+      --shape-a: #4ecdc4;
+      --shape-g: #a78bfa;
+      --shape-e: #f0a030;
+      --shape-d: #ff6b6b;
+      --shape-c: #69db7c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      padding: 0.85rem 0.85rem 2.5rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.65rem;
+      margin-bottom: 0.65rem;
+    }
+
+    header h1 { font-size: 1.2rem; font-weight: 700; }
+    header p { color: var(--muted); font-size: 0.8rem; margin-top: 0.2rem; }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem 1rem;
+      align-items: flex-end;
+      margin-bottom: 0.65rem;
+      padding: 0.55rem 0.7rem;
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .control-group label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .key-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .key-btn {
+      min-width: 2.5rem;
+      padding: 0.4rem 0.55rem;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    }
+
+    .key-btn:hover { border-color: var(--accent); }
+    .key-btn.active {
+      background: var(--accent);
+      color: #111;
+      border-color: var(--accent);
+    }
+
+    .type-btn {
+      min-width: auto;
+      padding: 0.4rem 0.65rem;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .type-btn:hover { border-color: var(--accent); }
+    .type-btn.active {
+      background: var(--accent);
+      color: #111;
+      border-color: var(--accent);
+    }
+
+    .tonic-display {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent2, var(--accent));
+    }
+
+    .tonic-display span { color: var(--muted); font-weight: 400; font-size: 0.85rem; }
+
+    h2 {
+      font-size: 0.95rem;
+      color: #4ecdc4;
+      margin: 0.85rem 0 0.4rem;
+    }
+
+    /* ── Mapa do braço ── */
+    .neck-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45rem 0.4rem;
+      overflow-x: auto;
+      margin-bottom: 0.35rem;
+    }
+
+    .neck-wrap svg { display: block; min-width: 100%; height: auto; }
+
+    .legend-shapes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem 0.5rem;
+      margin: 0 0 0.35rem;
+      font-size: 0.75rem;
+    }
+
+    .legend-shapes button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      font-size: inherit;
+    }
+
+    .legend-shapes button:hover { background: var(--surface2); }
+    .legend-shapes button.dim { opacity: 0.35; }
+    .legend-shapes button.active { border-color: var(--border); background: var(--surface2); }
+
+    .swatch {
+      width: 12px; height: 12px; border-radius: 50%;
+    }
+
+    /* ── Grid dos 5 shapes ── */
+    .shapes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.55rem;
+    }
+
+    .shape-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.55rem 0.65rem;
+      border-left: 3px solid var(--card-accent, var(--border));
+      transition: box-shadow 0.15s;
+    }
+
+    .shape-card.highlight {
+      box-shadow: 0 0 0 1px var(--card-accent), 0 4px 20px rgba(0,0,0,0.35);
+    }
+
+    .shape-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .shape-card-head h3 { font-size: 0.95rem; font-weight: 700; }
+    .shape-range {
+      font-size: 0.75rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .shape-card svg { width: 100%; height: auto; display: block; }
+
+    .anchor-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.45rem;
+    }
+
+    footer {
+      margin-top: 1.25rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--accent); }
+
+    /* ── Treino aleatório (compacto + sticky) ── */
+    .drill {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45rem 0.55rem;
+      margin-bottom: 0.55rem;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    }
+
+    .drill-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem 0.55rem;
+    }
+
+    .drill-row + .drill-row {
+      margin-top: 0.35rem;
+      padding-top: 0.35rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .drill-now,
+    .drill-next {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      min-width: 0;
+      border-radius: 6px;
+      padding: 0.2rem 0.45rem 0.2rem 0.35rem;
+    }
+
+    .drill-now {
+      flex: 1 1 12rem;
+      background: color-mix(in srgb, var(--drill-accent, var(--border)) 18%, var(--surface2));
+      border: 1px solid color-mix(in srgb, var(--drill-accent, var(--border)) 55%, var(--border));
+    }
+
+    .drill-now.idle {
+      opacity: 0.55;
+      background: var(--surface2);
+      border-color: var(--border);
+    }
+
+    .drill-next {
+      flex: 0 1 9rem;
+      background: var(--bg);
+      border: 1px dashed var(--border);
+      opacity: 0.95;
+    }
+
+    .drill-next.empty { opacity: 0.4; }
+
+    .drill-tag {
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+
+    .drill-now .drill-tag { color: var(--drill-accent, var(--muted)); }
+
+    .drill-letter {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      font-variant-numeric: tabular-nums;
+      min-width: 1.1ch;
+    }
+
+    .drill-now .drill-letter {
+      font-size: 2.35rem;
+      text-shadow: 0 0 18px color-mix(in srgb, var(--drill-accent, transparent) 45%, transparent);
+    }
+
+    .drill-next .drill-letter {
+      font-size: 1.55rem;
+      opacity: 0.92;
+    }
+
+    .drill-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 0.05rem;
+      min-width: 0;
+    }
+
+    .drill-shape-name {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .drill-now .drill-shape-name { font-size: 1.05rem; }
+
+    .drill-meta {
+      font-size: 0.7rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .drill-meta strong { color: var(--text); font-weight: 600; }
+
+    .drill-queue-extra {
+      display: flex;
+      gap: 0.2rem;
+      align-items: center;
+    }
+
+    .queue-chip {
+      min-width: 1.25rem;
+      text-align: center;
+      padding: 0.1rem 0.28rem;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: var(--surface2);
+      opacity: 0.55;
+    }
+
+    .drill-pulse-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      flex: 0 0 auto;
+      margin-left: auto;
+    }
+
+    .drill-pulse {
+      width: 1.15rem;
+      height: 1.15rem;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 2px solid var(--border);
+      transition: background 0.05s, transform 0.05s, border-color 0.05s, box-shadow 0.05s;
+    }
+
+    .drill-pulse.on {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: scale(1.15);
+      box-shadow: 0 0 10px rgba(240, 160, 48, 0.55);
+    }
+
+    .drill-pulse.on.accent {
+      background: #4ecdc4;
+      border-color: #4ecdc4;
+      box-shadow: 0 0 12px rgba(78, 205, 196, 0.65);
+    }
+
+    .drill-beats { display: flex; gap: 0.18rem; }
+
+    .drill-beat {
+      width: 0.4rem;
+      height: 0.4rem;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+    }
+
+    .drill-beat.active {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .drill-beat.active.accent {
+      background: #4ecdc4;
+      border-color: #4ecdc4;
+    }
+
+    .drill-timer {
+      font-size: 1.4rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      color: var(--accent);
+      min-width: 2.2ch;
+      text-align: center;
+    }
+
+    .drill-timer.warn { color: #ff6b6b; }
+
+    .drill-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem 0.4rem;
+      align-items: center;
+      flex: 1 1 auto;
+    }
+
+    .drill-controls select {
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      border-radius: 5px;
+      padding: 0.22rem 0.35rem;
+      font-size: 0.72rem;
+      max-width: 10rem;
+    }
+
+    .drill-controls select.narrow { max-width: 5.2rem; }
+
+    .drill-status {
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    .drill-btns {
+      display: flex;
+      gap: 0.25rem;
+      flex: 0 0 auto;
+    }
+
+    .drill-btn {
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      border-radius: 5px;
+      padding: 0.28rem 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .drill-btn:hover { border-color: var(--accent); }
+    .drill-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .drill-btn-primary {
+      background: var(--accent);
+      color: #111;
+      border-color: var(--accent);
+    }
+
+    .drill-btn-danger {
+      background: transparent;
+      color: #ff6b6b;
+      border-color: #ff6b6b55;
+    }
+
+    .shape-card.drill-active {
+      box-shadow: 0 0 0 2px var(--card-accent), 0 4px 16px rgba(0,0,0,0.35);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>5 shapes no braço · escala menor</h1>
+  <p>Escolha a tonalidade e o tipo (natural / harmônica / melódica) — os 5 shapes CAGED nas casas absolutas. MOD-BRAÇO-01 · Nelson Faria</p>
+</header>
+
+<div class="controls">
+  <div class="control-group">
+    <label>Tonalidade (menor)</label>
+    <div class="key-grid" id="key-grid" role="group" aria-label="Tonalidade"></div>
+  </div>
+  <div class="control-group">
+    <label>Tipo</label>
+    <div class="key-grid" id="type-grid" role="group" aria-label="Tipo de menor">
+      <button type="button" class="type-btn active" data-type="nat">Natural</button>
+      <button type="button" class="type-btn" data-type="harm">Harmônica</button>
+      <button type="button" class="type-btn" data-type="mel">Melódica ↑</button>
+    </div>
+  </div>
+  <div class="control-group">
+    <label>Seleção</label>
+    <div class="tonic-display" id="tonic-display">—</div>
+  </div>
+</div>
+
+<section class="drill" id="drill" aria-label="Treino de shapes aleatórios">
+  <div class="drill-row">
+    <div class="drill-now idle" id="drill-current">
+      <span class="drill-tag">agora</span>
+      <span class="drill-letter" id="drill-letter">—</span>
+      <span class="drill-copy">
+        <span class="drill-shape-name" id="drill-shape-name">shape</span>
+        <span class="drill-meta" id="drill-meta">Aguardando…</span>
+      </span>
+    </div>
+    <div class="drill-next empty" id="drill-next" aria-live="polite">
+      <span class="drill-tag">próximo</span>
+      <span class="drill-letter" id="drill-next-letter">?</span>
+      <span class="drill-copy">
+        <span class="drill-shape-name" id="drill-next-name">—</span>
+        <span class="drill-meta" id="drill-next-meta">surpresa</span>
+      </span>
+    </div>
+    <div class="drill-queue-extra" id="drill-queue"></div>
+    <div class="drill-pulse-wrap" title="Metrônomo visual (sem som)">
+      <div class="drill-pulse" id="drill-pulse" aria-hidden="true"></div>
+      <div class="drill-beats" id="drill-beats">
+        <span class="drill-beat" data-beat="1"></span>
+        <span class="drill-beat" data-beat="2"></span>
+        <span class="drill-beat" data-beat="3"></span>
+        <span class="drill-beat" data-beat="4"></span>
+      </div>
+    </div>
+    <div class="drill-timer" id="drill-timer">—</div>
+    <div class="drill-btns">
+      <button type="button" class="drill-btn drill-btn-primary" id="drill-start">Iniciar</button>
+      <button type="button" class="drill-btn" id="drill-next-btn" disabled>Próximo</button>
+      <button type="button" class="drill-btn drill-btn-danger" id="drill-stop" disabled>Parar</button>
+    </div>
+  </div>
+  <div class="drill-row">
+    <div class="drill-controls">
+      <select id="drill-mode" title="Modo de sorteio" aria-label="Modo de sorteio">
+        <option value="bag" selected>Saco (5 sem repetir)</option>
+        <option value="pure">Aleatório</option>
+        <option value="neighbor">Vizinhos</option>
+      </select>
+      <select id="drill-seconds" class="narrow" title="Tempo por shape" aria-label="Tempo por shape">
+        <option value="0">Manual</option>
+        <option value="20">20s</option>
+        <option value="30" selected>30s</option>
+        <option value="45">45s</option>
+        <option value="60">60s</option>
+        <option value="90">90s</option>
+      </select>
+      <select id="drill-bpm" class="narrow" title="BPM do metrônomo visual" aria-label="BPM">
+        <option value="60">60</option>
+        <option value="70">70</option>
+        <option value="80" selected>80</option>
+        <option value="90">90</option>
+        <option value="100">100</option>
+        <option value="110">110</option>
+        <option value="120">120</option>
+      </select>
+      <select id="drill-preview" class="narrow" title="Prévia da fila" aria-label="Prévia">
+        <option value="0">Surpresa</option>
+        <option value="1" selected>Ver 1</option>
+        <option value="3">Ver 3</option>
+      </select>
+    </div>
+    <div class="drill-status" id="drill-status">parado</div>
+  </div>
+</section>
+
+<section>
+  <h2>Mapa do braço</h2>
+  <div class="legend-shapes" id="shape-legend"></div>
+  <div class="neck-wrap" id="neck-map"></div>
+</section>
+
+<section>
+  <h2>Detalhe por digitação</h2>
+  <div class="shapes-grid" id="shapes-grid"></div>
+</section>
+
+<footer>
+  Maior (mesmo layout): <a href="escalas-shapes-tonalidade.html">escalas-shapes-tonalidade.html</a> ·
+  Colunas: <a href="escalas-menor-shapes-treino-colunas.html">treino-colunas menor</a> ·
+  Zoom A-shape: <a href="escalas-menor-shapes-tablatura.html">3 tipos · A</a> ·
+  <a href="../../escalas-arpejos-treino/pages/drill-escala.html?family=natural-minor">Treinar no ginásio →</a> ·
+  Sistema 5 (CAGED): A → G → E → D → C · GPS menor 1/4/1/4/1
+</footer>
+
+<script>
+const STRING_LABELS = ['e','B','G','D','A','E'];
+const OPEN = [4, 11, 7, 2, 9, 4];
+const NOTE_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const FRETS = 5;
+
+const SHAPE_COLORS = {
+  A: 'var(--shape-a)',
+  G: 'var(--shape-g)',
+  E: 'var(--shape-e)',
+  D: 'var(--shape-d)',
+  C: 'var(--shape-c)'
+};
+
+const SHAPE_HEX = { A:'#4ecdc4', G:'#a78bfa', E:'#f0a030', D:'#ff6b6b', C:'#69db7c' };
+
+/** Âncora principal: corda (0=e … 5=E) + casa relativa da tônica no shape */
+const SHAPE_ANCHORS = {
+  A: { si: 4, rel: 2, hint: 'tônica na 5ª corda (A)' },
+  G: { si: 2, rel: 2, hint: 'tônica na 3ª corda (G)' },
+  E: { si: 5, rel: 3, hint: 'tônica na 6ª corda (E)' },
+  D: { si: 3, rel: 2, hint: 'tônica na 4ª corda (D)' },
+  C: { si: 4, rel: 5, hint: 'tônica na 5ª corda (A) · casa rel 5' }
+};
+
+/** Meta dos 5 shapes — ref = mesma âncora de SHAPE_ANCHORS (preenche a janela com a menor) */
+const SHAPE_META = {
+  A: { order: 1, name: 'Digitação 1 · A shape' },
+  G: { order: 2, name: 'Digitação 2 · G shape' },
+  E: { order: 3, name: 'Digitação 3 · E shape' },
+  D: { order: 4, name: 'Digitação 4 · D shape' },
+  C: { order: 5, name: 'Digitação 5 · C shape' }
+};
+
+const SCALE_TYPES = {
+  nat:  { id: 'nat',  label: 'natural',   formula: '1 2 ♭3 4 5 ♭6 ♭7', intervals: [0, 2, 3, 5, 7, 8, 10] },
+  harm: { id: 'harm', label: 'harmônica', formula: '1 2 ♭3 4 5 ♭6 7',   intervals: [0, 2, 3, 5, 7, 8, 11] },
+  mel:  { id: 'mel',  label: 'melódica',  formula: '1 2 ♭3 4 5 6 7',    intervals: [0, 2, 3, 5, 7, 9, 11] }
+};
+
+const DEG_LABEL = { 0: 1, 2: 2, 3: '♭3', 5: 4, 7: 5, 8: '♭6', 9: 6, 10: '♭7', 11: 7 };
+
+let rootPc = 9; // A menor por padrão
+let scaleType = 'nat';
+let highlightShape = null;
+let SHAPE_DATA = [];
+
+function buildShapeNotes(shapeId, typeId) {
+  const anchor = SHAPE_ANCHORS[shapeId];
+  const intervals = SCALE_TYPES[typeId].intervals;
+  const notes = [[], [], [], [], [], []];
+  for (let s = 0; s < 6; s++) {
+    for (let f = 1; f <= FRETS; f++) {
+      const iv = ((OPEN[s] + f) - (OPEN[anchor.si] + anchor.rel) + 120) % 12;
+      if (!intervals.includes(iv)) continue;
+      const n = { f, g: DEG_LABEL[iv] };
+      if (iv === 0) n.r = 1;
+      notes[s].push(n);
+    }
+  }
+  return notes;
+}
+
+function rebuildShapeData() {
+  SHAPE_DATA = ['A', 'G', 'E', 'D', 'C'].map(id => ({
+    id,
+    order: SHAPE_META[id].order,
+    name: SHAPE_META[id].name,
+    notes: buildShapeNotes(id, scaleType)
+  }));
+}
+
+/** Ordem circular do Sistema 5 no braço (vizinhos). */
+const CAGED_RING = ['A', 'G', 'E', 'D', 'C'];
+
+const drill = {
+  running: false,
+  mode: 'bag',
+  seconds: 30,
+  preview: 1,
+  bpm: 80,
+  beatsPerBar: 4,
+  beat: 0,
+  current: null,
+  history: [],
+  bag: [],
+  queue: [],
+  round: 0,
+  timerId: null,
+  metroId: null,
+  endsAt: 0,
+  remainingSec: 0
+};
+
+function noteAt(si, absFret) {
+  return (OPEN[si] + absFret) % 12;
+}
+
+function findWindowStart(si, relFret, root) {
+  for (let ws = 0; ws <= 22; ws++) {
+    if (noteAt(si, ws + relFret - 1) === root) return ws;
+  }
+  return 0;
+}
+
+function shapePlacement(shape, root) {
+  const anchor = SHAPE_ANCHORS[shape.id];
+  const ws = findWindowStart(anchor.si, anchor.rel, root);
+  const absNotes = [];
+  shape.notes.forEach((stringNotes, si) => {
+    stringNotes.forEach(n => {
+      absNotes.push({
+        si,
+        abs: ws + n.f - 1,
+        rel: n.f,
+        root: !!n.r,
+        g: n.g
+      });
+    });
+  });
+  return {
+    ws,
+    we: ws + FRETS - 1,
+    absNotes,
+    anchorAbs: ws + anchor.rel - 1,
+    hint: anchor.hint
+  };
+}
+
+function renderNeckMap(placements) {
+  const minWs = Math.min(...placements.map(p => p.ws));
+  const maxWe = Math.max(...placements.map(p => p.we));
+  const minFret = minWs;
+  const maxFret = maxWe;
+  const fretCount = maxFret - minFret + 1;
+
+  const padL = 36, padT = 28, padR = 16, padB = 22;
+  const fretW = 44;
+  const strH = 14;
+  const W = padL + fretCount * fretW + padR;
+  const H = padT + 5 * strH + padB;
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+
+  // faixas dos shapes
+  placements.forEach(p => {
+    if (highlightShape && highlightShape !== p.shape.id) return;
+    const x0 = padL + (p.ws - minFret) * fretW;
+    const x1 = padL + (p.we - minFret + 1) * fretW;
+    const col = SHAPE_HEX[p.shape.id];
+    svg += `<rect x="${x0}" y="${padT - 4}" width="${x1 - x0}" height="${5 * strH + 8}" fill="${col}" opacity="0.12" rx="3"/>`;
+  });
+
+  // nut só quando algum shape começa na região aberta (ws = 0)
+  if (minFret === 0) {
+    const x = padL;
+    svg += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + 5 * strH}" stroke="#888" stroke-width="4"/>`;
+  }
+
+  // trastes verticais + números
+  for (let f = minFret; f <= maxFret; f++) {
+    const x = padL + (f - minFret) * fretW;
+    const thick = f === 0 ? 0 : 1;
+    if (f > 0) {
+      svg += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + 5 * strH}" stroke="#555" stroke-width="${thick}"/>`;
+    }
+    if (f >= minFret) {
+      const labelX = x + fretW * 0.5;
+      svg += `<text x="${labelX}" y="${padT - 8}" text-anchor="middle" font-size="10" fill="#888" font-family="system-ui">${f}</text>`;
+    }
+  }
+
+  // cordas
+  for (let s = 0; s < 6; s++) {
+    const y = padT + s * strH;
+    svg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#666" stroke-width="${s === 5 ? 2 : 1}"/>`;
+    svg += `<text x="8" y="${y + 4}" font-size="10" fill="#888" font-weight="600" font-family="system-ui">${STRING_LABELS[s]}</text>`;
+  }
+
+  // notas
+  placements.forEach(p => {
+    if (highlightShape && highlightShape !== p.shape.id) return;
+    const col = SHAPE_HEX[p.shape.id];
+    p.absNotes.forEach(n => {
+      const x = padL + (n.abs - minFret + 0.5) * fretW;
+      const y = padT + n.si * strH;
+      if (n.root) {
+        svg += `<circle cx="${x}" cy="${y}" r="6" fill="#fff" stroke="${col}" stroke-width="2.5"/>`;
+      } else {
+        svg += `<circle cx="${x}" cy="${y}" r="5" fill="${col}"/>`;
+      }
+    });
+  });
+
+  svg += '</svg>';
+  return svg;
+}
+
+function renderShapeCard(shape, placement) {
+  const W = 320, H = 118;
+  const padL = 34, padT = 22, padR = 12;
+  const fretW = (W - padL - padR) / FRETS;
+  const strH = (H - padT - 16) / 5;
+  const ws = placement.ws;
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+
+  // números absolutos das casas
+  for (let i = 0; i < FRETS; i++) {
+    const abs = ws + i;
+    const x = padL + (i + 0.5) * fretW;
+    svg += `<text x="${x}" y="12" text-anchor="middle" font-size="11" fill="${SHAPE_HEX[shape.id]}" font-weight="700" font-family="system-ui">${abs}</text>`;
+  }
+
+  svg += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT + 5 * strH}" stroke="#666" stroke-width="3"/>`;
+  for (let i = 1; i < FRETS; i++) {
+    const x = padL + i * fretW;
+    svg += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + 5 * strH}" stroke="#555" stroke-width="1"/>`;
+  }
+
+  for (let s = 0; s < 6; s++) {
+    const y = padT + s * strH;
+    svg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#555" stroke-width="${s === 5 ? 2 : 1}"/>`;
+    svg += `<text x="6" y="${y + 3.5}" font-size="9" fill="#888" font-weight="600" font-family="system-ui">${STRING_LABELS[s]}</text>`;
+  }
+
+  shape.notes.forEach((stringNotes, s) => {
+    stringNotes.forEach(n => {
+      const x = padL + (n.f - 0.5) * fretW;
+      const y = padT + s * strH;
+      if (n.r) {
+        svg += `<circle cx="${x}" cy="${y}" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>`;
+      } else {
+        svg += `<circle cx="${x}" cy="${y}" r="4.5" fill="#111"/>`;
+      }
+    });
+  });
+
+  svg += '</svg>';
+  return svg;
+}
+
+function buildLegend() {
+  const el = document.getElementById('shape-legend');
+  el.innerHTML = SHAPE_DATA.map(s => `
+    <button type="button" data-shape="${s.id}" class="legend-btn">
+      <i class="swatch" style="background:${SHAPE_HEX[s.id]}"></i>
+      ${s.id} shape
+    </button>
+  `).join('') + `
+    <button type="button" data-shape="" class="legend-btn active">Todos</button>`;
+
+  el.querySelectorAll('.legend-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      highlightShape = btn.dataset.shape || null;
+      el.querySelectorAll('.legend-btn').forEach(b => b.classList.toggle('active', b === btn));
+      el.querySelectorAll('.legend-btn').forEach(b => {
+        if (b.dataset.shape) b.classList.toggle('dim', highlightShape && b.dataset.shape !== highlightShape);
+      });
+      render();
+    });
+  });
+}
+
+function buildKeyGrid() {
+  const grid = document.getElementById('key-grid');
+  NOTE_NAMES.forEach((name, pc) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'key-btn' + (pc === rootPc ? ' active' : '');
+    btn.textContent = name;
+    btn.dataset.pc = pc;
+    btn.addEventListener('click', () => {
+      rootPc = pc;
+      grid.querySelectorAll('.key-btn').forEach(b => b.classList.toggle('active', +b.dataset.pc === rootPc));
+      render();
+    });
+    grid.appendChild(btn);
+  });
+}
+
+function render() {
+  const name = NOTE_NAMES[rootPc];
+  const type = SCALE_TYPES[scaleType];
+  document.getElementById('tonic-display').innerHTML =
+    `${name} menor <span>· ${type.label} · ${type.formula}</span>`;
+
+  // No treino, o mapa foca no shape atual
+  if (drill.running && drill.current) {
+    highlightShape = drill.current;
+    document.querySelectorAll('.legend-btn').forEach(b => {
+      const match = b.dataset.shape === drill.current;
+      b.classList.toggle('active', match);
+      if (b.dataset.shape) b.classList.toggle('dim', !match);
+    });
+  }
+
+  const placements = SHAPE_DATA.map(shape => ({
+    shape,
+    ...shapePlacement(shape, rootPc)
+  }));
+
+  document.getElementById('neck-map').innerHTML = renderNeckMap(placements);
+
+  const grid = document.getElementById('shapes-grid');
+  grid.innerHTML = placements.map(p => {
+    const range = p.ws === p.we ? `${p.ws}` : `${p.ws}–${p.we}`;
+    const hl = highlightShape === p.shape.id ? ' highlight' : '';
+    const active = drill.running && drill.current === p.shape.id ? ' drill-active' : '';
+    return `
+      <article class="shape-card${hl}${active}" data-shape="${p.shape.id}" style="--card-accent:${SHAPE_HEX[p.shape.id]}">
+        <div class="shape-card-head">
+          <h3>${p.shape.name}</h3>
+          <span class="shape-range">casas ${range}</span>
+        </div>
+        ${renderShapeCard(p.shape, p)}
+        <p class="anchor-note">${p.hint} · casa ${p.anchorAbs} (${name})</p>
+      </article>`;
+  }).join('');
+
+  grid.querySelectorAll('.shape-card').forEach(card => {
+    card.addEventListener('click', () => {
+      if (drill.running) return;
+      const id = card.dataset.shape;
+      highlightShape = highlightShape === id ? null : id;
+      document.querySelectorAll('.legend-btn').forEach(b => {
+        const match = !highlightShape ? !b.dataset.shape : b.dataset.shape === highlightShape;
+        b.classList.toggle('active', match);
+        if (b.dataset.shape) b.classList.toggle('dim', highlightShape && b.dataset.shape !== highlightShape);
+      });
+      render();
+    });
+  });
+
+  updateDrillPanel(placements);
+}
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function refillBag(avoid) {
+  let next = shuffle(CAGED_RING);
+  // Evita começar o novo saco com o mesmo shape que acabou
+  if (avoid && next[0] === avoid && next.length > 1) {
+    const swap = 1 + Math.floor(Math.random() * (next.length - 1));
+    [next[0], next[swap]] = [next[swap], next[0]];
+  }
+  drill.bag = next;
+}
+
+/** Sorteia o próximo id a partir de `from` (shape de referência). Mutates drill.bag no modo bag. */
+function pickNextShape(from) {
+  if (drill.mode === 'bag') {
+    if (!drill.bag.length) refillBag(from);
+    return drill.bag.shift();
+  }
+  if (drill.mode === 'neighbor') {
+    if (!from) return CAGED_RING[Math.floor(Math.random() * CAGED_RING.length)];
+    const i = CAGED_RING.indexOf(from);
+    const opts = [
+      CAGED_RING[(i + 1) % CAGED_RING.length],
+      CAGED_RING[(i - 1 + CAGED_RING.length) % CAGED_RING.length]
+    ];
+    return opts[Math.floor(Math.random() * opts.length)];
+  }
+  // pure: qualquer, sem repetir o imediato
+  const pool = CAGED_RING.filter(s => s !== from);
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+/** Mantém na fila o suficiente para o preview + margem. */
+function buildPreviewQueue() {
+  const need = Math.max(3, drill.preview + 2);
+  while (drill.queue.length < need) {
+    const from = drill.queue.length
+      ? drill.queue[drill.queue.length - 1]
+      : drill.current;
+    drill.queue.push(pickNextShape(from));
+  }
+}
+
+function advanceDrill() {
+  if (!drill.queue.length) buildPreviewQueue();
+  const id = drill.queue.shift();
+  drill.current = id;
+  drill.history.push(id);
+  drill.round++;
+  buildPreviewQueue();
+  startDrillCountdown();
+  render();
+}
+
+function startDrillCountdown() {
+  clearInterval(drill.timerId);
+  drill.timerId = null;
+
+  if (!drill.seconds) {
+    drill.remainingSec = 0;
+    drill.endsAt = 0;
+    updateDrillTimerUI();
+    return;
+  }
+
+  drill.remainingSec = drill.seconds;
+  drill.endsAt = performance.now() + drill.seconds * 1000;
+  updateDrillTimerUI();
+
+  drill.timerId = setInterval(() => {
+    const left = Math.max(0, Math.ceil((drill.endsAt - performance.now()) / 1000));
+    drill.remainingSec = left;
+    updateDrillTimerUI();
+    if (left <= 0) {
+      clearInterval(drill.timerId);
+      drill.timerId = null;
+      advanceDrill();
+    }
+  }, 200);
+}
+
+function updateDrillTimerUI() {
+  const el = document.getElementById('drill-timer');
+  if (!drill.running) {
+    el.textContent = '—';
+    el.classList.remove('warn');
+    return;
+  }
+  if (!drill.seconds) {
+    el.textContent = '∞';
+    el.classList.remove('warn');
+    return;
+  }
+  el.textContent = String(drill.remainingSec);
+  el.classList.toggle('warn', drill.remainingSec <= 5 && drill.remainingSec > 0);
+}
+
+function flashMetroBeat() {
+  drill.beat = (drill.beat % drill.beatsPerBar) + 1;
+  const accent = drill.beat === 1;
+  const pulse = document.getElementById('drill-pulse');
+  pulse.classList.add('on');
+  pulse.classList.toggle('accent', accent);
+  document.querySelectorAll('#drill-beats .drill-beat').forEach(dot => {
+    const on = Number(dot.dataset.beat) === drill.beat;
+    dot.classList.toggle('active', on);
+    dot.classList.toggle('accent', on && accent);
+  });
+  clearTimeout(flashMetroBeat._t);
+  flashMetroBeat._t = setTimeout(() => {
+    pulse.classList.remove('on', 'accent');
+  }, 90);
+}
+
+function startVisualMetro() {
+  stopVisualMetro();
+  drill.beat = 0;
+  const ms = 60000 / Math.max(30, drill.bpm);
+  flashMetroBeat();
+  drill.metroId = setInterval(flashMetroBeat, ms);
+}
+
+function stopVisualMetro() {
+  clearInterval(drill.metroId);
+  drill.metroId = null;
+  drill.beat = 0;
+  const pulse = document.getElementById('drill-pulse');
+  pulse?.classList.remove('on', 'accent');
+  document.querySelectorAll('#drill-beats .drill-beat').forEach(d => {
+    d.classList.remove('active', 'accent');
+  });
+}
+
+function placeRange(placements, id) {
+  const place = placements.find(p => p.shape.id === id);
+  if (!place) return '?';
+  return place.ws === place.we ? `${place.ws}` : `${place.ws}–${place.we}`;
+}
+
+function updateDrillPanel(placements) {
+  const curEl = document.getElementById('drill-current');
+  const letterEl = document.getElementById('drill-letter');
+  const nameEl = document.getElementById('drill-shape-name');
+  const metaEl = document.getElementById('drill-meta');
+  const nextEl = document.getElementById('drill-next');
+  const nextLetter = document.getElementById('drill-next-letter');
+  const nextName = document.getElementById('drill-next-name');
+  const nextMeta = document.getElementById('drill-next-meta');
+  const statusEl = document.getElementById('drill-status');
+  const queueEl = document.getElementById('drill-queue');
+  const name = NOTE_NAMES[rootPc];
+
+  if (!drill.running || !drill.current) {
+    curEl.classList.add('idle');
+    curEl.style.setProperty('--drill-accent', 'var(--border)');
+    letterEl.textContent = '—';
+    letterEl.style.color = '';
+    nameEl.textContent = 'shape';
+    nameEl.style.color = '';
+    metaEl.textContent = 'Aguardando…';
+    nextEl.classList.add('empty');
+    nextLetter.textContent = '?';
+    nextLetter.style.color = '';
+    nextName.textContent = '—';
+    nextName.style.color = '';
+    nextMeta.textContent = 'surpresa';
+    statusEl.textContent = 'parado';
+    queueEl.innerHTML = '';
+    updateDrillTimerUI();
+    return;
+  }
+
+  const place = placements.find(p => p.shape.id === drill.current);
+  const col = SHAPE_HEX[drill.current];
+
+  curEl.classList.remove('idle');
+  curEl.style.setProperty('--drill-accent', col);
+  letterEl.textContent = drill.current;
+  letterEl.style.color = col;
+  nameEl.textContent = `${drill.current} shape`;
+  nameEl.style.color = col;
+  metaEl.innerHTML =
+    `<strong>${name}</strong> · casas <strong>${placeRange(placements, drill.current)}</strong>` +
+    ` · tônica ${place?.anchorAbs ?? '—'}`;
+
+  statusEl.innerHTML = `#${drill.round} · ${drill.history.slice(-5).join('→')}`;
+
+  const upcoming = drill.queue.slice(0, Math.max(drill.preview, 0));
+  if (!drill.preview || !upcoming.length) {
+    nextEl.classList.add('empty');
+    nextLetter.textContent = '?';
+    nextLetter.style.color = '';
+    nextName.textContent = 'surpresa';
+    nextName.style.color = '';
+    nextMeta.textContent = 'fila oculta';
+    queueEl.innerHTML = '';
+  } else {
+    const nextId = upcoming[0];
+    const nextCol = SHAPE_HEX[nextId];
+    nextEl.classList.remove('empty');
+    nextLetter.textContent = nextId;
+    nextLetter.style.color = nextCol;
+    nextName.textContent = `${nextId} shape`;
+    nextName.style.color = nextCol;
+    nextMeta.innerHTML = `casas <strong>${placeRange(placements, nextId)}</strong>`;
+    queueEl.innerHTML = upcoming.slice(1).map(id =>
+      `<span class="queue-chip" style="background:${SHAPE_HEX[id]}22;color:${SHAPE_HEX[id]}">${id}</span>`
+    ).join('');
+  }
+
+  updateDrillTimerUI();
+}
+
+function syncDrillControls() {
+  drill.mode = document.getElementById('drill-mode').value;
+  drill.seconds = Number(document.getElementById('drill-seconds').value);
+  drill.preview = Number(document.getElementById('drill-preview').value);
+  drill.bpm = Number(document.getElementById('drill-bpm').value) || 80;
+
+  document.getElementById('drill-start').disabled = drill.running;
+  document.getElementById('drill-next-btn').disabled = !drill.running;
+  document.getElementById('drill-stop').disabled = !drill.running;
+  document.getElementById('drill-mode').disabled = drill.running;
+  document.getElementById('drill-seconds').disabled = drill.running;
+}
+
+function startDrill() {
+  syncDrillControls();
+  drill.running = true;
+  drill.history = [];
+  drill.bag = [];
+  drill.queue = [];
+  drill.round = 0;
+  drill.current = null;
+  refillBag(null);
+  buildPreviewQueue();
+  syncDrillControls();
+  startVisualMetro();
+  advanceDrill();
+}
+
+function stopDrill() {
+  clearInterval(drill.timerId);
+  drill.timerId = null;
+  stopVisualMetro();
+  drill.running = false;
+  drill.current = null;
+  drill.queue = [];
+  drill.bag = [];
+  drill.remainingSec = 0;
+  highlightShape = null;
+  document.querySelectorAll('.legend-btn').forEach(b => {
+    b.classList.toggle('active', !b.dataset.shape);
+    b.classList.remove('dim');
+  });
+  syncDrillControls();
+  render();
+}
+
+function bindDrillUI() {
+  document.getElementById('drill-start').addEventListener('click', startDrill);
+  document.getElementById('drill-stop').addEventListener('click', stopDrill);
+  document.getElementById('drill-next-btn').addEventListener('click', () => {
+    if (!drill.running) return;
+    advanceDrill();
+  });
+
+  document.getElementById('drill-bpm').addEventListener('change', () => {
+    drill.bpm = Number(document.getElementById('drill-bpm').value) || 80;
+    if (drill.running) startVisualMetro();
+  });
+
+  ['drill-mode', 'drill-seconds', 'drill-preview'].forEach(id => {
+    document.getElementById(id).addEventListener('change', () => {
+      if (!drill.running) syncDrillControls();
+      else if (id === 'drill-preview') {
+        drill.preview = Number(document.getElementById('drill-preview').value);
+        buildPreviewQueue();
+        render();
+      }
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.code !== 'Space' && e.key !== ' ') return;
+    if (!drill.running) return;
+    const tag = (e.target && e.target.tagName) || '';
+    if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA' || e.target.isContentEditable) return;
+    e.preventDefault();
+    advanceDrill();
+  });
+
+  syncDrillControls();
+}
+
+function bindTypeGrid() {
+  const grid = document.getElementById('type-grid');
+  grid.querySelectorAll('.type-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      scaleType = btn.dataset.type;
+      grid.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('active', b === btn));
+      rebuildShapeData();
+      render();
+    });
+  });
+}
+
+rebuildShapeData();
+buildKeyGrid();
+buildLegend();
+bindTypeGrid();
+bindDrillUI();
+render();
+</script>
+
+</body>
+</html>

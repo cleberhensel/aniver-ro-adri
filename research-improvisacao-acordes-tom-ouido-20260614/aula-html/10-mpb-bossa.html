@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Módulo 10 — MPB, Bossa Nova e Dispositivos Harmônicos</title>
+  <link rel="stylesheet" href="css/curso.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand"><h1>Harmonia Funcional</h1><p>MPB · Bossa</p></div>
+    <nav id="sidebar-nav"></nav>
+    <div style="padding:0 1.25rem 1rem">
+      <div id="course-progress-label" style="font-size:0.8rem;color:var(--text-muted)"></div>
+      <div class="progress-bar-wrap"><div id="course-progress-bar" class="progress-bar-fill" style="width:0"></div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="hero">
+      <h1>MPB e bossa nova: além do pop triádico</h1>
+      <p class="lead">Se você internalizou I–V–vi–IV em tríades e encontrar uma bossa, vai errar sistematicamente. MPB usa maj7, m7, diminutos e cromatismo como <strong>regra</strong>, não exceção.</p>
+    </header>
+
+    <h2>1. MPB ≠ pop triádico</h2>
+    <blockquote>“Plain triads are rare in bossa nova.” — Chordly / análises de repertório Jobim</blockquote>
+    <p>As diferenças fundamentais:</p>
+    <table>
+      <tr><th>Aspecto</th><th>Pop triádico</th><th>MPB / Bossa</th></tr>
+      <tr><td>Tônica</td><td>C (triade maior)</td><td>Cmaj7 (sétima maior)</td></tr>
+      <tr><td>Cadência</td><td>G → C ou G → Am</td><td>Dm7 → G7 → Cmaj7</td></tr>
+      <tr><td>Acordes “estranhos”</td><td>Erro ou capricho</td><td>Diminutos, bII, trítono — dispositivos</td></tr>
+      <tr><td>Cromatismo</td><td>Raro</td><td>Alto — voice leading</td></tr>
+      <tr><td>Voicings</td><td>6 cordas, barré</td><td>4 cordas, shell voicings</td></tr>
+    </table>
+
+    <div class="warn">Violonista que toca C onde a cifra pede Cmaj7 “funciona” em bar, mas soa amador em contexto bossa. A 7ª maior é parte da identidade harmônica.</div>
+
+    <h2>2. Dispositivos essenciais de Jobim — checklist auditivo</h2>
+    <p>Estes 6 dispositivos cobrem a maioria do repertório MPB avançado. Internalize o <strong>som</strong>, não só a cifra:</p>
+
+    <div class="card card-fn-T">
+      <h3 style="margin-top:0">2.1 bIImaj7 → I (Neapolitana bossa)</h3>
+      <pre>Dbmaj7 → Cmaj7
+Baixo desce semítone — transição mais suave possível</pre>
+      <p><strong>Onde:</strong> Garota de Ipanema, Insensatez, dezenas de Jobim.</p>
+      <p><strong>NNS:</strong> <code>b2maj7 → 1maj7</code></p>
+    </div>
+
+    <div class="card card-fn-SD">
+      <h3 style="margin-top:0">2.2 Substituição trítono</h3>
+      <pre>Em vez de C7 → F:  Gb7 → F (ou Gb7 → Cmaj7)
+Guide tones idênticos: B + F</pre>
+      <p><strong>Onde:</strong> Garota de Ipanema — Fmaj7 → Gb7 (não C7).</p>
+      <p><strong>Auditivo:</strong> som “surpresa suave” — cromático mas elegante.</p>
+    </div>
+
+    <div class="card card-fn-D">
+      <h3 style="margin-top:0">2.3 m6 como dominante substituto</h3>
+      <pre>Cm6 funciona como F7 (dominante de Bb ou subdominante de C)
+Jobim: Só Danço Samba — G-6 como dominante</pre>
+      <p><strong>Shape violão:</strong> <code>x02212</code></p>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">2.4 Diminuto passagem</h3>
+      <pre>A°7 → Bbmaj7 | A°7 → Am7 | C#°7 → Dm7
+Dura 1–2 tempos. Baixo move cromaticamente.</pre>
+      <p><strong>Onde:</strong> Outra Vez, Wave, inúmeras passagens Jobim.</p>
+      <p><strong>Auditivo:</strong> “escada” entre dois acordes estáveis — nunca repouso.</p>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">2.5 Imaj7 → Im7 (mesma tônica)</h3>
+      <pre>Dmaj7 → Dm7 — alternância major/menor no centro tonal
+Olha pro Céu, Wave</pre>
+      <p><strong>Efeito:</strong> mudança de cor emocional sem mudar tom.</p>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">2.6 Backdoor dominant</h3>
+      <pre>Bb7 → Cmaj7 (bVII7 → I)
+Som “surpresa” mas suave — blues infiltrado na bossa</pre>
+      <p><strong>NNS:</strong> <code>b7 → 1maj7</code></p>
+    </div>
+
+    <h2>3. Progressões-modelo MPB</h2>
+    <table>
+      <tr><th>Progressão (NNS)</th><th>Uso</th><th>Referência</th></tr>
+      <tr><td><code>2-7 – 57 – 1maj7</code></td><td>Cadência central</td><td>Insensatez</td></tr>
+      <tr><td><code>1maj7 – b2maj7 – 2-7 – 57</code></td><td>Abertura sofisticada</td><td>Garota (A section)</td></tr>
+      <tr><td><code>1maj7 – °7 – 2-7 – 57</code></td><td>Descida cromática</td><td>Outra Vez</td></tr>
+      <tr><td><code>2-7 – b5-7 – 1maj7</code></td><td>Substituição trítono</td><td>Garota</td></tr>
+      <tr><td><code>4maj7 – 3-7 – 2-7</code></td><td>Voice leading descendente</td><td>Brigas Nunca Mais</td></tr>
+    </table>
+
+    <h2>4. Análise detalhada — “Outra Vez” (Jobim)</h2>
+    <p>Exemplo completo de como pensar em números, não cifras:</p>
+
+    <pre>Compasso  |  Cifra (tom C)     |  NNS           |  Função
+----------|-------------------|----------------|------------------
+1–2       |  Cmaj7             |  1maj7         |  Tônica repouso
+3         |  Eb°7              |  #1°7 / passagem|  Cromático → ii
+4         |  Dm7               |  2-7           |  Subdominante prep
+5–6       |  G7(b9)            |  57             |  Dominante
+7–8       |  Cmaj7             |  1maj7         |  Resolução</pre>
+
+    <h3>Decodificação harmônica</h3>
+    <ul>
+      <li><strong>Eb°7:</strong> baixo desce Mi → Ré# → Ré (Eb° enharmônico = D#°). Prepara <strong>Dm7</strong> (ii).</li>
+      <li><strong>G7(b9):</strong> dominante com tensão extra — resolve fortemente em Cmaj7.</li>
+      <li><strong>Padrão reconhecível:</strong> maj7 tônica → diminuto passagem → ii–V — não precisa decorar Eb°7; precisa reconhecer o <em>tipo</em> de movimento.</li>
+    </ul>
+
+    <div class="tip">Violonista que conhece o <strong>padrão</strong> (não a cifra) reconhece: maj7 tônica → diminuto passagem → ii–V. Transponha o padrão para qualquer tom.</div>
+
+    <h2>5. Samba vs. Bossa — expectativas diferentes</h2>
+    <table>
+      <tr><th>Aspecto</th><th>Samba</th><th>Bossa nova</th></tr>
+      <tr><td>Harmonia</td><td>Mais triádica; IV–I comum</td><td>Maj7, extensions, cromatismo</td></tr>
+      <tr><td>Ritmo</td><td>Semínima / compasso forte</td><td>Antecipação, sincopação</td></tr>
+      <tr><td>Cromatismo</td><td>Moderado</td><td>Alto</td></tr>
+      <tr><td>Referência</td><td>Cartola, Noel Rosa, Adoniran</td><td>Jobim, João Gilberto, Tom</td></tr>
+      <tr><td>Progressão típica</td><td>I – IV – I – V</td><td>ii7 – V7 – Imaj7</td></tr>
+      <tr><td>Ao vivo (rodízio)</td><td>Montagens Dó/Sol/Ré</td><td>Voicings compactos, antecipação</td></tr>
+      <tr><td>Modulação</td><td>Sequência de dominantes</td><td>Cromática, bII, trítono</td></tr>
+    </table>
+
+    <p>Para <strong>rodízio de samba ao vivo</strong>: espere I–IV–I–V, montagens em Dó/Sol/Ré, modulação por sequência de dominantes. Para <strong>bossa</strong>: espere maj7, ii7–V7–Imaj7, diminutos passagem.</p>
+
+    <h2>6. Voicings essenciais no violão — referência rápida</h2>
+    <table>
+      <tr><th>Acorde</th><th>Shape</th><th>Notas</th></tr>
+      <tr><td>maj7</td><td><code>x3545x</code></td><td>1-3-5-7 compacto</td></tr>
+      <tr><td>m7</td><td><code>x353x</code> / <code>xx0211</code></td><td>Shell ii</td></tr>
+      <tr><td>dom7</td><td><code>x3530x</code></td><td>V7 essencial</td></tr>
+      <tr><td>m6</td><td><code>x02212</code></td><td>Dispositivo bossa</td></tr>
+      <tr><td>dim7</td><td><code>xx1212</code></td><td>Passagem cromática</td></tr>
+    </table>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">1</span> 5 dispositivos em 3 tons</div>
+      <p>Toque cada dispositivo Jobim (bIImaj7→I, trítono, m6, °7 passagem, backdoor) em <strong>Dó, Sol e Fá</strong>. Cante os números. Meta: reconhecer auditivamente sem olhar cifra.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">2</span> Outra Vez — transposição</div>
+      <p>Anote “Outra Vez” só em NNS. Transponha para Lá, Mi e Bb. Toque voicings compactos. Confira com gravação original em cada tom.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">3</span> Bossa vs pop — detector</div>
+      <p>Ouça 10 trechos (5 bossa, 5 pop). Antes de ver cifra: triade ou maj7 no repouso? ii–V–I ou axis? Meta: 8/10 acertos.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">4</span> Análise numérica de 10 Jobim</div>
+      <p>Escolha 10 composições Jobim. Reescreva refrão em números. Identifique quais dispositivos aparecem. Agrupe por padrão (ii–V–I, °7 passagem, bII…).</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">5</span> Samba ao vivo — montagem</div>
+      <p>Simule rodízio: I–IV–I–V em Sol com batida de contratempo. Parceiro canta melodia simples. Pratique transição suave IV→V sem quebrar ritmo.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">6</span> Voice leading Jobim</div>
+      <p>Toque sequência: <code>Cmaj7 → Eb°7 → Dm7 → G7 → Cmaj7</code> com mínimo movimento de dedos. Grave e compare com voicings “grandes”. Qual deixa mais espaço vocal?</p>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger" type="button">Aprofundamento: antecipação harmônica na bossa</button>
+      <div class="accordion-body">
+        <p>Na bossa, o acorde frequentemente entra <strong>ligeiramente antes</strong> do tempo — no “e” antes do downbeat. Isso não muda a harmonia, mas afeta como o acompanhante percebe o fluxo.</p>
+        <p><strong>Prática:</strong> ouça João Gilberto. Note onde o acorde “puxa” a melodia. Violonista deve antecipar suavemente, não empurrar o cantor.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger" type="button">Repertório sugerido para estudo</button>
+      <div class="accordion-body">
+        <ol>
+          <li>Garota de Ipanema — bIImaj7, trítono, ii–V–I</li>
+          <li>Insensatez — ii7–V7–Imaj7 clássico</li>
+          <li>Outra Vez — °7 passagem</li>
+          <li>Wave — Imaj7→Im7</li>
+          <li>Desafinado — cromatismo moderado</li>
+          <li>Chega de Saudade — proto-bossa</li>
+          <li>Águas de Março — modulação e voz leading</li>
+          <li>Corcovado — voicings compactos</li>
+        </ol>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem"><button class="btn" id="mark-module-complete" data-module="10">Marcar módulo como concluído</button></p>
+
+    <div class="nav-footer">
+      <a href="09-acompanhamento-vivo.html">← Ao vivo com cantor</a>
+      <a href="11-plano-treino.html">Plano 12 meses →</a>
+    </div>
+  </main>
+</div>
+<script src="js/chords-dict.js"></script>
+<script src="js/chord-diagrams.js"></script>
+<script src="js/chord-auto.js"></script>
+<script src="js/theory-data.js"></script>
+<script src="js/curso.js"></script>
+</body>
+</html>

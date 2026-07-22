@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Módulo 05 — Acordes e qualidades</title>
+  <link rel="stylesheet" href="css/curso.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h1>Harmonia Funcional</h1>
+      <p>Tocar de ouvido — técnica, não magia</p>
+    </div>
+    <nav id="sidebar-nav"></nav>
+    <div style="padding:0 1.25rem 1rem">
+      <div id="course-progress-label" style="font-size:0.8rem;color:var(--text-muted)">0/11 módulos</div>
+      <div class="progress-bar-wrap"><div id="course-progress-bar" class="progress-bar-fill" style="width:0"></div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="hero">
+      <h1>Acordes e qualidades: tríades e sétimas</h1>
+      <p class="lead">Depois de saber <em>qual grau</em> tocar (Módulo 04), você precisa saber <em>como</em> ele soa — maior, menor, dominante, maj7… Este módulo treina o ouvido para distinguir qualidades e escolher voicings enxutos no violão.</p>
+    </header>
+
+    <h2>Tríades — os quatro tipos</h2>
+    <p>Tríade = três notas empilhadas em terças. A qualidade depende dos intervalos entre raiz, 3ª e 5ª.</p>
+
+    <table>
+      <tr><th>Tipo</th><th>Símbolo</th><th>Intervalos</th><th>Em Dó</th><th>Sensação</th><th>Função típica</th></tr>
+      <tr><td><strong>Maior</strong></td><td>M, maj, Δ</td><td>3M + 3m</td><td>C (C-E-G)</td><td>Brilhante, estável, aberto</td><td>I, IV, V</td></tr>
+      <tr><td><strong>Menor</strong></td><td>m, min, −</td><td>3m + 3M</td><td>Cm (C-Eb-G)</td><td>Melancólico, fechado</td><td>ii, iii, vi</td></tr>
+      <tr><td><strong>Diminuta</strong></td><td>dim, °</td><td>3m + 3m</td><td>Cdim (C-Eb-Gb)</td><td>Instável, suspense</td><td>vii°, passagem</td></tr>
+      <tr><td><strong>Aumentada</strong></td><td>aug, +</td><td>3M + 3M</td><td>Caug (C-E-G#)</td><td>Flutuante, ambígua</td><td>Passagem, jazz</td></tr>
+    </table>
+
+    <div class="chord-pills">
+      <span class="chord-pill">C</span>
+      <span class="chord-pill">Cm</span>
+      <span class="chord-pill">Cdim</span>
+      <span class="chord-pill">Caug</span>
+    </div>
+
+    <div class="tip">No campo harmônico maior, só existem tríades M, m e dim — aug não é diatônica. Quando ouvir aug, pense passagem cromática ou jazz.</div>
+
+    <h3>Comparando tríades no instrumento</h3>
+    <p>Toque C, Cm, Cdim e Caug em sequência. Preste atenção:</p>
+    <ul>
+      <li><strong>M → m:</strong> apenas a 3ª muda (Mi → Mi♭) — diferença sutil mas decisiva</li>
+      <li><strong>m → dim:</strong> 3ª e 5ª mudam — sensação de "queda" e instabilidade</li>
+      <li><strong>M → aug:</strong> 5ª sobe (Sol → Sol#) — som "flutuante", sem repouso</li>
+    </ul>
+
+    <h2>Acordes com sétima — a paleta completa</h2>
+    <p>Adicionar a 7ª transforma completamente a função e a cor do acorde. Na prática ao vivo, distinguir triade de 7ª é tão importante quanto distinguir grau.</p>
+
+    <table>
+      <tr><th>Tipo</th><th>Símbolo</th><th>Estrutura</th><th>Em Dó</th><th>Sensação</th><th>Função típica</th></tr>
+      <tr><td><strong>Maj7</strong></td><td>maj7, M7, Δ7</td><td>3M + 3m + 3M</td><td>Cmaj7</td><td>Repouso sofisticado, "jazz", suave</td><td>I em bossa, IV maj7</td></tr>
+      <tr><td><strong>Dom7</strong></td><td>7, dom7</td><td>3M + 3m + 3m</td><td>C7</td><td>Tensão bluesy — quer resolver</td><td>V em todo estilo</td></tr>
+      <tr><td><strong>Menor 7</strong></td><td>m7, min7</td><td>3m + 3M + 3m</td><td>Cm7</td><td>Suave, preparação</td><td>ii, vi em jazz</td></tr>
+      <tr><td><strong>Menor-maj7</strong></td><td>m(maj7), mM7</td><td>3m + 3M + 3M</td><td>Cm(maj7)</td><td>Picante, noir, cinematográfico</td><td>i menor, passagem</td></tr>
+      <tr><td><strong>Meio-diminuta</strong></td><td>ø7, m7b5</td><td>3m + 3m + 3M</td><td>Cø7</td><td>Instável menor, tensão suave</td><td>viiø, iiø em jazz</td></tr>
+      <tr><td><strong>Diminuta 7</strong></td><td>dim7, °7</td><td>3m + 3m + 3m</td><td>Cdim7</td><td>Suspense, passagem cromática</td><td>Entre Imaj7 e iim7 (Jobim)</td></tr>
+    </table>
+
+    <div class="chord-pills">
+      <span class="chord-pill">Cmaj7</span>
+      <span class="chord-pill">G7</span>
+      <span class="chord-pill">Am7</span>
+      <span class="chord-pill">Cm7</span>
+      <span class="chord-pill">Bdim7</span>
+    </div>
+
+    <h3>Guia auditivo rápido</h3>
+    <table>
+      <tr><th>Se soa…</th><th>Provavelmente é…</th><th>Exemplo em Dó</th></tr>
+      <tr><td>Brilhante e repousa (sem tensão)</td><td>Maior ou maj7</td><td>C, Cmaj7</td></tr>
+      <tr><td>Triste mas suave</td><td>Menor ou m7</td><td>Am, Am7</td></tr>
+      <tr><td>Bluesy, "pede resolução"</td><td>Dom7</td><td>G7, D7</td></tr>
+      <tr><td>Instável, passagem rápida</td><td>dim7 ou ø7</td><td>Bdim7, Bø7</td></tr>
+      <tr><td>Exótico, filme noir</td><td>m(maj7)</td><td>Am(maj7)</td></tr>
+    </table>
+
+    <h2>Árvore de decisão — qual acorde estou ouvindo?</h2>
+    <p>Use esta sequência de perguntas para classificar qualquer acorde pelo ouvido:</p>
+
+    <div class="accordion-item open">
+      <button class="accordion-trigger">1. Soa maior ou menor?</button>
+      <div class="accordion-body">
+        <p><strong>Maior:</strong> brilhante, estável, "feliz" → vá para pergunta 2a.</p>
+        <p><strong>Menor:</strong> melancólico, fechado → vá para pergunta 2b.</p>
+        <p><strong>Instável/neither:</strong> diminuta ou aumentada → vá para pergunta 4.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">2a. Maior — tem 7ª?</button>
+      <div class="accordion-body">
+        <div class="accordion-item">
+          <button class="accordion-trigger">Sem 7ª perceptível</button>
+          <div class="accordion-body">
+            <p><strong>Triade maior</strong> (C, F, G) — repouso ou abertura. Função: I, IV ou V.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">7ª suave, "jazz", sem tensão</button>
+          <div class="accordion-body">
+            <p><strong>maj7</strong> (Cmaj7) — repouso sofisticado. Comum em bossa na tônica.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">7ª bluesy, quer resolver</button>
+          <div class="accordion-body">
+            <p><strong>dom7</strong> (G7, D7) — dominante. Se fora do campo → dominante secundária V7/x.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">2b. Menor — tem 7ª?</button>
+      <div class="accordion-body">
+        <div class="accordion-item">
+          <button class="accordion-trigger">Sem 7ª perceptível</button>
+          <div class="accordion-body">
+            <p><strong>Triade menor</strong> (Am, Dm, Em) — repouso relativo ou subdominante.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">7ª suave, jazz</button>
+          <div class="accordion-body">
+            <p><strong>m7</strong> (Am7, Dm7) — ii7 ou vi7. Preparação para V7.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">7ª "picante", maior sobre menor</button>
+          <div class="accordion-body">
+            <p><strong>m(maj7)</strong> — tonalidade menor ou passagem exótica.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">3. É dominante? Confirme pela resolução</button>
+      <div class="accordion-body">
+        <p>Dom7 resolve meio tom abaixo (G7 → C) ou para acorde alvo lógico (D7 → G = V7/V).</p>
+        <p>Se tem 7ª mas <em>não</em> resolve como dominante, reconsidere: pode ser maj7 ou m7 mal identificado.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-trigger">4. Instável — dim ou ø?</button>
+      <div class="accordion-body">
+        <div class="accordion-item">
+          <button class="accordion-trigger">Passagem rápida, cromática (Jobim)</button>
+          <div class="accordion-body">
+            <p><strong>dim7</strong> — liga dois acordes por semitom. Ex.: Cmaj7 → C#dim7 → Dm7.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">Tensão menor, iiø em jazz</button>
+          <div class="accordion-body">
+            <p><strong>ø7 (m7b5)</strong> — meio-diminuta. Função de iiø em tonalidade menor.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Voicings compactos para violão</h2>
+    <p>Formas enxutas que cabem em acompanhamento ao vivo — deixam espaço para a voz e permitem trocar rápido.</p>
+
+    <table>
+      <tr><th>Qualidade</th><th>Forma (cordas 6→1)</th><th>Notas / uso</th><th>Exemplo em Dó</th></tr>
+      <tr><td>maj7</td><td><code>x3545x</code></td><td>1-3-5-7 compacto</td><td>Cmaj7</td></tr>
+      <tr><td>maj7</td><td><code>xx544x</code></td><td>Shell sem 5ª</td><td>Cmaj7</td></tr>
+      <tr><td>dom7</td><td><code>x3530x</code></td><td>V7 essencial</td><td>G7</td></tr>
+      <tr><td>dom7</td><td><code>320001</code></td><td>G7 aberto</td><td>G7</td></tr>
+      <tr><td>m7</td><td><code>x353x</code></td><td>Shell ii</td><td>Dm7</td></tr>
+      <tr><td>m7</td><td><code>xx0211</code></td><td>Am7 compacto</td><td>Am7</td></tr>
+      <tr><td>m(maj7)</td><td><code>x6554x</code></td><td>Cor poética</td><td>Am(maj7)</td></tr>
+      <tr><td>ø7</td><td><code>x2323x</code></td><td>Bø7 em Dó</td><td>Bø7</td></tr>
+      <tr><td>dim7</td><td><code>xx1212</code></td><td>Passagem cromática</td><td>Bdim7</td></tr>
+      <tr><td>m6</td><td><code>x02212</code></td><td>Dispositivo bossa (Cm6 = F7)</td><td>Am6</td></tr>
+    </table>
+
+    <p><strong>Voicings em Dó / Sol / Lá menor:</strong></p>
+    <div class="progression-diagram" data-chords="Cmaj7,G7,Dm7,Am7"></div>
+
+    <div class="tip">Priorize 3–4 formas por qualidade nas regiões que você mais usa. Não decore 20 voicings — domine poucos que funcionem em 80% das músicas.</div>
+
+    <h2>Qualidades no campo harmônico</h2>
+    <table>
+      <tr><th>Grau</th><th>Triade</th><th>7ª natural</th><th>Em Dó</th></tr>
+      <tr><td>I</td><td>M</td><td>maj7</td><td>C / Cmaj7</td></tr>
+      <tr><td>ii</td><td>m</td><td>m7</td><td>Dm / Dm7</td></tr>
+      <tr><td>iii</td><td>m</td><td>m7</td><td>Em / Em7</td></tr>
+      <tr><td>IV</td><td>M</td><td>maj7</td><td>F / Fmaj7</td></tr>
+      <tr><td>V</td><td>M</td><td>dom7</td><td>G / G7</td></tr>
+      <tr><td>vi</td><td>m</td><td>m7</td><td>Am / Am7</td></tr>
+      <tr><td>vii</td><td>dim</td><td>ø7</td><td>Bdim / Bø7</td></tr>
+    </table>
+
+    <h2>Exercícios de ear training</h2>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">1</span> Tríades cegas</div>
+      <p>Peça a alguém (ou use app) para tocar C, Cm, Cdim ou Caug aleatoriamente. Nomeie a qualidade antes de ver. Meta: 8/10 acertos.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">2</span> Maior vs maj7 vs dom7</div>
+      <p>Toque C, Cmaj7 e C7 em sequência aleatória. Diferença-chave:</p>
+      <ul>
+        <li><strong>C:</strong> repouso triádico</li>
+        <li><strong>Cmaj7:</strong> repouso com "camada" suave</li>
+        <li><strong>C7:</strong> tensão — ouça a 7ª (Si♭) puxando para F</li>
+      </ul>
+      <p>Repita com G como raiz (G, Gmaj7, G7).</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">3</span> m7 vs m(maj7)</div>
+      <p>Toque Am7 e Am(maj7). Am7 = suave, jazz comum. Am(maj7) = "filme noir", a 7ª maior sobre menor cria dissonância elegante. Use em baladas para identificar repertório sofisticado.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">4</span> Progressão com qualidades</div>
+      <p>Toque e cante graus + qualidades:</p>
+      <pre><code>ii7 → V7 → Imaj7   (Dm7 → G7 → Cmaj7)
+IVmaj7 → ivm7 → Imaj7   (Fmaj7 → Fm7 → Cmaj7 — dispositivo MPB)</code></pre>
+      <p>Transponha para Sol e Lá.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">5</span> Voicings ao vivo</div>
+      <p>Escolha uma música bossa que conheça. Substitua acordes completos pelos voicings compactos da tabela. Toque em tempo real mantendo o groove — se travar, simplifique para triade até automatizar.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">6</span> Árvore de decisão ao vivo</div>
+      <p>Em uma música desconhecida, para cada acorde novo execute mentalmente: maior/menor? → tem 7ª? → resolve como dominante? → dim/ø? Anote acertos e erros após 5 músicas.</p>
+    </div>
+
+    <div class="tip">Grave 10 acordes aleatórios (tríades + 7ªs) e ouça no dia seguinte. A memória auditiva consolida com intervalo — não faça tudo numa sessão só.</div>
+
+    <h2>Checklist de domínio</h2>
+    <div class="card" data-checklist="mod05">
+      <div class="checklist-item"><input type="checkbox" id="c05-1"><label for="c05-1">Distingo M, m, dim e aug pelo ouvido</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c05-2"><label for="c05-2">Distingo maj7, dom7 e m7 instantaneamente</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c05-3"><label for="c05-3">Uso a árvore de decisão em música real</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c05-4"><label for="c05-4">Domino 3+ voicings compactos por qualidade</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c05-5"><label for="c05-5">Reconheço dim7 e ø7 como passagem/tensão</label></div>
+    </div>
+
+    <p style="margin-top:2rem">
+      <button id="mark-module-complete" class="btn" data-module="05">Marcar módulo como concluído</button>
+    </p>
+
+    <div class="nav-footer">
+      <a href="04-funcoes-harmonicas.html">← Módulo 04: Funções T–SD–D</a>
+      <a href="06-progressoes.html">Módulo 06: Progressões →</a>
+    </div>
+  </main>
+</div>
+<script src="js/chords-dict.js"></script>
+<script src="js/chord-diagrams.js"></script>
+<script src="js/chord-auto.js"></script>
+<script src="js/theory-data.js"></script>
+<script src="js/curso.js"></script>
+</body>
+</html>

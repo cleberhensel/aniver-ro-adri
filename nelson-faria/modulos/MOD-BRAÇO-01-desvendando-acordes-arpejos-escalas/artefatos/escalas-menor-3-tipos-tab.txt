@@ -1,0 +1,44 @@
+3 ESCALAS MENORES — digitação A shape (transcrição validada)
+Nelson Faria / Sistema 5 · janela de 5 casas (casas 1–5 relativas ao shape)
+Afinação: E A D G B e (6ª → 1ª) · (T) = tônica
+
+Mesmo mapa de dedos · mudam os graus 3, 6 e 7 conforme o tipo.
+Digitação 1 — A shape (1º dedo na 5ª corda · GPS menor 1/4/1/4/1)
+Âncora A shape: 1 na 5ª (A) · tônicas também em G rel 4
+
+────────────────────────────────────────────────────────────
+MENOR NATURAL (aeólia) — 1  2  b3  4  5  b6  b7
+────────────────────────────────────────────────────────────
+e | --2-3-----5-
+B | --2-3-----5-
+G | --2---(4)---
+D | --2---4----
+A | --(2)-4-5--
+E | --2-3-----5-
+
+────────────────────────────────────────────────────────────
+MENOR HARMÔNICA — 1  2  b3  4  5  b6  7
+────────────────────────────────────────────────────────────
+e | --2-3-----6-
+B | --2-3-----5-
+G | ---3-(4)----
+D | --2-4-5-----
+A | (1)-(2)-4-5-
+E | --2-3-------
+
+────────────────────────────────────────────────────────────
+MENOR MELÓDICA (ascendente) — 1  2  b3  4  5  6  7
+────────────────────────────────────────────────────────────
+e | --2---4-5---
+B | --2-3-----5-
+G | --2-3-(4)---
+D | --2---4----
+A | (1)-(2)-4-5-
+E | --2---4----
+
+Notas:
+- Números = casas relativas ao bloco (1–5), não absolutas no braço.
+- O desenho de dedos é o mesmo “molde”; só mudam as cores dos graus 6 e 7
+  (e a sensível 7 na harmônica / 6–7 na melódica ascendente).
+- Próximo passo: transpor as digitações 2–5 (G, E, D, C shapes) quando disponíveis.
+- Diagramas: escalas-menor-shapes-tablatura.html

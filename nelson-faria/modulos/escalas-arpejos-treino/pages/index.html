@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Escalas & Arpejos · Ginásio</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/hub.css">
+</head>
+<body>
+
+<header>
+  <h1>Escalas & Arpejos · Treino</h1>
+  <p>Ginásio Nelson Faria · dados + engines reutilizáveis</p>
+</header>
+
+<nav class="hub-nav">
+  <a href="drill-escala.html">Drill escala</a>
+  <a href="drill-arpejo.html">Drill arpejo</a>
+  <a href="backing-tracks.html">Backing tracks</a>
+  <a href="playlist-bossa.html">Playlist Bossa</a>
+  <a href="validador.html">Validador</a>
+  <a href="sessao.html">Sessão</a>
+  <a href="../../MOD-BRAÇO-01-desvendando-acordes-arpejos-escalas/">← Teoria (MOD-BRAÇO-01)</a>
+</nav>
+
+<div class="hub-intro">
+  Catálogo com status explícito: <span class="badge ready">ready</span> tem digitação completa;
+  <span class="badge partial">partial</span> é MVP; <span class="badge planned">planned</span> ainda sem shapes.
+</div>
+
+<div class="hub-section">
+  <h2>Escalas</h2>
+  <div class="hub-grid" id="hub-scales"></div>
+</div>
+
+<div class="hub-section">
+  <h2>Arpejos</h2>
+  <div class="hub-grid" id="hub-arpeggios"></div>
+</div>
+
+<div class="hub-section">
+  <h2>Ferramentas</h2>
+  <div class="hub-grid">
+    <a class="hub-card" href="drill-escala.html">
+      <span class="badge ready">cockpit</span>
+      <h3>Drill de escalas</h3>
+      <p>Tom · shapes · pulso · mapa do braço</p>
+    </a>
+    <a class="hub-card" href="validador.html">
+      <span class="badge partial">mic</span>
+      <h3>Validador</h3>
+      <p>Microfone · graus da família</p>
+    </a>
+    <a class="hub-card" href="sessao.html">
+      <span class="badge ready">timer</span>
+      <h3>Sessão</h3>
+      <p>Work/rest + metrônomo PracticeTools</p>
+    </a>
+    <a class="hub-card" href="backing-tracks.html">
+      <span class="badge ready">jam</span>
+      <h3>Backing tracks</h3>
+      <p>MPB · Bossa · Samba · Jazz — por tonalidade</p>
+    </a>
+    <a class="hub-card" href="playlist-bossa.html">
+      <span class="badge ready">play</span>
+      <h3>Playlist Bossa</h3>
+      <p>9 tons prioritários · I–vi–ii–V + menores</p>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <a href="../README.md">README do módulo</a> ·
+  <a href="../../MOD-BRAÇO-01-desvendando-acordes-arpejos-escalas/artefatos/escalas-shapes-tonalidade.html">Poster CAGED</a>
+</footer>
+
+<script src="../js/data/meta/tuning.js"></script>
+<script src="../js/data/scales/families.js"></script>
+<script src="../js/data/scales/shapes/major-caged.js"></script>
+<script src="../js/data/scales/shapes/natural-minor-a.js"></script>
+<script src="../js/data/scales/shapes/harmonic-minor-a.js"></script>
+<script src="../js/data/scales/shapes/melodic-minor-a.js"></script>
+<script src="../js/data/scales/index.js"></script>
+<script src="../js/data/arpeggios/qualities.js"></script>
+<script src="../js/data/arpeggios/progressions/ii-V-I-major.js"></script>
+<script src="../js/data/arpeggios/index.js"></script>
+<script src="../js/data/catalog.js"></script>
+<script>
+(function () {
+  const scalesEl = document.getElementById('hub-scales');
+  const arpEl = document.getElementById('hub-arpeggios');
+  const links = {
+    major: 'drill-escala.html?family=major',
+    'natural-minor': 'drill-escala.html?family=natural-minor',
+    'harmonic-minor': 'drill-escala.html?family=harmonic-minor',
+    'melodic-minor': 'drill-escala.html?family=melodic-minor'
+  };
+
+  EatCatalog.listFamilies().forEach((f) => {
+    const href = links[f.id];
+    const card = document.createElement(href ? 'a' : 'div');
+    card.className = 'hub-card' + (href ? '' : ' disabled');
+    if (href) card.href = href;
+    card.innerHTML = `
+      <span class="badge ${f.status}">${f.status}</span>
+      <h3>${f.label}</h3>
+      <p>${f.shapeIds.length ? f.shapeIds.length + ' shape(s)' : 'sem digitação ainda'}</p>`;
+    scalesEl.appendChild(card);
+  });
+
+  EatCatalog.listArpeggioQualities().forEach((q) => {
+    const card = document.createElement(q.status === 'planned' ? 'div' : 'a');
+    card.className = 'hub-card' + (q.status === 'planned' ? ' disabled' : '');
+    if (q.status !== 'planned') card.href = 'drill-arpejo.html';
+    card.innerHTML = `
+      <span class="badge ${q.status}">${q.status}</span>
+      <h3>${q.label}</h3>
+      <p>${q.formula}</p>`;
+    arpEl.appendChild(card);
+  });
+
+  const prog = EatCatalog.getProgression('ii-V-I-major');
+  if (prog) {
+    const card = document.createElement('a');
+    card.className = 'hub-card';
+    card.href = 'drill-arpejo.html';
+    card.innerHTML = `
+      <span class="badge ${prog.status}">${prog.status}</span>
+      <h3>${prog.label}</h3>
+      <p>ii · V · I em Maj7 / Dom7 / m7</p>`;
+    arpEl.appendChild(card);
+  }
+})();
+</script>
+</body>
+</html>

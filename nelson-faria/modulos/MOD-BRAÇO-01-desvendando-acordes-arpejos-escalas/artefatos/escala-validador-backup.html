@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Validador de escala · backup v1 | MOD-BRAÇO-01</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #f0a030;
+      --accent2: #4ecdc4;
+      --border: #2d3f54;
+      --ok: #69db7c;
+      --bad: #ff6b6b;
+      --pending: #4ecdc4;
+      --dim: rgba(78, 205, 196, 0.35);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding: 1.5rem 1rem 3rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+    header h1 { font-size: 1.45rem; font-weight: 700; }
+    header p { color: var(--muted); font-size: 0.92rem; margin-top: 0.35rem; }
+    nav { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0 1.25rem; }
+    nav a {
+      color: var(--accent); text-decoration: none; font-size: 0.8rem;
+      padding: 0.3rem 0.6rem; border: 1px solid var(--border); border-radius: 5px;
+    }
+    h2 { font-size: 1.12rem; color: var(--accent2); margin: 1.75rem 0 0.65rem; }
+    p, li { font-size: 0.92rem; margin-bottom: 0.5rem; }
+    .callout {
+      background: var(--surface); border-left: 3px solid var(--accent);
+      padding: 0.85rem 1rem; border-radius: 0 6px 6px 0; margin: 0.75rem 0; font-size: 0.88rem;
+    }
+    .controls {
+      display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;
+      margin-bottom: 1.25rem; padding: 1rem;
+      background: var(--surface); border-radius: 10px; border: 1px solid var(--border);
+    }
+    .control-group label {
+      display: block; font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.35rem;
+    }
+    .key-grid { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .key-btn, .mode-btn, .shape-btn {
+      min-width: 2.45rem; padding: 0.38rem 0.5rem;
+      border: 1px solid var(--border); background: var(--surface2);
+      color: var(--text); border-radius: 6px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    }
+    .key-btn.active, .mode-btn.active, .shape-btn.active {
+      background: var(--accent); color: #111; border-color: var(--accent);
+    }
+    select {
+      background: var(--surface2); color: var(--text); border: 1px solid var(--border);
+      border-radius: 6px; padding: 0.45rem 0.6rem; font-size: 0.85rem;
+    }
+    .mic-panel {
+      display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1rem; margin: 1rem 0;
+    }
+    @media (max-width: 640px) { .mic-panel { grid-template-columns: 1fr; } }
+    .live-note {
+      font-size: 2.4rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1;
+    }
+    .live-note.ok { color: var(--ok); }
+    .live-note.bad { color: var(--bad); }
+    .live-note.idle { color: var(--muted); font-size: 1.2rem; font-weight: 600; }
+    .live-meta { font-size: 0.82rem; color: var(--muted); margin-top: 0.35rem; }
+    .meter-wrap { height: 8px; background: var(--surface2); border-radius: 4px; margin-top: 0.5rem; overflow: hidden; }
+    .meter-fill { height: 100%; width: 0%; background: var(--accent2); transition: width 0.05s; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .btn {
+      padding: 0.55rem 1rem; border-radius: 8px; border: none; font-weight: 700;
+      font-size: 0.88rem; cursor: pointer;
+    }
+    .btn-primary { background: var(--accent); color: #111; }
+    .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+    .btn-danger { background: rgba(255,107,107,0.2); color: var(--bad); border: 1px solid var(--bad); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .progress-bar {
+      display: flex; gap: 0.35rem; margin: 0.75rem 0; flex-wrap: wrap;
+    }
+    .deg-chip {
+      padding: 0.35rem 0.55rem; border-radius: 6px; font-size: 0.78rem; font-weight: 700;
+      border: 1px solid var(--border); background: var(--surface2); color: var(--muted);
+    }
+    .deg-chip.hit { background: rgba(105,219,124,0.2); border-color: var(--ok); color: var(--ok); }
+    .deg-chip.next { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+    .deg-chip.wrong { background: rgba(255,107,107,0.15); border-color: var(--bad); color: var(--bad); }
+    .neck-wrap {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.65rem 0.4rem; overflow-x: auto; margin: 0.65rem 0;
+    }
+    .neck-wrap svg { display: block; min-width: 100%; height: auto; }
+    .log {
+      max-height: 140px; overflow-y: auto; font-family: "SF Mono", Consolas, monospace;
+      font-size: 0.75rem; background: var(--surface2); border-radius: 8px; padding: 0.65rem;
+      border: 1px solid var(--border);
+    }
+    .log div { margin-bottom: 0.2rem; }
+    .log .ok { color: var(--ok); }
+    .log .bad { color: var(--bad); }
+    .sliders { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.75rem; }
+    @media (max-width: 640px) { .sliders { grid-template-columns: 1fr; } }
+    .sliders label { font-size: 0.78rem; color: var(--muted); display: block; margin-bottom: 0.25rem; }
+    input[type=range] { width: 100%; accent-color: var(--accent); }
+    footer {
+      margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);
+      font-size: 0.78rem; color: var(--muted);
+    }
+    footer a { color: var(--accent); }
+
+    /* ─── Feedback visual ─── */
+    .score-row {
+      display: flex; align-items: center; gap: 1rem; margin: 0.75rem 0; flex-wrap: wrap;
+    }
+    .progress-ring-wrap { position: relative; width: 56px; height: 56px; flex-shrink: 0; }
+    .progress-ring-wrap svg { transform: rotate(-90deg); }
+    .progress-ring-bg { fill: none; stroke: var(--surface2); stroke-width: 5; }
+    .progress-ring-fill {
+      fill: none; stroke: var(--ok); stroke-width: 5; stroke-linecap: round;
+      transition: stroke-dashoffset 0.45s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+    .progress-ring-label {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      font-size: 0.82rem; font-weight: 800; color: var(--text);
+    }
+    .progress-bar { flex: 1; min-width: 200px; }
+
+    @keyframes chip-pop {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.18); box-shadow: 0 0 18px rgba(105,219,124,0.55); }
+      100% { transform: scale(1); }
+    }
+    @keyframes chip-shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+    .deg-chip.just-hit { animation: chip-pop 0.55s ease; }
+    .deg-chip.just-wrong { animation: chip-shake 0.4s ease; border-color: var(--bad); color: var(--bad); }
+
+    .mic-panel { transition: box-shadow 0.2s, border-color 0.2s; }
+    .mic-panel.flash-ok {
+      border-color: var(--ok);
+      box-shadow: 0 0 0 2px rgba(105,219,124,0.35), 0 0 28px rgba(105,219,124,0.2);
+    }
+    .mic-panel.flash-bad {
+      border-color: var(--bad);
+      box-shadow: 0 0 0 2px rgba(255,107,107,0.35);
+      animation: panel-shake 0.45s ease;
+    }
+    @keyframes panel-shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+
+    .live-note.ok {
+      animation: note-bloom 0.5s ease;
+      text-shadow: 0 0 24px rgba(105,219,124,0.5);
+    }
+    @keyframes note-bloom {
+      0% { transform: scale(0.85); opacity: 0.6; }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .neck-wrap { transition: box-shadow 0.35s, border-color 0.35s; position: relative; }
+    .neck-wrap.flash-ok {
+      border-color: var(--ok);
+      box-shadow: 0 0 0 2px rgba(105,219,124,0.25), inset 0 0 40px rgba(105,219,124,0.06);
+    }
+    .neck-wrap.complete {
+      border-color: var(--ok);
+      box-shadow: 0 0 0 3px rgba(105,219,124,0.4), 0 0 48px rgba(105,219,124,0.15);
+    }
+
+    #feedback-toast {
+      position: fixed; top: 1rem; left: 50%; transform: translateX(-50%) translateY(-120%);
+      z-index: 100; padding: 0.75rem 1.25rem; border-radius: 12px;
+      font-weight: 700; font-size: 0.95rem; pointer-events: none;
+      opacity: 0; transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1), opacity 0.25s;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.45); min-width: 220px; text-align: center;
+    }
+    #feedback-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    #feedback-toast.ok { background: rgba(105,219,124,0.95); color: #0f1419; border: 2px solid #fff; }
+    #feedback-toast.bad { background: rgba(255,107,107,0.92); color: #fff; border: 2px solid rgba(255,255,255,0.3); }
+    #feedback-toast .toast-sub { font-size: 0.78rem; font-weight: 600; opacity: 0.85; margin-top: 0.15rem; }
+
+    #celebration-overlay {
+      position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center;
+      background: rgba(15,20,25,0.82); backdrop-filter: blur(6px);
+      opacity: 0; pointer-events: none; transition: opacity 0.4s;
+    }
+    #celebration-overlay.show { opacity: 1; pointer-events: auto; }
+    .celebration-card {
+      background: var(--surface); border: 2px solid var(--ok);
+      border-radius: 16px; padding: 2rem 2.5rem; text-align: center; max-width: 360px;
+      transform: scale(0.8); transition: transform 0.45s cubic-bezier(0.34, 1.5, 0.64, 1);
+      box-shadow: 0 0 60px rgba(105,219,124,0.25);
+    }
+    #celebration-overlay.show .celebration-card { transform: scale(1); }
+    .celebration-icon { font-size: 3.5rem; line-height: 1; margin-bottom: 0.5rem; }
+    .celebration-card h3 { font-size: 1.35rem; color: var(--ok); margin-bottom: 0.35rem; }
+    .celebration-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.25rem; }
+    .celebration-card .btn { margin: 0 0.25rem; }
+
+    #confetti-layer {
+      position: fixed; inset: 0; pointer-events: none; z-index: 199; overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute; top: -12px; width: 8px; height: 8px; border-radius: 2px;
+      animation: confetti-fall 2.8s ease-in forwards;
+    }
+    @keyframes confetti-fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Validador de escala · backup v1</h1>
+  <p>Versão congelada (livre + sequência ↑) · use <a href="escala-validador.html" style="color:var(--accent)">escala-validador.html</a> para nível 2</p>
+</header>
+
+<nav>
+  <a href="#como">Como funciona</a>
+  <a href="#pratica">Praticar</a>
+  <a href="escala-validador.html">Validador v2</a>
+  <a href="escalas-shapes-tonalidade.html">Tonalidade</a>
+  <a href="escalas-shapes-tablatura.html">Escalas</a>
+</nav>
+
+<section id="como">
+  <h2>Como funciona</h2>
+  <div class="callout">
+    <strong>Ideia:</strong> o microfone captura cada nota isolada (como um afinador). O script converte a frequência em nome de nota e compara com a escala escolhida. Acertou → acende verde no braço; errou → flash vermelho no painel ao vivo.
+  </div>
+  <ul>
+    <li><strong>Validação por altura</strong> (Dó é Dó em qualquer corda) — mais simples e robusto para começar.</li>
+    <li><strong>Autocorrelação</strong> no browser (Web Audio API) — funciona melhor que FFT em graves de violão.</li>
+    <li><strong>Modo livre:</strong> toque as 7 notas da escala em qualquer ordem.</li>
+    <li><strong>Modo sequência:</strong> suba grau a grau (1→2→3…→7→1).</li>
+    <li>Use fones ou ambiente quieto; toque <em>uma nota por vez</em>, deixando soar ~½ s.</li>
+  </ul>
+</section>
+
+<section id="pratica">
+  <h2>Praticar</h2>
+
+  <div class="controls">
+    <div class="control-group">
+      <label>Tonalidade</label>
+      <div class="key-grid" id="key-grid"></div>
+    </div>
+    <div class="control-group">
+      <label>Escala</label>
+      <select id="scale-type">
+        <option value="major">Maior</option>
+        <option value="natural">Menor natural</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label>Shape</label>
+      <div id="shape-btns">
+        <button type="button" class="shape-btn active" data-shape="A">A</button>
+        <button type="button" class="shape-btn" data-shape="G">G</button>
+        <button type="button" class="shape-btn" data-shape="E">E</button>
+        <button type="button" class="shape-btn" data-shape="D">D</button>
+        <button type="button" class="shape-btn" data-shape="C">C</button>
+      </div>
+    </div>
+    <div class="control-group">
+      <label>Modo</label>
+      <div>
+        <button type="button" class="mode-btn active" data-mode="free">Livre (7 notas)</button>
+        <button type="button" class="mode-btn" data-mode="sequence">Sequência ↑</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mic-panel">
+    <div>
+      <div class="live-note idle" id="live-note">—</div>
+      <div class="live-meta" id="live-meta">Microfone parado</div>
+      <div class="meter-wrap"><div class="meter-fill" id="meter"></div></div>
+    </div>
+    <div class="btn-row">
+      <button type="button" class="btn btn-primary" id="btn-start">Iniciar microfone</button>
+      <button type="button" class="btn btn-danger" id="btn-stop" disabled>Parar</button>
+      <button type="button" class="btn btn-secondary" id="btn-reset">Reset</button>
+    </div>
+  </div>
+
+  <div class="sliders">
+    <div>
+      <label>Sensibilidade (clareza mín.) <span id="clarity-val">0.82</span></label>
+      <input type="range" id="clarity" min="0.5" max="0.98" step="0.01" value="0.82">
+    </div>
+    <div>
+      <label>Tolerância (cents) <span id="cents-val">35</span></label>
+      <input type="range" id="cents-tol" min="10" max="60" step="1" value="35">
+    </div>
+  </div>
+
+  <p style="margin-top:0.75rem;font-size:0.85rem;color:var(--muted)" id="target-label"></p>
+
+  <div class="score-row">
+    <div class="progress-ring-wrap" aria-hidden="true">
+      <svg width="56" height="56" viewBox="0 0 56 56">
+        <circle class="progress-ring-bg" cx="28" cy="28" r="22"/>
+        <circle class="progress-ring-fill" id="progress-ring" cx="28" cy="28" r="22"
+          stroke-dasharray="138.2" stroke-dashoffset="138.2"/>
+      </svg>
+      <div class="progress-ring-label" id="score-label">0/7</div>
+    </div>
+    <div class="progress-bar" id="deg-progress"></div>
+  </div>
+
+  <div class="neck-wrap" id="neck-map"></div>
+
+  <h2 style="font-size:1rem;margin-top:1.25rem">Histórico da sessão</h2>
+  <div class="log" id="session-log"></div>
+</section>
+
+<div id="feedback-toast" role="status" aria-live="polite">
+  <div id="toast-main"></div>
+  <div class="toast-sub" id="toast-sub"></div>
+</div>
+<div id="confetti-layer"></div>
+<div id="celebration-overlay">
+  <div class="celebration-card">
+    <div class="celebration-icon">★</div>
+    <h3 id="celebration-title">Escala completa!</h3>
+    <p id="celebration-msg"></p>
+    <button type="button" class="btn btn-primary" id="btn-celebrate-again">De novo</button>
+    <button type="button" class="btn btn-secondary" id="btn-celebrate-close">Fechar</button>
+  </div>
+</div>
+
+<footer>
+  Requer HTTPS ou localhost · Chrome/Safari recomendados ·
+  <a href="escalas-shapes-tonalidade.html">Mapa de tonalidade</a>
+</footer>
+
+<script>
+/* ─── Braço / escalas (mesma lógica dos outros artefatos) ─── */
+const STRING_LABELS = ['e','B','G','D','A','E'];
+const OPEN = [4, 11, 7, 2, 9, 4];
+const NOTE_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const FRETS = 5;
+const A4 = 440;
+
+const SCALE_INTERVALS = {
+  major: [0, 2, 4, 5, 7, 9, 11],
+  natural: [0, 2, 3, 5, 7, 8, 10]
+};
+
+const SHAPE_ANCHORS = {
+  A: { si: 4, rel: 2 },
+  G: { si: 2, rel: 2 },
+  E: { si: 5, rel: 3 },
+  D: { si: 3, rel: 2 },
+  C: { si: 4, rel: 5 }
+};
+
+const SHAPE_DATA = {
+  A: [[{f:2,g:5},{f:4,g:6}],[{f:2,g:2},{f:4,g:3},{f:5,g:4}],[{f:1,g:6},{f:3,g:7},{f:4,g:1,r:1}],[{f:1,g:3},{f:2,g:4},{f:4,g:5}],[{f:1,g:7},{f:2,g:1,r:1},{f:4,g:2}],[{f:2,g:5},{f:4,g:6}]],
+  G: [[{f:2,g:6},{f:4,g:7},{f:5,g:1,r:1}],[{f:2,g:3},{f:3,g:4},{f:5,g:5}],[{f:1,g:7},{f:2,g:1,r:1},{f:4,g:2}],[{f:2,g:5},{f:4,g:6}],[{f:2,g:2},{f:4,g:3},{f:5,g:4}],[{f:2,g:6},{f:3,g:7},{f:5,g:1,r:1}]],
+  E: [[{f:2,g:7},{f:3,g:1,r:1},{f:5,g:2}],[{f:3,g:5},{f:5,g:6}],[{f:2,g:2},{f:4,g:3},{f:5,g:4}],[{f:2,g:6},{f:4,g:7},{f:5,g:1,r:1}],[{f:2,g:3},{f:3,g:4},{f:5,g:5}],[{f:2,g:7},{f:3,g:1,r:1},{f:5,g:2}]],
+  D: [[{f:2,g:2},{f:4,g:3},{f:5,g:4}],[{f:2,g:6},{f:4,g:7},{f:5,g:1,r:1}],[{f:1,g:3},{f:2,g:4},{f:4,g:5}],[{f:1,g:7},{f:2,g:1,r:1},{f:4,g:2}],[{f:2,g:5},{f:4,g:6}],[{f:2,g:2},{f:4,g:3},{f:5,g:4}]],
+  C: [[{f:2,g:3},{f:3,g:4},{f:5,g:5}],[{f:2,g:7},{f:3,g:1,r:1},{f:5,g:2}],[{f:2,g:5},{f:4,g:6}],[{f:2,g:2},{f:4,g:3},{f:5,g:4}],[{f:2,g:6},{f:4,g:7},{f:5,g:1,r:1}],[{f:2,g:3},{f:3,g:4},{f:5,g:5}]]
+};
+
+let rootPc = 0;
+let scaleType = 'major';
+let shapeId = 'A';
+let playMode = 'free';
+let hitDegrees = new Set();
+let seqIndex = 0;
+let hitPositions = new Set();
+let pulseKeys = new Set();
+let lastHitDegree = null;
+let lastWrongDegree = null;
+let scaleComplete = false;
+let toastTimer = null;
+const RING_C = 2 * Math.PI * 22;
+
+/* ─── Pitch detection (autocorrelação + interpolação parabólica) ─── */
+function rms(buf) {
+  let s = 0;
+  for (let i = 0; i < buf.length; i++) s += buf[i] * buf[i];
+  return Math.sqrt(s / buf.length);
+}
+
+function detectPitch(buf, sampleRate) {
+  const volume = rms(buf);
+  if (volume < 0.008) return { freq: 0, clarity: 0, volume };
+
+  const SIZE = buf.length;
+  const r = new Float32Array(SIZE);
+  for (let lag = 0; lag < SIZE; lag++) {
+    let sum = 0;
+    for (let i = 0; i < SIZE - lag; i++) sum += buf[i] * buf[i + lag];
+    r[lag] = sum;
+  }
+  if (r[0] === 0) return { freq: 0, clarity: 0, volume };
+
+  const minLag = Math.floor(sampleRate / 1200);
+  const maxLag = Math.min(Math.floor(sampleRate / 70), SIZE - 2);
+  let bestLag = -1;
+  let bestVal = 0;
+
+  for (let lag = minLag; lag <= maxLag; lag++) {
+    const norm = r[lag] / r[0];
+    if (norm > bestVal) { bestVal = norm; bestLag = lag; }
+  }
+  if (bestLag < 0 || bestVal < 0.75) return { freq: 0, clarity: bestVal, volume };
+
+  // parabolic interpolation
+  const y1 = r[bestLag - 1] / r[0];
+  const y2 = r[bestLag] / r[0];
+  const y3 = r[bestLag + 1] / r[0];
+  const denom = 2 * (2 * y2 - y1 - y3);
+  const shift = denom !== 0 ? (y1 - y3) / denom : 0;
+  const refinedLag = bestLag + shift;
+  const freq = sampleRate / refinedLag;
+  return { freq, clarity: bestVal, volume };
+}
+
+function freqToNote(freq) {
+  if (!freq || freq < 60) return null;
+  const midi = 69 + 12 * Math.log2(freq / A4);
+  const rounded = Math.round(midi);
+  const cents = (midi - rounded) * 100;
+  const pc = ((rounded % 12) + 12) % 12;
+  const octave = Math.floor(rounded / 12) - 1;
+  return { midi: rounded, pc, cents, name: NOTE_NAMES[pc], octave, freq };
+}
+
+/* ─── Estado do microfone ─── */
+let audioCtx = null;
+let analyser = null;
+let stream = null;
+let rafId = null;
+let buf = null;
+let clarityThreshold = 0.82;
+let centsTolerance = 35;
+let lastRegisteredPc = -1;
+let lastRegisteredAt = 0;
+let stablePc = -1;
+let stableSince = 0;
+const STABLE_MS = 120;
+const COOLDOWN_MS = 350;
+
+function noteAt(si, abs) { return (OPEN[si] + abs) % 12; }
+
+function findWindowStart(si, rel, root) {
+  for (let ws = 0; ws <= 22; ws++) {
+    if (noteAt(si, ws + rel - 1) === root) return ws;
+  }
+  return 0;
+}
+
+function buildPlacement() {
+  const anchor = SHAPE_ANCHORS[shapeId];
+  const ws = findWindowStart(anchor.si, anchor.rel, rootPc);
+  const shape = SHAPE_DATA[shapeId];
+  const absNotes = [];
+  shape.forEach((stringNotes, si) => {
+    stringNotes.forEach(n => {
+      absNotes.push({
+        si, abs: ws + n.f - 1, rel: n.f, root: !!n.r,
+        pc: noteAt(si, ws + n.f - 1),
+        g: n.g
+      });
+    });
+  });
+  const intervals = SCALE_INTERVALS[scaleType];
+  const scalePcs = intervals.map(i => (rootPc + i) % 12);
+  const degreeByPc = {};
+  scalePcs.forEach((pc, i) => { degreeByPc[pc] = i + 1; });
+  return { ws, we: ws + FRETS - 1, absNotes, scalePcs, degreeByPc };
+}
+
+function posKey(n) { return `${n.si}:${n.abs}`; }
+
+function renderFretboard(placement) {
+  const { ws, we, absNotes, scalePcs } = placement;
+  const scaleSet = new Set(scalePcs);
+  const fretCount = we - ws + 1;
+  const padL = 34, padT = 14, padR = 14;
+  const fretW = 44, strH = 14;
+  const W = padL + fretCount * fretW + padR;
+  const H = padT + 5 * strH + 18;
+  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+
+  const xNut = padL;
+  if (ws === 0) svg += `<line x1="${xNut}" y1="${padT}" x2="${xNut}" y2="${padT + 5 * strH}" stroke="#666" stroke-width="2.5"/>`;
+  for (let i = 1; i < fretCount; i++) {
+    const x = padL + i * fretW;
+    svg += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + 5 * strH}" stroke="#888" stroke-width="1"/>`;
+  }
+  for (let si = 0; si < 6; si++) {
+    const y = padT + si * strH;
+    svg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#555" stroke-width="${si === 5 ? 2 : 1}"/>`;
+    svg += `<text x="6" y="${y + 4}" font-size="9" fill="#888" font-family="system-ui">${STRING_LABELS[si]}</text>`;
+  }
+  for (let f = ws; f <= we; f++) {
+    const x = padL + (f - ws + 0.5) * fretW;
+    svg += `<text x="${x}" y="${padT - 3}" text-anchor="middle" font-size="9" fill="#888" font-family="system-ui">${f}</text>`;
+  }
+
+  absNotes.forEach(n => {
+    if (!scaleSet.has(n.pc)) return;
+    const key = posKey(n);
+    const hit = hitPositions.has(key);
+    const pulsing = pulseKeys.has(key);
+    const x = padL + (n.abs - ws + 0.5) * fretW;
+    const y = padT + n.si * strH;
+    const deg = placement.degreeByPc[n.pc];
+
+    if (pulsing) {
+      svg += `<circle cx="${x}" cy="${y}" r="5" fill="none" stroke="#69db7c" stroke-width="2" opacity="0.85">
+        <animate attributeName="r" from="5" to="17" dur="0.75s" repeatCount="1" fill="freeze"/>
+        <animate attributeName="opacity" from="0.85" to="0" dur="0.75s" repeatCount="1" fill="freeze"/>
+      </circle>`;
+    }
+
+    if (n.root) {
+      const stroke = hit ? '#69db7c' : '#4ecdc4';
+      svg += `<circle cx="${x}" cy="${y}" r="6" fill="#fff" stroke="${stroke}" stroke-width="${hit ? 3 : 2.5}"/>`;
+      if (hit) svg += `<circle cx="${x}" cy="${y}" r="8" fill="none" stroke="#69db7c" stroke-width="1.5" opacity="0.6"/>`;
+    } else {
+      const fill = hit ? '#69db7c' : 'rgba(78,205,196,0.35)';
+      const stroke = hit ? '#b2f2bb' : '#4ecdc4';
+      svg += `<circle cx="${x}" cy="${y}" r="${hit ? 6 : 5}" fill="${fill}" stroke="${stroke}" stroke-width="${hit ? 2 : 0}"/>`;
+    }
+    svg += `<text x="${x}" y="${y + 3.5}" text-anchor="middle" font-size="7" fill="${hit ? '#0f1419' : (n.root ? (hit ? '#69db7c' : '#4ecdc4') : '#e8edf4')}" font-weight="700" font-family="system-ui">${deg}</text>`;
+  });
+  svg += '</svg>';
+  return svg;
+}
+
+function updateScoreRing() {
+  const count = hitDegrees.size;
+  const ring = document.getElementById('progress-ring');
+  const offset = RING_C * (1 - count / 7);
+  ring.style.strokeDashoffset = String(offset);
+  document.getElementById('score-label').textContent = `${count}/7`;
+  ring.style.stroke = count >= 7 ? '#ffd43b' : '#69db7c';
+}
+
+function renderProgress(placement) {
+  const chips = placement.scalePcs.map((pc, i) => {
+    const deg = i + 1;
+    const hit = hitDegrees.has(deg);
+    const isNext = playMode === 'sequence' && seqIndex === i && !hit && !scaleComplete;
+    let cls = 'deg-chip';
+    if (hit) cls += ' hit';
+    if (isNext) cls += ' next';
+    if (deg === lastHitDegree) cls += ' just-hit';
+    if (deg === lastWrongDegree) cls += ' just-wrong';
+    const mark = hit ? ' ✓' : '';
+    return `<span class="${cls}" data-deg="${deg}">${deg} · ${NOTE_NAMES[pc]}${mark}</span>`;
+  }).join('');
+  document.getElementById('deg-progress').innerHTML = chips;
+  updateScoreRing();
+}
+
+function showToast(ok, main, sub) {
+  const el = document.getElementById('feedback-toast');
+  el.classList.remove('show', 'ok', 'bad');
+  void el.offsetWidth;
+  el.classList.add('show', ok ? 'ok' : 'bad');
+  document.getElementById('toast-main').textContent = main;
+  document.getElementById('toast-sub').textContent = sub || '';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), ok ? 1400 : 1800);
+}
+
+function flashPanel(ok) {
+  const panel = document.querySelector('.mic-panel');
+  const neck = document.getElementById('neck-map');
+  panel.classList.remove('flash-ok', 'flash-bad');
+  neck.classList.remove('flash-ok');
+  void panel.offsetWidth;
+  panel.classList.add(ok ? 'flash-ok' : 'flash-bad');
+  if (ok) {
+    neck.classList.add('flash-ok');
+    setTimeout(() => {
+      panel.classList.remove('flash-ok');
+      neck.classList.remove('flash-ok');
+    }, 700);
+  } else {
+    setTimeout(() => panel.classList.remove('flash-bad'), 500);
+  }
+}
+
+function pulsePositions(keys) {
+  keys.forEach(k => pulseKeys.add(k));
+  renderUI();
+  setTimeout(() => {
+    keys.forEach(k => pulseKeys.delete(k));
+    renderUI();
+  }, 750);
+}
+
+function burstConfetti() {
+  const layer = document.getElementById('confetti-layer');
+  const colors = ['#69db7c', '#ffd43b', '#4ecdc4', '#f0a030', '#ff6b6b', '#a78bfa'];
+  for (let i = 0; i < 55; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = `${Math.random() * 100}%`;
+    p.style.background = colors[i % colors.length];
+    p.style.animationDuration = `${2 + Math.random() * 1.5}s`;
+    p.style.animationDelay = `${Math.random() * 0.4}s`;
+    layer.appendChild(p);
+    setTimeout(() => p.remove(), 4000);
+  }
+}
+
+function celebrateCompletion() {
+  if (scaleComplete) return;
+  scaleComplete = true;
+  const scaleName = scaleType === 'major' ? 'maior' : 'menor natural';
+  const modeLabel = playMode === 'sequence' ? 'Sequência completa' : 'Escala completa';
+  document.getElementById('celebration-title').textContent = `${modeLabel}!`;
+  document.getElementById('celebration-msg').textContent =
+    `${NOTE_NAMES[rootPc]} ${scaleName} · ${shapeId} shape — 7/7 notas`;
+  document.getElementById('neck-map').classList.add('complete');
+  document.getElementById('celebration-overlay').classList.add('show');
+  burstConfetti();
+  showToast(true, '★ ' + modeLabel, `${NOTE_NAMES[rootPc]} ${scaleName}`);
+  logEntry(`★ ${modeLabel} — ${NOTE_NAMES[rootPc]} ${scaleName}`, true);
+  playSuccessChime();
+}
+
+function playSuccessChime() {
+  try {
+    const ctx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const notes = [523.25, 659.25, 783.99, 1046.5];
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.1);
+      gain.gain.linearRampToValueAtTime(0.12, ctx.currentTime + i * 0.1 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.35);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(ctx.currentTime + i * 0.1);
+      osc.stop(ctx.currentTime + i * 0.1 + 0.4);
+    });
+  } catch (_) { /* optional */ }
+}
+
+function playHitPing() {
+  try {
+    const ctx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = 880;
+    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.12);
+  } catch (_) { /* optional */ }
+}
+
+function renderUI() {
+  const placement = buildPlacement();
+  const scaleName = scaleType === 'major' ? 'maior' : 'menor natural';
+  document.getElementById('target-label').textContent =
+    `Alvo: ${NOTE_NAMES[rootPc]} ${scaleName} · ${shapeId} shape · casas ${placement.ws}–${placement.we}`;
+  document.getElementById('neck-map').innerHTML = renderFretboard(placement);
+  renderProgress(placement);
+}
+
+function logEntry(text, ok) {
+  const el = document.getElementById('session-log');
+  const line = document.createElement('div');
+  line.className = ok ? 'ok' : 'bad';
+  line.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
+  el.prepend(line);
+}
+
+function registerNote(note, placement) {
+  const now = Date.now();
+  if (note.pc === lastRegisteredPc && now - lastRegisteredAt < COOLDOWN_MS) return;
+
+  const inScale = placement.scalePcs.includes(note.pc);
+  const deg = placement.degreeByPc[note.pc];
+  lastWrongDegree = null;
+
+  if (playMode === 'sequence') {
+    const expectedPc = placement.scalePcs[seqIndex];
+    if (scaleComplete) return;
+    if (note.pc === expectedPc) {
+      const isNew = !hitDegrees.has(deg);
+      hitDegrees.add(deg);
+      const newKeys = placement.absNotes.filter(n => n.pc === note.pc).map(n => posKey(n));
+      newKeys.forEach(k => hitPositions.add(k));
+      logEntry(`✓ Grau ${deg} · ${note.name}${note.octave} (${note.freq.toFixed(1)} Hz)`, true);
+      lastHitDegree = deg;
+      seqIndex = Math.min(seqIndex + 1, 7);
+      flashLive(true, `✓ ${note.name}${note.octave}`);
+      showToast(true, `✓ Grau ${deg} · ${NOTE_NAMES[expectedPc]}`, `${hitDegrees.size} de 7`);
+      flashPanel(true);
+      if (isNew) playHitPing();
+      pulsePositions(newKeys);
+      renderUI();
+      setTimeout(() => { lastHitDegree = null; renderUI(); }, 600);
+      if (seqIndex >= 7) celebrateCompletion();
+    } else {
+      lastWrongDegree = seqIndex + 1;
+      const exp = NOTE_NAMES[expectedPc];
+      logEntry(`✗ Esperava ${exp} (grau ${seqIndex + 1}), veio ${note.name}${note.octave}`, false);
+      flashLive(false, `✗ ${note.name}`);
+      showToast(false, `Esperava ${exp}`, `Grau ${seqIndex + 1} · veio ${note.name}${note.octave}`);
+      flashPanel(false);
+      renderUI();
+      setTimeout(() => { lastWrongDegree = null; renderUI(); }, 500);
+    }
+  } else {
+    if (scaleComplete) return;
+    if (inScale) {
+      const isNew = !hitDegrees.has(deg);
+      hitDegrees.add(deg);
+      const newKeys = placement.absNotes.filter(n => n.pc === note.pc).map(n => posKey(n));
+      newKeys.forEach(k => hitPositions.add(k));
+      logEntry(`✓ ${note.name}${note.octave} · grau ${deg}`, true);
+      lastHitDegree = deg;
+      flashLive(true, `✓ ${note.name}${note.octave}`);
+      showToast(true, `✓ ${note.name}${note.octave}`, isNew ? `Grau ${deg} · ${hitDegrees.size}/7` : `Grau ${deg} (já tinha)`);
+      flashPanel(true);
+      if (isNew) playHitPing();
+      pulsePositions(newKeys);
+      renderUI();
+      setTimeout(() => { lastHitDegree = null; renderUI(); }, 600);
+      if (hitDegrees.size >= 7) celebrateCompletion();
+    } else {
+      logEntry(`✗ ${note.name}${note.octave} — fora da escala`, false);
+      flashLive(false, `✗ ${note.name}`);
+      showToast(false, `${note.name}${note.octave} — fora da escala`, `Notas válidas: ${placement.scalePcs.map(p => NOTE_NAMES[p]).join(' · ')}`);
+      flashPanel(false);
+    }
+  }
+
+  lastRegisteredPc = note.pc;
+  lastRegisteredAt = now;
+}
+
+function flashLive(ok, text) {
+  const el = document.getElementById('live-note');
+  el.textContent = text;
+  el.className = 'live-note ' + (ok ? 'ok' : 'bad');
+  if (ok) {
+    setTimeout(() => {
+      if (el.classList.contains('ok') && el.textContent === text) {
+        el.className = 'live-note idle';
+      }
+    }, 1200);
+  }
+}
+
+function tick() {
+  if (!analyser || !buf) return;
+  analyser.getFloatTimeDomainData(buf);
+  const { freq, clarity, volume } = detectPitch(buf, audioCtx.sampleRate);
+  document.getElementById('meter').style.width = `${Math.min(100, volume * 400)}%`;
+
+  const liveEl = document.getElementById('live-note');
+  const metaEl = document.getElementById('live-meta');
+
+  if (clarity < clarityThreshold || !freq) {
+    stablePc = -1;
+    if (!liveEl.classList.contains('ok') && !liveEl.classList.contains('bad')) {
+      liveEl.textContent = '…';
+      liveEl.className = 'live-note idle';
+    }
+    metaEl.textContent = `Ouvindo · clareza ${(clarity * 100).toFixed(0)}% (mín ${(clarityThreshold * 100).toFixed(0)}%)`;
+    rafId = requestAnimationFrame(tick);
+    return;
+  }
+
+  const note = freqToNote(freq);
+  if (!note || Math.abs(note.cents) > centsTolerance) {
+    metaEl.textContent = `${freq.toFixed(1)} Hz · fora de afinação (±${centsTolerance}¢)`;
+    rafId = requestAnimationFrame(tick);
+    return;
+  }
+
+  metaEl.textContent = `${note.freq.toFixed(1)} Hz · ${note.cents >= 0 ? '+' : ''}${note.cents.toFixed(0)}¢ · clareza ${(clarity * 100).toFixed(0)}%`;
+  liveEl.textContent = `${note.name}${note.octave}`;
+  liveEl.className = 'live-note idle';
+
+  const now = performance.now();
+  if (note.pc !== stablePc) {
+    stablePc = note.pc;
+    stableSince = now;
+  } else if (now - stableSince >= STABLE_MS) {
+    registerNote(note, buildPlacement());
+    stablePc = -1; // evita re-registrar enquanto segura a nota
+  }
+
+  rafId = requestAnimationFrame(tick);
+}
+
+async function startMic() {
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+    const src = audioCtx.createMediaStreamSource(stream);
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 8192;
+    analyser.smoothingTimeConstant = 0.3;
+    src.connect(analyser);
+    buf = new Float32Array(analyser.fftSize);
+    document.getElementById('btn-start').disabled = true;
+    document.getElementById('btn-stop').disabled = false;
+    document.getElementById('live-meta').textContent = 'Microfone ativo — toque uma nota';
+    tick();
+  } catch (e) {
+    alert('Não foi possível acessar o microfone: ' + e.message);
+  }
+}
+
+function stopMic() {
+  if (rafId) cancelAnimationFrame(rafId);
+  if (stream) stream.getTracks().forEach(t => t.stop());
+  if (audioCtx) audioCtx.close();
+  audioCtx = analyser = stream = buf = null;
+  rafId = null;
+  document.getElementById('btn-start').disabled = false;
+  document.getElementById('btn-stop').disabled = true;
+  document.getElementById('live-note').textContent = '—';
+  document.getElementById('live-note').className = 'live-note idle';
+  document.getElementById('live-meta').textContent = 'Microfone parado';
+  document.getElementById('meter').style.width = '0%';
+}
+
+function resetSession() {
+  hitDegrees = new Set();
+  hitPositions = new Set();
+  pulseKeys = new Set();
+  seqIndex = 0;
+  lastRegisteredPc = -1;
+  stablePc = -1;
+  lastHitDegree = null;
+  lastWrongDegree = null;
+  scaleComplete = false;
+  document.getElementById('session-log').innerHTML = '';
+  document.getElementById('neck-map').classList.remove('complete');
+  document.getElementById('celebration-overlay').classList.remove('show');
+  renderUI();
+}
+
+function closeCelebration() {
+  document.getElementById('celebration-overlay').classList.remove('show');
+}
+
+function buildKeyGrid() {
+  const grid = document.getElementById('key-grid');
+  NOTE_NAMES.forEach((name, pc) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'key-btn' + (pc === rootPc ? ' active' : '');
+    btn.textContent = name;
+    btn.addEventListener('click', () => {
+      rootPc = pc;
+      grid.querySelectorAll('.key-btn').forEach(b => b.classList.toggle('active', NOTE_NAMES[rootPc] === b.textContent));
+      resetSession();
+    });
+    grid.appendChild(btn);
+  });
+}
+
+document.getElementById('scale-type').addEventListener('change', e => {
+  scaleType = e.target.value;
+  resetSession();
+});
+
+document.querySelectorAll('.shape-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    shapeId = btn.dataset.shape;
+    document.querySelectorAll('.shape-btn').forEach(b => b.classList.toggle('active', b === btn));
+    resetSession();
+  });
+});
+
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    playMode = btn.dataset.mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b === btn));
+    resetSession();
+  });
+});
+
+document.getElementById('clarity').addEventListener('input', e => {
+  clarityThreshold = +e.target.value;
+  document.getElementById('clarity-val').textContent = clarityThreshold.toFixed(2);
+});
+document.getElementById('cents-tol').addEventListener('input', e => {
+  centsTolerance = +e.target.value;
+  document.getElementById('cents-val').textContent = centsTolerance;
+});
+
+document.getElementById('btn-start').addEventListener('click', startMic);
+document.getElementById('btn-stop').addEventListener('click', stopMic);
+document.getElementById('btn-reset').addEventListener('click', resetSession);
+document.getElementById('btn-celebrate-close').addEventListener('click', closeCelebration);
+document.getElementById('btn-celebrate-again').addEventListener('click', () => {
+  closeCelebration();
+  resetSession();
+});
+document.getElementById('celebration-overlay').addEventListener('click', e => {
+  if (e.target.id === 'celebration-overlay') closeCelebration();
+});
+
+buildKeyGrid();
+renderUI();
+</script>
+</body>
+</html>

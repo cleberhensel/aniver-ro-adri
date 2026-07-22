@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Módulo 03 — Campo harmônico | Harmonia Funcional</title>
+  <link rel="stylesheet" href="css/curso.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h1>Harmonia Funcional</h1>
+      <p>Tocar de ouvido — técnica, não magia</p>
+    </div>
+    <nav id="sidebar-nav"></nav>
+    <div style="padding:0 1.25rem 1rem">
+      <div id="course-progress-label" style="font-size:0.8rem;color:var(--text-muted)">0/11 módulos</div>
+      <div class="progress-bar-wrap"><div id="course-progress-bar" class="progress-bar-fill" style="width:0"></div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="hero">
+      <h1>Campo harmônico da escala maior</h1>
+      <p class="lead">O campo harmônico é o mapa de todos os acordes "nativos" de uma tonalidade — os 7 acordes diatônicos que derivam da escala maior. Dominar este mapa em pelo menos 5 tons é o pré-requisito para prever acordes de ouvido, acompanhar cantores e transpor sem pânico.</p>
+    </header>
+
+    <h2>O que é campo harmônico</h2>
+    <p>Campo harmônico (ou <em>harmonia diatônica</em>) é o conjunto de acordes formados empilhando terças sobre cada grau da escala maior, <strong>sem alterar as notas da escala</strong>. Em tom de Dó maior, só usamos as notas Dó, Ré, Mi, Fá, Sol, Lá, Si — e obtemos 7 acordes com qualidades fixas.</p>
+    <p>Por que isso importa para tocar de ouvido? Porque <strong>80% das músicas populares e da MPB</strong> circulam quase exclusivamente dentro deste campo. Quando um acorde "não pertence", geralmente é exceção explicável (dominante secundária, passagem diminuta, empréstimo modal) — assunto dos módulos avançados.</p>
+
+    <blockquote>Internalize o som de cada <strong>grau relativo à tônica</strong>, não o acorde absoluto. O "quinto grau" soa como dominante em C, em G, em F — sempre com a mesma função.</blockquote>
+
+    <h2>Como derivar os 7 acordes diatônicos</h2>
+    <p>Método em 3 passos (aplicável a qualquer tônica):</p>
+    <ol>
+      <li><strong>Construa a escala maior</strong> (módulo 02): padrão W–W–H–W–W–W–H</li>
+      <li><strong>Empilhe terças</strong> sobre cada grau: nota do grau + terça acima na escala + quinta acima</li>
+      <li><strong>Meça a terça</strong> sobre a fundamental: 3M = acorde maior, 3m = menor, 3m+3m = diminuto</li>
+    </ol>
+
+    <h3>Exemplo completo em Dó maior</h3>
+    <table>
+      <tr><th>Grau</th><th>Romano</th><th>Nashville</th><th>Notas da tríade</th><th>Acorde</th><th>Qualidade</th><th>Função</th><th>Sensação</th></tr>
+      <tr><td>I</td><td>I</td><td>1</td><td>Dó – Mi – Sol</td><td><strong>C</strong></td><td>Maior</td><td><span class="fn-badge fn-badge-T">T</span></td><td>Repouso, casa, estabilidade</td></tr>
+      <tr><td>II</td><td>ii</td><td>2-</td><td>Ré – Fá – Lá</td><td><strong>Dm</strong></td><td>Menor</td><td><span class="fn-badge fn-badge-SD">SD</span></td><td>Movimento, preparação</td></tr>
+      <tr><td>III</td><td>iii</td><td>3-</td><td>Mi – Sol – Si</td><td><strong>Em</strong></td><td>Menor</td><td><span class="fn-badge fn-badge-T">T*</span></td><td>Tônica fraca, passagem</td></tr>
+      <tr><td>IV</td><td>IV</td><td>4</td><td>Fá – Lá – Dó</td><td><strong>F</strong></td><td>Maior</td><td><span class="fn-badge fn-badge-SD">SD</span></td><td>Abertura, subdominante plena</td></tr>
+      <tr><td>V</td><td>V</td><td>5</td><td>Sol – Si – Ré</td><td><strong>G</strong></td><td>Maior</td><td><span class="fn-badge fn-badge-D">D</span></td><td>Tensão, quer resolver em I</td></tr>
+      <tr><td>VI</td><td>vi</td><td>6-</td><td>Lá – Dó – Mi</td><td><strong>Am</strong></td><td>Menor</td><td><span class="fn-badge fn-badge-T">T</span></td><td>Relativa menor, repouso alternativo</td></tr>
+      <tr><td>VII</td><td>vii°</td><td>7°</td><td>Si – Ré – Fá</td><td><strong>Bdim</strong></td><td>Dim</td><td><span class="fn-badge fn-badge-D">D</span></td><td>Tensão instável, dominante fraca</td></tr>
+    </table>
+
+    <p><strong>Diagramas em Dó maior:</strong></p>
+    <div class="progression-diagram" data-chords="C,Dm,Em,F,G,Am,Bdim"></div>
+
+    <p>Padrão universal de qualidades: <code>M – m – m – M – M – m – dim</code>. Memorize o padrão, não apenas os acordes de Dó.</p>
+
+    <h2>As três funções no campo harmônico</h2>
+    <p>Função harmônica agrupa acordes pela <strong>sensação</strong>, não pela letra. No campo maior:</p>
+
+    <div class="card card-fn-T">
+      <h3 style="margin-top:0"><span class="fn-badge fn-badge-T">Tônica (T)</span></h3>
+      <p><strong>Graus:</strong> I, vi, (iii como T fraca)</p>
+      <p>Centro de gravidade tonal. Frases terminam aqui. I é repouso pleno; vi é repouso relativo (mesmas notas da escala, coloração mais melancólica); iii raramente fecha frase sozinha em pop.</p>
+      <p><strong>Em Dó:</strong> C, Am, (Em)</p>
+    </div>
+
+    <div class="card card-fn-SD">
+      <h3 style="margin-top:0"><span class="fn-badge fn-badge-SD">Subdominante (SD)</span></h3>
+      <p><strong>Graus:</strong> IV, ii</p>
+      <p>Afastamento suave da tônica. IV tem peso de "placa" (subdominante plena); ii é mais ágil e jazzística, prepara dominante com elegância.</p>
+      <p><strong>Em Dó:</strong> F, Dm</p>
+    </div>
+
+    <div class="card card-fn-D">
+      <h3 style="margin-top:0"><span class="fn-badge fn-badge-D">Dominante (D)</span></h3>
+      <p><strong>Graus:</strong> V, vii°</p>
+      <p>Máxima tensão diatônica. V (especialmente com 7ª) pede resolução em I; vii° é versão diminuta — mesma função, mais frágil e passagem.</p>
+      <p><strong>Em Dó:</strong> G, Bdim</p>
+    </div>
+
+    <h3>A cadeia SD → D → T</h3>
+    <p>A progressão mais fundamental da música ocidental tonal:</p>
+    <ul>
+      <li><strong>ii → V → I</strong> (Dm → G → C) — cadência jazz/pop/bossa</li>
+      <li><strong>IV → V → I</strong> (F → G → C) — cadência clássica, samba, rock</li>
+      <li><strong>IV → V → vi</strong> (F → G → Am) — "decepção" pop: esperava I, chegou vi</li>
+    </ul>
+    <div class="progression-diagram" data-chords="Dm,G,C"></div>
+    <div class="progression-diagram" data-chords="F,G,C"></div>
+    <div class="progression-diagram" data-chords="F,G,Am"></div>
+    <p>Quando você ouve tensão crescente, aposte dominante. Quando ouve resolução, tônica. Quando ouve abertura sem tensão forte, subdominante.</p>
+
+    <h2>Campo harmônico em outros tons</h2>
+    <p>O padrão de graus e funções é idêntico; apenas as letras mudam. Referência rápida:</p>
+    <table>
+      <tr><th>Tom</th><th>I</th><th>ii</th><th>iii</th><th>IV</th><th>V</th><th>vi</th><th>vii°</th></tr>
+      <tr><td>C</td><td>C</td><td>Dm</td><td>Em</td><td>F</td><td>G</td><td>Am</td><td>Bdim</td></tr>
+      <tr><td>G</td><td>G</td><td>Am</td><td>Bm</td><td>C</td><td>D</td><td>Em</td><td>F#dim</td></tr>
+      <tr><td>D</td><td>D</td><td>Em</td><td>F#m</td><td>G</td><td>A</td><td>Bm</td><td>C#dim</td></tr>
+      <tr><td>A</td><td>A</td><td>Bm</td><td>C#m</td><td>D</td><td>E</td><td>F#m</td><td>G#dim</td></tr>
+      <tr><td>F</td><td>F</td><td>Gm</td><td>Am</td><td>Bb</td><td>C</td><td>Dm</td><td>Edim</td></tr>
+    </table>
+
+    <h2>Relativa menor e paralela menor</h2>
+    <p><strong>Relativa menor</strong> do tom maior é o vi: em Dó maior, Lá menor (Am) compartilha as mesmas 7 notas. Por isso C e Am "combinam" sem esforço — são o mesmo campo.</p>
+    <p><strong>Paralela menor</strong> (C menor) é outra escala, outro campo. Não confunda: Cm tem Mi♭, não Mi. A escala menor natural (A menor no paralelo de C) coincide com a relativa; a menor harmônica e melódica alteram graus — assunto futuro.</p>
+
+    <div class="interactive" id="key-field-tool">
+      <h3>Campo harmônico interativo</h3>
+      <p>Escolha uma tônica e explore os 7 acordes diatônicos com função e sensação. Use esta ferramenta para comparar tons e verificar transposições.</p>
+      <label for="kf-key">Escolha a tônica (tom)</label>
+      <select id="kf-key"></select>
+      <div id="kf-result"></div>
+    </div>
+
+    <div class="tip">
+      Ao praticar, toque os 7 acordes em ordem numérica cantando em voz alta: "primeiro grau — repouso — C; segundo grau — subdominante — Dm…" até o sétimo. Depois embaralhe: toque IV – V – I – vi – ii e nomeie função antes de nomear acorde. O objetivo é que, ao ouvir Fá no baixo em tom de Dó, seu reflexo seja "quarto grau, SD" — não apenas "F".
+    </div>
+
+    <h2>Conexão com o pipeline mental</h2>
+    <p>No módulo 01, o passo 4 (função) e o passo 6 (antecipação) dependem diretamente deste mapa. Exemplo prático:</p>
+    <ol>
+      <li>Cantor em tom de Sol, baixo canta Ré → grau ii (Am) → SD</li>
+      <li>Após ii, aposta estatística: V (D) → tensão</li>
+      <li>Após V, aposta: I (G) ou vi (Em)</li>
+      <li>Qualidade: triades do campo = Am, D, G — sem surpresas</li>
+    </ol>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">1</span> Harmonizar a escala (exercício fundamental)</div>
+      <p><strong>Objetivo:</strong> ligar escala (módulo 02) ao campo harmônico no instrumento.</p>
+      <p><strong>Procedimento em cada tom (C, G, D, A, F):</strong></p>
+      <ol>
+        <li>Toque a escala maior ascendente em uma região do braço.</li>
+        <li>No grau I, forme e toque o acorde maior. Cante: "um — tônica — maior".</li>
+        <li>Suba: no grau II, acorde menor. Cante: "dois — subdominante — menor".</li>
+        <li>Continue até o VII (diminuto).</li>
+        <li>Desca a escala e toque apenas os acordes I – IV – V – I, cantando funções.</li>
+        <li>Sem olhar: alguém diz um grau (ex.: "6"); você toca o acorde e a função em menos de 3 segundos.</li>
+      </ol>
+      <p><strong>Meta:</strong> 5 tons completos em uma semana, 10 minutos por tom.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">2</span> Ouvir baixo → grau → acorde</div>
+      <p><strong>Objetivo:</strong> treinar passos 3–4 do pipeline com o campo harmônico.</p>
+      <ol>
+        <li>Escolha uma música diatônica simples (ex.: "Wonderwall" em tom de Sol, ou samba I–IV–V).</li>
+        <li>Primeira audição: anote apenas a linha de baixo (nota grave de cada acorde).</li>
+        <li>Identifique a tônica da música.</li>
+        <li>Converta cada nota de baixo em grau (ex.: em Sol: A=ii, C=IV, D=V, G=I).</li>
+        <li>Escreva a progressão em números Nashville antes de consultar cifra.</li>
+        <li>Toque usando apenas formas de campo harmônico do tom.</li>
+      </ol>
+      <p><strong>Critério:</strong> acertar 6/7 graus em músicas com harmonia 100% diatônica.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">3</span> Cadências de função — SD → D → T</div>
+      <p><strong>Objetivo:</strong> sentir a cadeia funcional no corpo, não só na teoria.</p>
+      <ol>
+        <li>Em 3 tons (C, G, F), toque lentamente: ii – V – I e IV – V – I.</li>
+        <li>Entre cada acorde, pause 2 segundos e diga a função em voz alta.</li>
+        <li>Repita com vi no lugar de I: IV – V – vi (sensação de decepção).</li>
+        <li>Improvise um pequeno riff melódico apenas com notas da escala sobre cada função.</li>
+        <li>Grave áudio e compare se a sensação de tensão/resolução está clara.</li>
+      </ol>
+    </div>
+
+    <h2>Erros comuns</h2>
+    <ul>
+      <li><strong>Decorar só C, G, F</strong> — expanda para D e A cedo; cantores pedem esses tons com frequência</li>
+      <li><strong>Tratar iii como dominante</strong> — é tônica fraca; em pop raramente substitui V</li>
+      <li><strong>Esquecer vii°</strong> — é dominante; em MPB aparece como passagem para I</li>
+      <li><strong>Confundir relativa com paralela</strong> — Am é relativa de C; Cm é paralela menor (outro universo)</li>
+    </ul>
+
+    <h2>Checklist deste módulo</h2>
+    <div data-checklist="mod03">
+      <div class="checklist-item"><input type="checkbox" id="c03a"><label for="c03a">Derivo os 7 acordes diatônicos em qualquer tom maior</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c03b"><label for="c03b">Classifico I, ii, IV, V, vi por função T/SD/D</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c03c"><label for="c03c">Harmonizei a escala em 5 tons</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c03d"><label for="c03d">Uso a ferramenta interativa para comparar pelo menos 3 tons</label></div>
+    </div>
+
+    <p style="margin-top:1.5rem">
+      <button class="btn" id="mark-module-complete" data-module="03">Marcar módulo como concluído</button>
+    </p>
+
+    <div class="nav-footer">
+      <a href="02-escalas-intervalos.html">← Escalas e intervalos</a>
+      <a href="04-funcoes-harmonicas.html">Próximo: Funções T–SD–D →</a>
+    </div>
+  </main>
+</div>
+<script src="js/chords-dict.js"></script>
+<script src="js/chord-diagrams.js"></script>
+<script src="js/chord-auto.js"></script>
+<script src="js/theory-data.js"></script>
+<script src="js/curso.js"></script>
+</body>
+</html>

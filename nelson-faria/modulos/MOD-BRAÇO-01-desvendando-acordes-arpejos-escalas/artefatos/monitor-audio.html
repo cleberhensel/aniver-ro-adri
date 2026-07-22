@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monitor de áudio · violão / interface | MOD-BRAÇO-01</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #f0a030;
+      --accent2: #4ecdc4;
+      --border: #2d3f54;
+      --ok: #69db7c;
+      --bad: #ff6b6b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding: 1.5rem 1rem 3rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 1.25rem; margin-bottom: 1.25rem; }
+    header h1 { font-size: 1.45rem; font-weight: 700; }
+    header p { color: var(--muted); font-size: 0.92rem; margin-top: 0.35rem; }
+    nav { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0 1.25rem; }
+    nav a {
+      color: var(--accent); text-decoration: none; font-size: 0.78rem;
+      padding: 0.3rem 0.55rem; border: 1px solid var(--border); border-radius: 5px;
+    }
+    .callout {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      padding: 0.85rem 1rem;
+      border-radius: 0 6px 6px 0;
+      margin: 0.75rem 0 1rem;
+      font-size: 0.88rem;
+    }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .panel h2 {
+      font-size: 0.95rem;
+      color: var(--accent2);
+      margin-bottom: 0.75rem;
+    }
+    .controls {
+      display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;
+    }
+    .control-group { flex: 1 1 12rem; min-width: 0; }
+    .control-group label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    select, button {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 0.55rem 0.65rem;
+      font-size: 0.88rem;
+    }
+    button { cursor: pointer; font-weight: 700; }
+    button.primary { background: var(--accent2); color: #111; border-color: var(--accent2); }
+    button.danger { background: rgba(255,107,107,0.15); color: var(--bad); border-color: var(--bad); }
+    button:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .btn-row button { flex: 1 1 8rem; width: auto; }
+    input[type="range"] { width: 100%; accent-color: var(--accent2); }
+    .range-value { font-size: 0.82rem; color: var(--muted); margin-top: 0.25rem; }
+    .status {
+      display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem;
+      font-size: 0.85rem; margin-top: 0.85rem;
+    }
+    .status-item strong { color: var(--accent2); }
+    .status-dot {
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--muted); margin-right: 0.35rem;
+    }
+    .status-dot.live { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+    .meter-wrap { margin: 0.75rem 0 0.25rem; }
+    .meter-label {
+      display: flex; justify-content: space-between;
+      font-size: 0.78rem; color: var(--muted); margin-bottom: 0.35rem;
+    }
+    .meter {
+      height: 18px; background: var(--surface2); border-radius: 999px;
+      overflow: hidden; border: 1px solid var(--border);
+    }
+    .meter-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--ok), var(--accent), var(--bad));
+      transition: width 0.05s linear;
+    }
+    .viz-grid {
+      display: grid; grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .viz-box {
+      background: #0a0e14;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .viz-head {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.78rem; color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    canvas { display: block; width: 100%; height: 140px; }
+    canvas.spectrum { height: 180px; }
+    .note-display {
+      text-align: center;
+      padding: 1.25rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    .note-display .label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .note-display .note {
+      font-size: 3.5rem; font-weight: 800; line-height: 1.1;
+      color: var(--accent2); margin: 0.15rem 0;
+    }
+    .note-display .freq { font-size: 0.92rem; color: var(--muted); }
+    .note-display .note.idle { color: var(--muted); font-size: 1.5rem; font-weight: 600; }
+    .toggle-row {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.88rem; margin-top: 0.5rem;
+    }
+    .toggle-row input { width: auto; accent-color: var(--accent2); }
+    footer {
+      margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);
+      font-size: 0.78rem; color: var(--muted);
+    }
+    footer a { color: var(--accent); }
+    .error {
+      display: none;
+      background: rgba(255,107,107,0.12);
+      border: 1px solid var(--bad);
+      color: #ffb4b4;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 0.88rem;
+    }
+    .error.show { display: block; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Monitor de áudio</h1>
+  <p>Veja e ouça o sinal captado do violão ou interface · Web Audio API</p>
+</header>
+
+<nav>
+  <a href="escala-validador.html">Validador de escala</a>
+  <a href="numa-ilha-estudo-harmonico.html">Numa Ilha</a>
+  <a href="arpejos-ii-V-I.html">Arpejos ii–V–I</a>
+</nav>
+
+<div class="callout">
+  Use <strong>fone de ouvido</strong> se possível — monitorar pelo alto-falante pode gerar microfonia.
+  No macOS, escolha a interface correta em <em>Ajustes → Som → Entrada</em> ou no seletor abaixo.
+</div>
+
+<div class="error" id="error-box"></div>
+
+<section class="panel">
+  <h2>Entrada</h2>
+  <div class="controls">
+    <div class="control-group" style="flex: 2 1 18rem">
+      <label for="device-select">Dispositivo de captura</label>
+      <select id="device-select">
+        <option value="">Carregando dispositivos…</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label>&nbsp;</label>
+      <div class="btn-row">
+        <button type="button" class="primary" id="btn-start">Iniciar captura</button>
+        <button type="button" class="danger" id="btn-stop" disabled>Parar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls" style="margin-top: 1rem">
+    <div class="control-group">
+      <label for="input-gain">Ganho de entrada</label>
+      <input type="range" id="input-gain" min="0" max="200" value="100">
+      <div class="range-value" id="input-gain-label">100%</div>
+    </div>
+    <div class="control-group">
+      <label for="monitor-gain">Volume do monitor</label>
+      <input type="range" id="monitor-gain" min="0" max="100" value="70">
+      <div class="range-value" id="monitor-gain-label">70%</div>
+    </div>
+  </div>
+
+  <label class="toggle-row">
+    <input type="checkbox" id="monitor-enabled" checked>
+    Ouvir o que está sendo captado (monitor)
+  </label>
+
+  <div class="status">
+    <span><i class="status-dot" id="status-dot"></i><span id="status-text">Parado</span></span>
+    <span>Latência: <strong id="latency-ms">—</strong></span>
+    <span>Taxa: <strong id="sample-rate">—</strong></span>
+  </div>
+
+  <div class="meter-wrap">
+    <div class="meter-label"><span>Nível de entrada</span><span id="level-db">−∞ dB</span></div>
+    <div class="meter"><div class="meter-fill" id="level-fill"></div></div>
+  </div>
+</section>
+
+<div class="note-display">
+  <div class="label">Nota detectada (aprox.)</div>
+  <div class="note idle" id="detected-note">—</div>
+  <div class="freq" id="detected-freq">Toque uma corda</div>
+</div>
+
+<section class="panel">
+  <h2>Visualização</h2>
+  <div class="viz-grid">
+    <div class="viz-box">
+      <div class="viz-head"><span>Forma de onda</span><span id="wave-peaks">—</span></div>
+      <canvas id="wave-canvas" width="900" height="140"></canvas>
+    </div>
+    <div class="viz-box">
+      <div class="viz-head"><span>Espectro de frequências</span><span>20 Hz – 5 kHz</span></div>
+      <canvas id="spectrum-canvas" class="spectrum" width="900" height="180"></canvas>
+    </div>
+  </div>
+</section>
+
+<footer>
+  MOD-BRAÇO-01 · Abra via servidor local ou direto no navegador (Chrome / Edge / Firefox).
+  Permissão de microfone necessária — interfaces de áudio aparecem como entrada.
+</footer>
+
+<script>
+const NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+let audioCtx = null;
+let stream = null;
+let sourceNode = null;
+let gainIn = null;
+let gainMonitor = null;
+let analyser = null;
+let monitorDest = null;
+let rafId = null;
+let activeDeviceId = '';
+
+const els = {
+  deviceSelect: document.getElementById('device-select'),
+  btnStart: document.getElementById('btn-start'),
+  btnStop: document.getElementById('btn-stop'),
+  inputGain: document.getElementById('input-gain'),
+  monitorGain: document.getElementById('monitor-gain'),
+  inputGainLabel: document.getElementById('input-gain-label'),
+  monitorGainLabel: document.getElementById('monitor-gain-label'),
+  monitorEnabled: document.getElementById('monitor-enabled'),
+  statusDot: document.getElementById('status-dot'),
+  statusText: document.getElementById('status-text'),
+  latencyMs: document.getElementById('latency-ms'),
+  sampleRate: document.getElementById('sample-rate'),
+  levelFill: document.getElementById('level-fill'),
+  levelDb: document.getElementById('level-db'),
+  waveCanvas: document.getElementById('wave-canvas'),
+  spectrumCanvas: document.getElementById('spectrum-canvas'),
+  wavePeaks: document.getElementById('wave-peaks'),
+  detectedNote: document.getElementById('detected-note'),
+  detectedFreq: document.getElementById('detected-freq'),
+  errorBox: document.getElementById('error-box')
+};
+
+const waveCtx = els.waveCanvas.getContext('2d');
+const specCtx = els.spectrumCanvas.getContext('2d');
+const timeData = new Uint8Array(2048);
+const freqData = new Uint8Array(2048);
+
+function showError(msg) {
+  els.errorBox.textContent = msg;
+  els.errorBox.classList.add('show');
+}
+
+function clearError() {
+  els.errorBox.classList.remove('show');
+  els.errorBox.textContent = '';
+}
+
+function setStatus(live, text) {
+  els.statusDot.classList.toggle('live', live);
+  els.statusText.textContent = text;
+}
+
+function dbFromByte(v) {
+  const n = v / 255;
+  if (n <= 0.0001) return -Infinity;
+  return 20 * Math.log10(n);
+}
+
+function freqToNote(freq) {
+  if (!freq || freq < 50 || freq > 2000) return null;
+  const midi = Math.round(69 + 12 * Math.log2(freq / 440));
+  const name = NOTE_NAMES[((midi % 12) + 12) % 12];
+  const octave = Math.floor(midi / 12) - 1;
+  const cents = Math.round((1200 * Math.log2(freq / (440 * Math.pow(2, (midi - 69) / 12)))));
+  return { label: `${name}${octave}`, freq: Math.round(freq), cents };
+}
+
+function detectPitch(buf, sampleRate) {
+  let rms = 0;
+  for (let i = 0; i < buf.length; i++) {
+    const x = (buf[i] - 128) / 128;
+    rms += x * x;
+  }
+  rms = Math.sqrt(rms / buf.length);
+  if (rms < 0.015) return null;
+
+  const size = buf.length;
+  let bestOffset = -1;
+  let bestCorr = 0;
+  const minLag = Math.floor(sampleRate / 1000);
+  const maxLag = Math.floor(sampleRate / 70);
+
+  for (let lag = minLag; lag < maxLag; lag++) {
+    let corr = 0;
+    for (let i = 0; i < size - lag; i++) {
+      corr += Math.abs(((buf[i] - 128) / 128) * ((buf[i + lag] - 128) / 128));
+    }
+    if (corr > bestCorr) {
+      bestCorr = corr;
+      bestOffset = lag;
+    }
+  }
+  if (bestOffset <= 0) return null;
+  return sampleRate / bestOffset;
+}
+
+function drawWaveform() {
+  const w = els.waveCanvas.width;
+  const h = els.waveCanvas.height;
+  analyser.getByteTimeDomainData(timeData);
+
+  waveCtx.fillStyle = '#0a0e14';
+  waveCtx.fillRect(0, 0, w, h);
+
+  waveCtx.strokeStyle = '#2d3f54';
+  waveCtx.lineWidth = 1;
+  waveCtx.beginPath();
+  waveCtx.moveTo(0, h / 2);
+  waveCtx.lineTo(w, h / 2);
+  waveCtx.stroke();
+
+  waveCtx.strokeStyle = '#4ecdc4';
+  waveCtx.lineWidth = 2;
+  waveCtx.beginPath();
+  const step = w / timeData.length;
+  let min = 255, max = 0;
+  for (let i = 0; i < timeData.length; i++) {
+    const v = timeData[i];
+    if (v < min) min = v;
+    if (v > max) max = v;
+    const y = (v / 255) * h;
+    if (i === 0) waveCtx.moveTo(0, y);
+    else waveCtx.lineTo(i * step, y);
+  }
+  waveCtx.stroke();
+
+  const peak = Math.max(Math.abs(min - 128), Math.abs(max - 128)) / 128;
+  els.wavePeaks.textContent = `pico ${Math.round(peak * 100)}%`;
+}
+
+function drawSpectrum() {
+  const w = els.spectrumCanvas.width;
+  const h = els.spectrumCanvas.height;
+  analyser.getByteFrequencyData(freqData);
+
+  specCtx.fillStyle = '#0a0e14';
+  specCtx.fillRect(0, 0, w, h);
+
+  const binCount = analyser.frequencyBinCount;
+  const sampleRate = audioCtx.sampleRate;
+  const maxHz = 5000;
+  const maxBin = Math.min(binCount - 1, Math.floor(maxHz / (sampleRate / 2) * binCount));
+
+  const barW = w / maxBin;
+  for (let i = 0; i < maxBin; i++) {
+    const v = freqData[i] / 255;
+    const barH = v * h;
+    const x = i * barW;
+    const hue = 170 + v * 40;
+    specCtx.fillStyle = `hsla(${hue}, 70%, ${45 + v * 25}%, 0.95)`;
+    specCtx.fillRect(x, h - barH, Math.max(barW - 0.5, 1), barH);
+  }
+
+  specCtx.fillStyle = '#8b9cb3';
+  specCtx.font = '10px system-ui';
+  [100, 200, 440, 1000, 2000].forEach(hz => {
+    const bin = Math.floor(hz / (sampleRate / 2) * binCount);
+    if (bin > maxBin) return;
+    const x = bin * barW;
+    specCtx.fillRect(x, h - 2, 1, 2);
+    specCtx.fillText(`${hz}`, x + 2, h - 6);
+  });
+}
+
+function updateMeterAndPitch() {
+  analyser.getByteTimeDomainData(timeData);
+  let sum = 0;
+  let peak = 0;
+  for (let i = 0; i < timeData.length; i++) {
+    const amp = Math.abs(timeData[i] - 128) / 128;
+    sum += amp * amp;
+    if (amp > peak) peak = amp;
+  }
+  const rms = Math.sqrt(sum / timeData.length);
+  const db = rms > 0.0001 ? 20 * Math.log10(rms) : -Infinity;
+  const pct = Math.min(100, peak * 100 * 1.2);
+
+  els.levelFill.style.width = `${pct}%`;
+  els.levelDb.textContent = Number.isFinite(db) ? `${db.toFixed(1)} dB` : '−∞ dB';
+
+  const pitch = detectPitch(timeData, audioCtx.sampleRate);
+  if (pitch) {
+    const note = freqToNote(pitch);
+    if (note) {
+      els.detectedNote.textContent = note.label;
+      els.detectedNote.classList.remove('idle');
+      const centStr = note.cents === 0 ? '' : ` · ${note.cents > 0 ? '+' : ''}${note.cents} ct`;
+      els.detectedFreq.textContent = `${note.freq} Hz${centStr}`;
+    }
+  } else {
+    els.detectedNote.textContent = '—';
+    els.detectedNote.classList.add('idle');
+    els.detectedFreq.textContent = 'Sinal fraco ou silêncio';
+  }
+}
+
+function tick() {
+  if (!analyser) return;
+  drawWaveform();
+  drawSpectrum();
+  updateMeterAndPitch();
+  rafId = requestAnimationFrame(tick);
+}
+
+function applyGains() {
+  if (!gainIn || !gainMonitor) return;
+  gainIn.gain.value = Number(els.inputGain.value) / 100;
+  gainMonitor.gain.value = els.monitorEnabled.checked ? Number(els.monitorGain.value) / 100 : 0;
+}
+
+async function listDevices() {
+  const devices = await navigator.mediaDevices.enumerateDevices();
+  const inputs = devices.filter(d => d.kind === 'audioinput');
+  els.deviceSelect.innerHTML = inputs.length
+    ? inputs.map(d => `<option value="${d.deviceId}">${d.label || `Entrada ${d.deviceId.slice(0, 8)}…`}</option>`).join('')
+    : '<option value="">Nenhuma entrada encontrada</option>';
+  if (activeDeviceId && inputs.some(d => d.deviceId === activeDeviceId)) {
+    els.deviceSelect.value = activeDeviceId;
+  }
+}
+
+async function stopCapture() {
+  if (rafId) {
+    cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+  if (stream) {
+    stream.getTracks().forEach(t => t.stop());
+    stream = null;
+  }
+  if (sourceNode) {
+    sourceNode.disconnect();
+    sourceNode = null;
+  }
+  if (audioCtx && audioCtx.state !== 'closed') {
+    await audioCtx.close();
+  }
+  audioCtx = null;
+  analyser = null;
+  gainIn = null;
+  gainMonitor = null;
+
+  els.btnStart.disabled = false;
+  els.btnStop.disabled = true;
+  setStatus(false, 'Parado');
+  els.latencyMs.textContent = '—';
+  els.sampleRate.textContent = '—';
+  els.levelFill.style.width = '0%';
+  els.levelDb.textContent = '−∞ dB';
+  els.detectedNote.textContent = '—';
+  els.detectedNote.classList.add('idle');
+  els.detectedFreq.textContent = 'Toque uma corda';
+
+  waveCtx.fillStyle = '#0a0e14';
+  waveCtx.fillRect(0, 0, els.waveCanvas.width, els.waveCanvas.height);
+  specCtx.fillStyle = '#0a0e14';
+  specCtx.fillRect(0, 0, els.spectrumCanvas.width, els.spectrumCanvas.height);
+}
+
+async function startCapture() {
+  clearError();
+  await stopCapture();
+
+  if (!navigator.mediaDevices?.getUserMedia) {
+    showError('Este navegador não suporta captura de áudio.');
+    return;
+  }
+
+  const deviceId = els.deviceSelect.value;
+  const constraints = {
+    audio: deviceId
+      ? { deviceId: { exact: deviceId }, echoCancellation: false, noiseSuppression: false, autoGainControl: false }
+      : { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
+  };
+
+  try {
+    stream = await navigator.mediaDevices.getUserMedia(constraints);
+    activeDeviceId = stream.getAudioTracks()[0]?.getSettings().deviceId || deviceId;
+  } catch (err) {
+    showError(`Não foi possível abrir a entrada: ${err.message}. Verifique permissões e dispositivo selecionado.`);
+    return;
+  }
+
+  audioCtx = new AudioContext();
+  sourceNode = audioCtx.createMediaStreamSource(stream);
+  gainIn = audioCtx.createGain();
+  gainMonitor = audioCtx.createGain();
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 4096;
+  analyser.smoothingTimeConstant = 0.75;
+
+  sourceNode.connect(gainIn);
+  gainIn.connect(analyser);
+  gainIn.connect(gainMonitor);
+  gainMonitor.connect(audioCtx.destination);
+
+  applyGains();
+
+  els.btnStart.disabled = true;
+  els.btnStop.disabled = false;
+  setStatus(true, 'Capturando');
+  els.latencyMs.textContent = `${Math.round((audioCtx.baseLatency || 0) * 1000 + (audioCtx.outputLatency || 0) * 1000)} ms`;
+  els.sampleRate.textContent = `${audioCtx.sampleRate} Hz`;
+
+  await listDevices();
+  tick();
+}
+
+async function init() {
+  try {
+    const tmp = await navigator.mediaDevices.getUserMedia({ audio: true });
+    tmp.getTracks().forEach(t => t.stop());
+    await listDevices();
+  } catch (err) {
+    await listDevices();
+    showError('Permita o acesso ao microfone/entrada de áudio para listar dispositivos e capturar.');
+  }
+}
+
+els.btnStart.addEventListener('click', startCapture);
+els.btnStop.addEventListener('click', stopCapture);
+els.deviceSelect.addEventListener('change', () => {
+  if (stream) startCapture();
+});
+els.inputGain.addEventListener('input', () => {
+  els.inputGainLabel.textContent = `${els.inputGain.value}%`;
+  applyGains();
+});
+els.monitorGain.addEventListener('input', () => {
+  els.monitorGainLabel.textContent = `${els.monitorGain.value}%`;
+  applyGains();
+});
+els.monitorEnabled.addEventListener('change', applyGains);
+
+navigator.mediaDevices?.addEventListener('devicechange', listDevices);
+window.addEventListener('beforeunload', () => { stopCapture(); });
+
+init();
+</script>
+</body>
+</html>

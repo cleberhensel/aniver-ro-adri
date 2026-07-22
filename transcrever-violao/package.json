@@ -1,0 +1,17 @@
+{
+  "name": "transcrever-violao",
+  "version": "1.0.0",
+  "description": "Módulo **isolado** do pipeline `vozes/`. Transcreve o stem de violão para MIDI, tablatura e GP5.",
+  "main": "index.js",
+  "scripts": {
+    "serve": "node server.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@coderline/alphatab": "^1.8.3"
+  }
+}

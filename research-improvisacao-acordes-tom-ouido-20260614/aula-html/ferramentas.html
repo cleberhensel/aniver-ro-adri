@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ferramentas — Harmonia Funcional</title>
+  <link rel="stylesheet" href="css/curso.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand"><h1>Harmonia Funcional</h1><p>Ferramentas interativas</p></div>
+    <nav id="sidebar-nav"></nav>
+    <div style="padding:0 1.25rem 1rem">
+      <div id="course-progress-label" style="font-size:0.8rem;color:var(--text-muted)"></div>
+      <div class="progress-bar-wrap"><div id="course-progress-bar" class="progress-bar-fill" style="width:0"></div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="hero">
+      <h1>Ferramentas interativas</h1>
+      <p class="lead">Hub central para visualizar campos harmônicos, transpor progressões, prever acordes prováveis, treinar funções e converter cifras para números — use durante o estudo e no palco (tablet).</p>
+    </header>
+
+    <h2>Como usar este hub</h2>
+    <p>Cada ferramenta abaixo corresponde a um conceito do curso. Use-as para <strong>confirmar</strong> o que o ouvido suspeita, não para substituir o treino auditivo.</p>
+    <ul>
+      <li>Durante estudo: teste hipóteses antes de abrir a cifra</li>
+      <li>Na preparação: monte charts numéricos de repertório</li>
+      <li>No palco (com moderação): transposição rápida se cantor mudar tom</li>
+    </ul>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0">
+
+    <h2>1. Campo harmônico interativo</h2>
+    <p>Visualize os 7 graus diatônicos de qualquer tom: numeração romana, NNS, função (T/SD/D) e sensação auditiva. Base do módulo 03.</p>
+
+    <div class="interactive" id="key-field-tool">
+      <h3>Campo harmônico — escolha a tônica</h3>
+      <label for="kf-key">Tom (1 =)</label>
+      <select id="kf-key"></select>
+      <div id="kf-result"></div>
+    </div>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0">
+
+    <h2>2. Transpositor de progressões</h2>
+    <p>Selecione uma progressão-modelo (Axis, Doo-wop, ii–V–I), escolha tom original e novo tom. Veja acordes convertidos + números + graus romanos. Essencial do módulo 07.</p>
+
+    <div class="interactive" id="transposer">
+      <h3>Transpor progressão</h3>
+      <label for="trans-prog">Progressão</label>
+      <select id="trans-prog">
+        <option value="axis">Axis / 1–5–6–4</option>
+        <option value="doowop">Doo-wop / 1–6–4–5</option>
+        <option value="iiVII">ii–V–I / 2–5–1</option>
+      </select>
+      <label for="trans-from">Tom original (1 =)</label>
+      <select id="trans-from"></select>
+      <label for="trans-to">Novo tom (1 =)</label>
+      <select id="trans-to"></select>
+      <button class="btn" type="button" id="trans-run">Transpor</button>
+      <div id="trans-result" class="result-box" style="margin-top:1rem"></div>
+    </div>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0">
+
+    <h2>3. Preditor de acordes (Markov)</h2>
+    <p>Com base em estatísticas de progressões pop, bossa e samba: dado o grau atual, quais são os próximos mais prováveis? Use como <strong>aposta inicial</strong> — confirme pelo ouvido. Módulo 06.</p>
+
+    <div class="interactive" id="predictor-tool">
+      <h3>Próximo acorde provável</h3>
+      <label for="pred-after">Contexto — após qual grau?</label>
+      <select id="pred-after"></select>
+      <label for="pred-genre">Gênero / estilo</label>
+      <select id="pred-genre">
+        <option value="pop">Pop anglo (Hooktheory)</option>
+        <option value="bossa">Bossa nova / MPB harmônica</option>
+        <option value="samba">Samba / choro funcional</option>
+      </select>
+      <button class="btn" type="button" id="pred-run">Prever</button>
+      <div id="pred-result" class="result-box" style="margin-top:1rem"></div>
+    </div>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0">
+
+    <h2>4. Quiz de funções harmônicas</h2>
+    <p>Teste rápido: classifique acordes como Tônica, Subdominante ou Dominante. Treino de reflexo para o módulo 04.</p>
+
+    <div class="interactive" id="function-quiz">
+      <h3>Quiz — funções T · SD · D</h3>
+      <p id="quiz-question" style="font-weight:600;font-size:1.1rem"></p>
+      <div id="quiz-options"></div>
+      <p id="quiz-score" style="margin-top:1rem;color:var(--text-muted)">Acertos: 0</p>
+    </div>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0">
+
+    <h2>5. Conversor cifra → números (NNS)</h2>
+    <p>Cole acordes separados por espaço ou hífen. O sistema converte para Nashville Number System assumindo o tom selecionado como tônica. Primeiro passo do workflow de transposição (módulo 07).</p>
+
+    <div class="interactive" id="cifra-converter">
+      <h3>Cifra → números</h3>
+      <label for="cc-input">Acordes (ex.: C G Am F ou C – G – Am – F)</label>
+      <textarea id="cc-input" rows="3" style="width:100%;max-width:100%;padding:0.5rem;border:1px solid var(--border);border-radius:6px;font-family:var(--font-mono)">C G Am F</textarea>
+      <label for="cc-key">Tom da cifra (1 =)</label>
+      <select id="cc-key"></select>
+      <button class="btn" type="button" id="cc-run">Converter</button>
+      <div id="cc-output" class="result-box" style="margin-top:1rem"></div>
+    </div>
+
+    <div class="tip">Workflow completo: (1) converter cifra → números aqui, (2) declarar novo tom, (3) usar transpositor ou mentalmente mapear números → novas letras.</div>
+
+    <h2>Atalhos por módulo</h2>
+    <table>
+      <tr><th>Ferramenta</th><th>Módulo relacionado</th><th>Uso típico</th></tr>
+      <tr><td>Campo harmônico</td><td><a href="03-campo-harmonico.html">03 — Campo harmônico</a></td><td>Memorizar graus em novo tom</td></tr>
+      <tr><td>Transpositor</td><td><a href="07-transposicao.html">07 — Transposição</a></td><td>Cantor pediu outro tom</td></tr>
+      <tr><td>Preditor</td><td><a href="06-progressoes.html">06 — Progressões</a></td><td>Apostar próximo acorde ao vivo</td></tr>
+      <tr><td>Quiz funções</td><td><a href="04-funcoes-harmonicas.html">04 — Funções</a></td><td>Aquecimento pré-show</td></tr>
+      <tr><td>Conversor cifra</td><td><a href="07-transposicao.html">07 — Transposição</a></td><td>Montar chart numérico</td></tr>
+    </table>
+
+    <div class="nav-footer">
+      <a href="index.html">← Início</a>
+      <a href="01-pipeline-mental.html">Começar curso →</a>
+    </div>
+  </main>
+</div>
+<script src="js/chords-dict.js"></script>
+<script src="js/chord-diagrams.js"></script>
+<script src="js/chord-auto.js"></script>
+<script src="js/theory-data.js"></script>
+<script src="js/curso.js"></script>
+</body>
+</html>

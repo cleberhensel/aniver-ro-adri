@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campo menor · 3 tipos + pentatônica | MOD-BRAÇO-01</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #f0a030;
+      --accent2: #4ecdc4;
+      --border: #2d3f54;
+      --ok: #69db7c;
+      --purple: #a78bfa;
+      --warn: #ff6b6b;
+      --col-7M: rgba(105, 219, 124, 0.12);
+      --col-m7: rgba(78, 205, 196, 0.12);
+      --col-7: rgba(240, 160, 48, 0.15);
+      --col-m7b5: rgba(167, 139, 250, 0.12);
+      --col-alt: rgba(255, 107, 107, 0.12);
+      --col-m7M: rgba(240, 160, 48, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      line-height: 1.55;
+      padding: 1.25rem 0.85rem 3rem;
+      max-width: 1180px; margin: 0 auto;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem; margin-bottom: 1rem;
+    }
+    header .eyebrow {
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.25rem;
+    }
+    header h1 { font-size: 1.4rem; font-weight: 800; }
+    header p { color: var(--muted); font-size: 0.9rem; margin-top: 0.3rem; }
+    nav { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1rem; }
+    nav a {
+      color: var(--accent); text-decoration: none; font-size: 0.78rem;
+      padding: 0.3rem 0.55rem; border: 1px solid var(--border); border-radius: 5px;
+    }
+    .callout {
+      background: var(--surface); border-left: 3px solid var(--accent2);
+      padding: 0.75rem 0.9rem; border-radius: 0 8px 8px 0;
+      margin: 0 0 1rem; font-size: 0.88rem;
+    }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout.ok { border-left-color: var(--ok); }
+    .callout .label {
+      display: block; font-size: 0.65rem; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.25rem;
+    }
+    h2 {
+      font-size: 1.08rem; color: var(--accent2);
+      margin: 1.5rem 0 0.65rem; font-weight: 800;
+    }
+    h3 { font-size: 0.95rem; margin: 1rem 0 0.45rem; color: var(--text); }
+    p, li { font-size: 0.9rem; margin-bottom: 0.5rem; }
+    ul, ol { padding-left: 1.25rem; margin-bottom: 0.85rem; }
+    strong { color: #fff; }
+    .mono { font-family: "SF Mono", Consolas, monospace; }
+    .formula {
+      display: inline-block; font-family: "SF Mono", Consolas, monospace;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 5px; padding: 0.12rem 0.4rem; font-size: 0.82rem; color: var(--accent);
+    }
+
+    .tabs {
+      display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem;
+    }
+    .tab {
+      padding: 0.45rem 0.75rem; border-radius: 999px; font-size: 0.78rem; font-weight: 800;
+      border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+      cursor: pointer;
+    }
+    .tab:hover { border-color: var(--accent2); color: var(--accent2); }
+    .tab.active { background: var(--accent); color: #111; border-color: var(--accent); }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .how-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.65rem; margin: 0.85rem 0 1.25rem;
+    }
+    .how-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.85rem;
+    }
+    .how-card h3 { margin: 0 0 0.35rem; font-size: 0.88rem; color: var(--accent2); }
+    .how-card p { margin: 0; font-size: 0.82rem; color: var(--muted); }
+
+    .compare {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      margin: 0.65rem 0 1rem;
+    }
+    .compare th, .compare td {
+      border: 1px solid var(--border); padding: 0.4rem 0.5rem; text-align: left;
+    }
+    .compare th { background: var(--surface2); color: var(--accent2); }
+    .compare td { background: var(--surface); }
+    .compare .chg { color: var(--accent); font-weight: 800; }
+
+    .toolbar {
+      display: flex; flex-wrap: wrap; gap: 0.55rem; align-items: center;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.65rem 0.8rem; margin-bottom: 0.85rem;
+    }
+    .toolbar label { font-size: 0.72rem; color: var(--muted); margin-right: 0.25rem; }
+    .key-btn, .form-btn, .mode-btn {
+      padding: 0.35rem 0.55rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700;
+      border: 1px solid var(--border); background: var(--surface2); color: var(--text);
+      cursor: pointer;
+    }
+    .key-btn.active, .form-btn.active, .mode-btn.active {
+      background: var(--accent); color: #111; border-color: var(--accent);
+    }
+
+    .table-wrap {
+      overflow-x: auto; border-radius: 12px; border: 1px solid var(--border);
+      margin-bottom: 1rem; box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    }
+    .harm-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 780px;
+    }
+    .harm-table th, .harm-table td {
+      border: 1px solid var(--border); padding: 0.45rem 0.4rem;
+      text-align: center; white-space: nowrap;
+    }
+    .harm-table thead th { background: #0a0e14; color: #fff; font-weight: 800; font-size: 0.72rem; }
+    .harm-table thead th:first-child, .harm-table tbody th {
+      text-align: left; background: #0a0e14; color: #fff; font-weight: 700;
+    }
+    .harm-table tbody tr { cursor: pointer; }
+    .harm-table tbody tr:hover td { background: rgba(78, 205, 196, 0.08); }
+    .harm-table tbody tr.selected td { background: rgba(240, 160, 48, 0.12); }
+    .harm-table tbody tr.selected th { background: rgba(240, 160, 48, 0.35); color: #111; }
+    .harm-table td { background: var(--surface); font-weight: 700; font-family: "SF Mono", Consolas, monospace; font-size: 0.78rem; }
+    .harm-table td.col-7M { background: var(--col-7M); }
+    .harm-table td.col-m7 { background: var(--col-m7); }
+    .harm-table td.col-7 { background: var(--col-7); }
+    .harm-table td.col-m7b5 { background: var(--col-m7b5); }
+    .harm-table td.col-m7M { background: var(--col-m7M); }
+    .harm-table td.col-alt { background: var(--col-alt); }
+    .harm-table td.highlight { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+    .detail-panel {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 0.9rem 1rem; margin-bottom: 1rem;
+    }
+    .detail-key { font-size: 1.35rem; font-weight: 800; color: var(--accent); margin-bottom: 0.3rem; }
+    .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; margin: 0.45rem 0; }
+    .chord-pill {
+      padding: 0.3rem 0.5rem; border-radius: 7px; font-weight: 800;
+      font-family: "SF Mono", Consolas, monospace; font-size: 0.78rem;
+      border: 1px solid var(--border); background: var(--surface2);
+    }
+    .arrow { color: var(--muted); }
+    .prog-row { margin-top: 0.35rem; font-size: 0.82rem; color: var(--muted); }
+    .prog-row strong { color: var(--text); }
+
+    .diagrams-head {
+      display: flex; flex-wrap: wrap; align-items: baseline;
+      gap: 0.4rem 0.75rem; margin: 1rem 0 0.55rem;
+      padding-top: 0.75rem; border-top: 1px solid var(--border);
+    }
+    .diagrams-head h3 { font-size: 0.9rem; color: var(--accent2); font-weight: 800; margin: 0; }
+    .diagrams-head .meta { font-size: 0.74rem; color: var(--muted); }
+    .form-row { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+    .chords-grid {
+      display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.35rem;
+    }
+    .chord-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 6px; padding: 0.28rem 0.2rem 0.3rem;
+      text-align: center; min-width: 0;
+    }
+    .chord-card .deg { font-size: 0.6rem; font-weight: 800; color: var(--muted); }
+    .chord-card h4 {
+      font-size: 0.72rem; font-weight: 800; margin: 0.05rem 0;
+      font-family: "SF Mono", Consolas, monospace;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .chord-card .fret-hint { font-size: 0.56rem; color: var(--accent); margin-bottom: 0.12rem; }
+    .chord-card svg { width: 100%; max-width: 100px; height: auto; display: block; margin: 0 auto; }
+
+    .pent-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 0.75rem 0;
+    }
+    @media (max-width: 720px) { .pent-grid { grid-template-columns: 1fr; } }
+    .pent-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.85rem;
+    }
+    .pent-card h3 { margin: 0 0 0.4rem; color: var(--accent2); font-size: 0.95rem; }
+    .scale-svg-wrap {
+      background: var(--surface2); border-radius: 8px; padding: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .scale-svg-wrap svg { width: 100%; max-width: 320px; height: auto; display: block; margin: 0 auto; }
+
+    @media (max-width: 900px) {
+      .chords-grid {
+        display: flex; gap: 0.35rem; overflow-x: auto;
+        padding-bottom: 0.3rem;
+      }
+      .chord-card { flex: 0 0 96px; }
+    }
+
+    footer {
+      margin-top: 1.75rem; padding-top: 0.85rem; border-top: 1px solid var(--border);
+      font-size: 0.75rem; color: var(--muted);
+    }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">MOD-BRAÇO-01 · Harmonia · Como funciona</div>
+  <h1>Campo harmônico menor (3 tipos) + pentatônica</h1>
+  <p>
+    Como se monta o campo · natural / harmônica / melódica · o que a pentatônica
+    <em>não</em> é (e como usá-la mesmo assim) · tabela + grips
+  </p>
+</header>
+
+<nav>
+  <a href="campo-harmonico-maior.html">Campo maior</a>
+  <a href="formacao-acordes-braco.html">28 acordes</a>
+  <a href="escalas-menor-shapes-tonalidade.html">Menor · tonalidade</a>
+  <a href="escalas-menor-shapes-tablatura.html">3 tipos · A</a>
+  <a href="estudo-arpejos/03-sete-tipos.html">7 tipos</a>
+  <a href="quadro-tensoes.html">Tensões</a>
+</nav>
+
+<div class="tabs" role="tablist">
+  <button type="button" class="tab active" data-panel="como">Como funciona</button>
+  <button type="button" class="tab" data-panel="natural">Menor natural</button>
+  <button type="button" class="tab" data-panel="harmonic">Menor harmônica</button>
+  <button type="button" class="tab" data-panel="melodic">Menor melódica</button>
+  <button type="button" class="tab" data-panel="penta">Pentatônica</button>
+</div>
+
+<!-- ═══ COMO FUNCIONA ═══ -->
+<section class="panel active" id="panel-como">
+  <div class="callout">
+    <span class="label">Ideia central</span>
+    <strong>Campo harmônico</strong> = pegar uma escala e empilhar terças em cada grau.
+    O resultado são os acordes “do tom”. Escala muda → campo muda.
+  </div>
+
+  <h2>Receita em 3 passos</h2>
+  <div class="how-grid">
+    <div class="how-card">
+      <h3>1. Escolha a escala</h3>
+      <p>Maior, menor natural, harmônica, melódica… Cada uma tem uma fórmula de graus (intervalos).</p>
+    </div>
+    <div class="how-card">
+      <h3>2. Empilhe terças</h3>
+      <p>Em cada nota da escala: 1ª + 3ª + 5ª + 7ª (notas da própria escala). Isso vira tétrade.</p>
+    </div>
+    <div class="how-card">
+      <h3>3. Nomeie a qualidade</h3>
+      <p>Compare os intervalos com a fundamental → 7M, m7, 7, m7(b5), m7M, °…</p>
+    </div>
+  </div>
+
+  <h2>Por que existem 3 menores?</h2>
+  <p>
+    A <strong>menor natural</strong> é o relativo da maior (mesmo conjunto de notas).
+    O problema prático: o grau <span class="formula">v</span> fica <em>menor</em> (v m7),
+    sem a <strong>sensível</strong> (7 natural) que puxa para a tônica.
+    Por isso a tradição “conserta” a escala:
+  </p>
+  <table class="compare">
+    <thead>
+      <tr>
+        <th>Tipo</th>
+        <th>Fórmula</th>
+        <th>O que muda</th>
+        <th>Pra quê</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Natural</strong></td>
+        <td class="mono">1 2 ♭3 4 5 ♭6 ♭7</td>
+        <td>—</td>
+        <td>Som “modal” / eólico; folk, pop modal, bossa aberta</td>
+      </tr>
+      <tr>
+        <td><strong>Harmônica</strong></td>
+        <td class="mono">1 2 ♭3 4 5 ♭6 <span class="chg">7</span></td>
+        <td>Sobe o 7º</td>
+        <td>Nasce <strong>V7</strong> → cadência clássica iiø–V7–i</td>
+      </tr>
+      <tr>
+        <td><strong>Melódica ↑</strong></td>
+        <td class="mono">1 2 ♭3 4 5 <span class="chg">6 7</span></td>
+        <td>Sobe 6º e 7º</td>
+        <td>Suaviza o salto ♭6→7; jazz, bossa, linhas ascendentes</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout ok">
+    <span class="label">Na prática brasileira / jazz</span>
+    Ninguém fica preso a um só tipo. Compasso de tônica → natural ou melódica;
+    compasso de dominante → harmônica (sensível). É <em>mistura sob demanda</em>.
+  </div>
+
+  <h2>E a pentatônica?</h2>
+  <p>
+    Pentatônica <strong>não monta um campo de 7 tétrades</strong> do mesmo jeito —
+    ela tem só 5 notas. É um <em>subconjunto</em> da escala (maior ou menor)
+    feito para <strong>improvisar / melodizar</strong> sem bater em notas “perigosas”.
+  </p>
+  <ul>
+    <li><strong>Pentatônica menor</strong> = graus <span class="formula">1 ♭3 4 5 ♭7</span> da menor</li>
+    <li><strong>Pentatônica maior</strong> = graus <span class="formula">1 2 3 5 6</span> da maior</li>
+    <li>São as <strong>mesmas notas</strong> deslocadas: Lá menor penta = Dó maior penta</li>
+  </ul>
+  <p>Detalhe e diagramas na aba <strong>Pentatônica</strong>.</p>
+</section>
+
+<!-- ═══ NATURAL / HARMÔNICA / MELÓDICA (mesmo shell) ═══ -->
+<section class="panel" id="panel-natural" data-scale="natural"></section>
+<section class="panel" id="panel-harmonic" data-scale="harmonic"></section>
+<section class="panel" id="panel-melodic" data-scale="melodic"></section>
+
+<!-- ═══ PENTATÔNICA ═══ -->
+<section class="panel" id="panel-penta">
+  <div class="callout warn">
+    <span class="label">Atenção didática</span>
+    Pentatônica <strong>não é</strong> um “campo harmônico de 5 acordes” no sentido Nelson
+    (tétrades empilhadas). É escala de 5 notas para linha/melodia — e encaixa
+    <em>sobre</em> acordes do campo maior/menor.
+  </div>
+
+  <h2>As duas faces (mesmo desenho)</h2>
+  <div class="pent-grid">
+    <div class="pent-card">
+      <h3>Pentatônica menor</h3>
+      <p class="mono" style="color:var(--accent)">1 · ♭3 · 4 · 5 · ♭7</p>
+      <p style="font-size:0.84rem;color:var(--muted);margin:0.4rem 0 0">
+        Em Lá: <strong style="color:var(--text)">A C D E G</strong><br>
+        Tira 2 e ♭6 da menor natural → sobra o “esqueleto” do blues/rock/samba.
+      </p>
+    </div>
+    <div class="pent-card">
+      <h3>Pentatônica maior</h3>
+      <p class="mono" style="color:var(--accent)">1 · 2 · 3 · 5 · 6</p>
+      <p style="font-size:0.84rem;color:var(--muted);margin:0.4rem 0 0">
+        Em Dó: <strong style="color:var(--text)">C D E G A</strong><br>
+        = mesmas notas da Lá menor penta. Só muda qual nota você chama de “1”.
+      </p>
+    </div>
+  </div>
+
+  <h2>Sobre quais acordes “cola”</h2>
+  <table class="compare">
+    <thead>
+      <tr><th>Escala</th><th>Encaixa bem</th><th>Cuidado</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Penta menor (ex. Am)</td>
+        <td>i (Am7), iv (Dm7), ♭VII (G7), blues no i</td>
+        <td>No V7 da harmônica (E7) falta a sensível G# — use harmônica/arpejo</td>
+      </tr>
+      <tr>
+        <td>Penta maior (ex. C)</td>
+        <td>I (C7M), IV (F7M), vi (Am7), vamp maior “aberto”</td>
+        <td>No V7 (G7) a penta maior evita o F (♭7) — às vezes soa “fofa”</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="toolbar">
+    <span><label>Tônica da penta menor:</label></span>
+    <div id="penta-keys" style="display:flex;flex-wrap:wrap;gap:0.3rem"></div>
+  </div>
+
+  <div class="detail-panel">
+    <div class="detail-key" id="penta-title">A menor pentatônica</div>
+    <p style="font-size:0.84rem;color:var(--muted)" id="penta-desc"></p>
+    <div class="prog-row"><strong>Notas:</strong> <span class="mono" id="penta-notes"></span></div>
+    <div class="prog-row"><strong>= penta maior relativa:</strong> <span class="mono" id="penta-rel"></span></div>
+    <div class="prog-row"><strong>Campo menor natural “por baixo”:</strong> <span class="mono" id="penta-field"></span></div>
+
+    <div class="diagrams-head">
+      <h3>Shape box 1 (fund. na 6ª)</h3>
+      <span class="meta">Bolinha branca = tônica · casas absolutas</span>
+    </div>
+    <div class="scale-svg-wrap" id="penta-svg"></div>
+  </div>
+
+  <h2>Como estudar (rápido)</h2>
+  <ol>
+    <li>Toque o <strong>campo menor natural</strong> do tom (aba Natural).</li>
+    <li>Improvise só com a <strong>penta menor</strong> sobre i–iv–♭VII.</li>
+    <li>Quando aparecer <strong>V7</strong>, troque 1 compasso para menor harmônica (sensível) ou arpejo do V7.</li>
+    <li>Ligue com shapes: <a href="escalas-menor-shapes-tablatura.html">3 menores A shape</a>.</li>
+  </ol>
+</section>
+
+<footer>
+  Campo = escala → terças empilhadas ·
+  <a href="campo-harmonico-maior.html">Campo maior</a> ·
+  <a href="formacao-acordes-braco.html">28 grips</a> ·
+  <a href="escalas-menor-shapes-tablatura.html">Shapes menores</a>
+</footer>
+
+<script>
+(function () {
+  const STRING_LABELS = ['e', 'B', 'G', 'D', 'A', 'E'];
+  const OPEN = [4, 11, 7, 2, 9, 4];
+  const FRETS = 5;
+  const SHARP = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+  const FLAT  = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+  const NOTE_PC = {};
+  SHARP.forEach((n, i) => { NOTE_PC[n] = i; });
+  FLAT.forEach((n, i) => { NOTE_PC[n] = i; });
+
+  const KEYS = [
+    { id: 'A',  root: 'A',  label: 'A menor',  flat: false },
+    { id: 'E',  root: 'E',  label: 'E menor',  flat: false },
+    { id: 'B',  root: 'B',  label: 'B menor',  flat: false },
+    { id: 'F#', root: 'F#', label: 'F# menor', flat: false },
+    { id: 'C#', root: 'C#', label: 'C# menor', flat: false },
+    { id: 'D',  root: 'D',  label: 'D menor',  flat: true },
+    { id: 'G',  root: 'G',  label: 'G menor',  flat: true },
+    { id: 'C',  root: 'C',  label: 'C menor',  flat: true },
+    { id: 'F',  root: 'F',  label: 'F menor',  flat: true },
+  ];
+
+  const SCALES = {
+    natural: {
+      id: 'natural',
+      title: 'Menor natural (eólica)',
+      formula: '1 2 ♭3 4 5 ♭6 ♭7',
+      intervals: [0, 2, 3, 5, 7, 8, 10],
+      degrees: [
+        { roman: 'i',     qual: 'm7',     cls: 'col-m7' },
+        { roman: 'iiø',   qual: 'm7(b5)', cls: 'col-m7b5' },
+        { roman: '♭III',  qual: '7M',     cls: 'col-7M' },
+        { roman: 'iv',    qual: 'm7',     cls: 'col-m7' },
+        { roman: 'v',     qual: 'm7',     cls: 'col-m7' },
+        { roman: '♭VI',   qual: '7M',     cls: 'col-7M' },
+        { roman: '♭VII',  qual: '7',      cls: 'col-7' },
+      ],
+      tip: 'Relativo da maior. Sem sensível → v fica menor. Som modal / folk / bossa aberta.',
+      cadence: (ch) => `${ch[0]} → ${ch[6]} → ${ch[0]}  (i–♭VII–i) · ou ${ch[3]} → ${ch[4]} → ${ch[0]}`,
+      highlight: [0, 3, 6]
+    },
+    harmonic: {
+      id: 'harmonic',
+      title: 'Menor harmônica',
+      formula: '1 2 ♭3 4 5 ♭6 7',
+      intervals: [0, 2, 3, 5, 7, 8, 11],
+      degrees: [
+        { roman: 'i',      qual: 'm7M',     cls: 'col-m7M' },
+        { roman: 'iiø',    qual: 'm7(b5)',  cls: 'col-m7b5' },
+        { roman: '♭III+',  qual: '7M(#5)',  cls: 'col-alt' },
+        { roman: 'iv',     qual: 'm7',      cls: 'col-m7' },
+        { roman: 'V',      qual: '7',       cls: 'col-7' },
+        { roman: '♭VI',    qual: '7M',      cls: 'col-7M' },
+        { roman: 'vii°',   qual: '°',       cls: 'col-alt' },
+      ],
+      tip: 'Sobe o 7º → nasce V7 com sensível. Cadência clássica do tom menor.',
+      cadence: (ch) => `${ch[1]} → ${ch[4]} → ${ch[0]}  (iiø–V7–i)`,
+      highlight: [1, 4, 0]
+    },
+    melodic: {
+      id: 'melodic',
+      title: 'Menor melódica (ascendente)',
+      formula: '1 2 ♭3 4 5 6 7',
+      intervals: [0, 2, 3, 5, 7, 9, 11],
+      degrees: [
+        { roman: 'i',     qual: 'm7M',     cls: 'col-m7M' },
+        { roman: 'ii',    qual: 'm7',      cls: 'col-m7' },
+        { roman: '♭III+', qual: '7M(#5)',  cls: 'col-alt' },
+        { roman: 'IV',    qual: '7',       cls: 'col-7' },
+        { roman: 'V',     qual: '7',       cls: 'col-7' },
+        { roman: 'viø',   qual: 'm7(b5)',  cls: 'col-m7b5' },
+        { roman: 'viiø',  qual: 'm7(b5)',  cls: 'col-m7b5' },
+      ],
+      tip: 'Sobe 6º e 7º. Jazz/bossa: linhas que sobem sem o salto de 1½ tom da harmônica.',
+      cadence: (ch) => `${ch[1]} → ${ch[4]} → ${ch[0]}  (ii–V–i) · IV7: ${ch[3]}`,
+      highlight: [1, 4, 0]
+    }
+  };
+
+  const QUAL_SUFFIX = {
+    '7M': '7M',
+    'm7': 'm7',
+    '7': '7',
+    'm7(b5)': 'm7(♭5)',
+    'm7M': 'm7M',
+    '7M(#5)': '7M(#5)',
+    '°': '°'
+  };
+
+  const SHAPES = {
+    f41: {
+      id: 'f41', label: '4.1', meta: '1–7–3–5 · fund. na 6ª', rootString: 5,
+      quals: {
+        '7M':     [{ s: 5, o: 0, r: 1 }, { s: 3, o: 1 }, { s: 2, o: 1 }, { s: 1, o: 0 }],
+        'm7':     [{ s: 5, o: 0, r: 1 }, { s: 3, o: 0 }, { s: 2, o: 0 }, { s: 1, o: 0 }],
+        'm7(b5)': [{ s: 5, o: 0, r: 1 }, { s: 3, o: 0 }, { s: 2, o: 0 }, { s: 1, o: -1 }],
+        '7':      [{ s: 5, o: 0, r: 1 }, { s: 3, o: 0 }, { s: 2, o: 1 }, { s: 1, o: 0 }],
+        'm7M':    [{ s: 5, o: 0, r: 1 }, { s: 3, o: 1 }, { s: 2, o: 0 }, { s: 1, o: 0 }],
+        '7M(#5)': [{ s: 5, o: 0, r: 1 }, { s: 3, o: 1 }, { s: 2, o: 1 }, { s: 1, o: 1 }],
+        '°':      [{ s: 5, o: 0, r: 1 }, { s: 3, o: -1 }, { s: 2, o: 0 }, { s: 1, o: -1 }]
+      }
+    },
+    f42: {
+      id: 'f42', label: '4.2', meta: '1–5–7–3 · fund. na 4ª', rootString: 3,
+      quals: {
+        '7M':     [{ s: 3, o: 0, r: 1 }, { s: 2, o: 2 }, { s: 1, o: 2 }, { s: 0, o: 2 }],
+        'm7':     [{ s: 3, o: 0, r: 1 }, { s: 2, o: 2 }, { s: 1, o: 1 }, { s: 0, o: 1 }],
+        'm7(b5)': [{ s: 3, o: 0, r: 1 }, { s: 2, o: 1 }, { s: 1, o: 1 }, { s: 0, o: 1 }],
+        '7':      [{ s: 3, o: 0, r: 1 }, { s: 2, o: 2 }, { s: 1, o: 1 }, { s: 0, o: 2 }],
+        'm7M':    [{ s: 3, o: 0, r: 1 }, { s: 2, o: 2 }, { s: 1, o: 2 }, { s: 0, o: 1 }],
+        '7M(#5)': [{ s: 3, o: 0, r: 1 }, { s: 2, o: 3 }, { s: 1, o: 2 }, { s: 0, o: 2 }],
+        '°':      [{ s: 3, o: 0, r: 1 }, { s: 2, o: 1 }, { s: 1, o: 0 }, { s: 0, o: 1 }]
+      }
+    },
+    f43: {
+      id: 'f43', label: '4.3', meta: '1–3–5–7 · fund. na 5ª', rootString: 4,
+      quals: {
+        '7M':     [{ s: 4, o: 0, r: 1 }, { s: 3, o: -1 }, { s: 2, o: -3 }, { s: 1, o: -3 }],
+        'm7':     [{ s: 4, o: 0, r: 1 }, { s: 3, o: -2 }, { s: 2, o: -3 }, { s: 1, o: -4 }],
+        'm7(b5)': [{ s: 4, o: 0, r: 1 }, { s: 3, o: -2 }, { s: 2, o: -4 }, { s: 1, o: -4 }],
+        '7':      [{ s: 4, o: 0, r: 1 }, { s: 3, o: -1 }, { s: 2, o: -3 }, { s: 1, o: -4 }],
+        'm7M':    [{ s: 4, o: 0, r: 1 }, { s: 3, o: -2 }, { s: 3, o: -3 }, { s: 1, o: -3 }],
+        '7M(#5)': [{ s: 4, o: 0, r: 1 }, { s: 3, o: -1 }, { s: 2, o: -2 }, { s: 1, o: -3 }],
+        '°':      [{ s: 4, o: 0, r: 1 }, { s: 3, o: -2 }, { s: 2, o: -4 }, { s: 1, o: -5 }]
+      }
+    },
+    f44: {
+      id: 'f44', label: '4.4', meta: '1–5–7–3 · fund. na 5ª', rootString: 4,
+      quals: {
+        '7M':     [{ s: 4, o: 0, r: 1 }, { s: 3, o: 2 }, { s: 2, o: 1 }, { s: 1, o: 2 }],
+        'm7':     [{ s: 4, o: 0, r: 1 }, { s: 3, o: 2 }, { s: 2, o: 0 }, { s: 1, o: 1 }],
+        'm7(b5)': [{ s: 4, o: 0, r: 1 }, { s: 3, o: 1 }, { s: 2, o: 0 }, { s: 1, o: 1 }],
+        '7':      [{ s: 4, o: 0, r: 1 }, { s: 3, o: 2 }, { s: 2, o: 0 }, { s: 1, o: 2 }],
+        'm7M':    [{ s: 4, o: 0, r: 1 }, { s: 3, o: 2 }, { s: 2, o: 1 }, { s: 1, o: 1 }],
+        '7M(#5)': [{ s: 4, o: 0, r: 1 }, { s: 3, o: 3 }, { s: 2, o: 1 }, { s: 1, o: 2 }],
+        '°':      [{ s: 4, o: 0, r: 1 }, { s: 3, o: 1 }, { s: 2, o: -1 }, { s: 1, o: 1 }]
+      }
+    }
+  };
+
+  // Fix typo in f43 m7M - I accidentally wrote s:3 twice. Correct from formacao:
+  SHAPES.f43.quals['m7M'] = [{ s: 4, o: 0, r: 1 }, { s: 3, o: -2 }, { s: 2, o: -3 }, { s: 1, o: -3 }];
+
+  /** Pentatônica menor box 1: offsets from root fret on string 6 */
+  const PENTA_MIN_BOX = [
+    { s: 5, o: 0, r: 1 }, { s: 5, o: 3 },
+    { s: 4, o: 0 }, { s: 4, o: 2 },
+    { s: 3, o: 0 }, { s: 3, o: 2 },
+    { s: 2, o: 0 }, { s: 2, o: 2 },
+    { s: 1, o: 0 }, { s: 1, o: 3 },
+    { s: 0, o: 0, r: 1 }, { s: 0, o: 3 }
+  ];
+
+  let state = {
+    scale: 'natural',
+    keyId: 'A',
+    form: 'f41',
+    highlightCadence: false,
+    pentaKey: 'A'
+  };
+
+  function pcName(pc, flat) {
+    return (flat ? FLAT : SHARP)[((pc % 12) + 12) % 12];
+  }
+
+  function buildChords(key, scale) {
+    const rootPc = NOTE_PC[key.root];
+    return scale.degrees.map((deg, i) => {
+      const pc = (rootPc + scale.intervals[i]) % 12;
+      const name = pcName(pc, key.flat) + QUAL_SUFFIX[deg.qual];
+      return { name, qual: deg.qual, roman: deg.roman, cls: deg.cls, pc };
+    });
+  }
+
+  function findRootFret(si, pc) {
+    for (let f = 0; f <= 15; f++) {
+      if ((OPEN[si] + f) % 12 === pc) return f;
+    }
+    return 0;
+  }
+
+  function placeNotes(notes, rootFret) {
+    const absNotes = notes.map(n => ({ s: n.s, abs: rootFret + n.o, r: !!n.r }));
+    let minAbs = Math.min(...absNotes.map(n => n.abs));
+    let maxAbs = Math.max(...absNotes.map(n => n.abs));
+    if (minAbs < 0) {
+      const bump = -minAbs;
+      absNotes.forEach(n => { n.abs += bump; });
+      minAbs += bump; maxAbs += bump;
+    }
+    let ws = minAbs;
+    if (maxAbs - ws + 1 < FRETS) {
+      const rootAbs = absNotes.find(n => n.r)?.abs ?? minAbs;
+      ws = Math.max(0, rootAbs - 2);
+      if (maxAbs > ws + FRETS - 1) ws = maxAbs - FRETS + 1;
+      if (ws < 0) ws = 0;
+    }
+    return { notes: absNotes, ws, we: ws + FRETS - 1 };
+  }
+
+  function renderChordSVG(placement, opts = {}) {
+    const { notes, ws } = placement;
+    const showFrets = opts.showFrets !== false;
+    const W = 100, H = showFrets ? 96 : 88;
+    const padL = 12, padT = showFrets ? 16 : 7, padR = 4, padB = 5;
+    const fretW = (W - padL - padR) / FRETS;
+    const strH = (H - padT - padB) / 5;
+    let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">`;
+    if (showFrets) {
+      for (let i = 0; i < FRETS; i++) {
+        const x = padL + (i + 0.5) * fretW;
+        svg += `<text x="${x}" y="10" text-anchor="middle" font-size="7" fill="#f0a030" font-weight="700" font-family="system-ui">${ws + i}</text>`;
+      }
+    }
+    svg += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT + 5 * strH}" stroke="${ws === 0 ? '#ccc' : '#888'}" stroke-width="${ws === 0 ? 2.5 : 2}"/>`;
+    for (let i = 1; i < FRETS; i++) {
+      const x = padL + i * fretW;
+      svg += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + 5 * strH}" stroke="#555"/>`;
+    }
+    for (let s = 0; s < 6; s++) {
+      const y = padT + s * strH;
+      svg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#666" stroke-width="${s === 5 ? 1.4 : 0.9}"/>`;
+      svg += `<text x="2" y="${y + 2.5}" font-size="6.5" fill="#888" font-family="system-ui">${STRING_LABELS[s]}</text>`;
+    }
+    notes.forEach(n => {
+      if (n.abs < ws || n.abs > ws + FRETS - 1) return;
+      const x = padL + (n.abs - ws + 0.5) * fretW;
+      const y = padT + n.s * strH;
+      if (n.r) svg += `<circle cx="${x}" cy="${y}" r="4.2" fill="#fff" stroke="#111" stroke-width="1.5"/>`;
+      else svg += `<circle cx="${x}" cy="${y}" r="3.7" fill="#111" stroke="#ccc" stroke-width="0.5"/>`;
+    });
+    svg += '</svg>';
+    return svg;
+  }
+
+  function renderScaleSVG(placement) {
+    // wider for scale
+    const { notes, ws } = placement;
+    const W = 280, H = 120;
+    const padL = 22, padT = 18, padR = 10, padB = 8;
+    const fretW = (W - padL - padR) / FRETS;
+    const strH = (H - padT - padB) / 5;
+    let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+    for (let i = 0; i < FRETS; i++) {
+      const x = padL + (i + 0.5) * fretW;
+      svg += `<text x="${x}" y="12" text-anchor="middle" font-size="10" fill="#f0a030" font-weight="700" font-family="system-ui">${ws + i}</text>`;
+    }
+    svg += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT + 5 * strH}" stroke="#888" stroke-width="2.5"/>`;
+    for (let i = 1; i < FRETS; i++) {
+      const x = padL + i * fretW;
+      svg += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + 5 * strH}" stroke="#555"/>`;
+    }
+    for (let s = 0; s < 6; s++) {
+      const y = padT + s * strH;
+      svg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#666"/>`;
+      svg += `<text x="6" y="${y + 3.5}" font-size="9" fill="#888" font-family="system-ui">${STRING_LABELS[s]}</text>`;
+    }
+    notes.forEach(n => {
+      const x = padL + (n.abs - ws + 0.5) * fretW;
+      const y = padT + n.s * strH;
+      if (n.r) svg += `<circle cx="${x}" cy="${y}" r="6" fill="#fff" stroke="#4ecdc4" stroke-width="2"/>`;
+      else svg += `<circle cx="${x}" cy="${y}" r="5" fill="#111" stroke="#ccc" stroke-width="0.6"/>`;
+    });
+    svg += '</svg>';
+    return svg;
+  }
+
+  function shellHTML(scaleId) {
+    const sc = SCALES[scaleId];
+    return `
+      <div class="callout">
+        <span class="label">${sc.title}</span>
+        Fórmula <span class="formula">${sc.formula}</span> — ${sc.tip}
+      </div>
+      <div class="toolbar">
+        <span><label>Tom:</label></span>
+        <div class="key-quick" data-scale="${scaleId}" style="display:flex;flex-wrap:wrap;gap:0.3rem"></div>
+        <span style="margin-left:auto"></span>
+        <button type="button" class="mode-btn btn-cadence" data-scale="${scaleId}">Destacar cadência</button>
+      </div>
+      <div class="table-wrap">
+        <table class="harm-table">
+          <thead><tr class="head-row"></tr></thead>
+          <tbody class="harm-body"></tbody>
+        </table>
+      </div>
+      <section class="detail-panel">
+        <div class="detail-key detail-key-el"></div>
+        <p style="font-size:0.84rem;color:var(--muted)" class="detail-tip"></p>
+        <div class="chain detail-chain"></div>
+        <div class="prog-row"><strong>Cadência típica:</strong> <span class="detail-cadence mono"></span></div>
+        <div class="diagrams-head">
+          <h3>Diagramas no braço</h3>
+          <span class="meta form-meta"></span>
+          <div class="form-row form-picker" style="margin-left:auto"></div>
+        </div>
+        <div class="chords-grid chord-diagrams"></div>
+      </section>
+    `;
+  }
+
+  function mountScalePanels() {
+    ['natural', 'harmonic', 'melodic'].forEach(id => {
+      document.getElementById('panel-' + id).innerHTML = shellHTML(id);
+    });
+  }
+
+  function renderScalePanel(scaleId) {
+    const sc = SCALES[scaleId];
+    const panel = document.getElementById('panel-' + scaleId);
+    const key = KEYS.find(k => k.id === state.keyId) || KEYS[0];
+    const allRows = KEYS.map(k => ({ key: k, chords: buildChords(k, sc) }));
+
+    // header
+    const head = panel.querySelector('.head-row');
+    head.innerHTML = '<th>Tons / Graus</th>' + sc.degrees.map(d =>
+      `<th>${d.roman}<br>${QUAL_SUFFIX[d.qual]}</th>`
+    ).join('');
+
+    // keys quick
+    const kq = panel.querySelector('.key-quick');
+    kq.innerHTML = KEYS.map(k =>
+      `<button type="button" class="key-btn${k.id === key.id ? ' active' : ''}" data-key="${k.id}">${k.id}</button>`
+    ).join('');
+    kq.querySelectorAll('.key-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.keyId = btn.dataset.key;
+        renderScalePanel(scaleId);
+      });
+    });
+
+    // cadence highlight toggle
+    const cadBtn = panel.querySelector('.btn-cadence');
+    cadBtn.classList.toggle('active', state.highlightCadence);
+    cadBtn.onclick = () => {
+      state.highlightCadence = !state.highlightCadence;
+      renderScalePanel(scaleId);
+    };
+
+    // table body
+    const tbody = panel.querySelector('.harm-body');
+    tbody.innerHTML = allRows.map(({ key: k, chords }) => {
+      const sel = k.id === key.id ? ' selected' : '';
+      const cells = chords.map((c, i) => {
+        const hi = state.highlightCadence && sc.highlight.includes(i) ? ' highlight' : '';
+        return `<td class="${c.cls}${hi}">${c.name}</td>`;
+      }).join('');
+      return `<tr data-key="${k.id}" class="${sel}"><th>${k.label}</th>${cells}</tr>`;
+    }).join('');
+    tbody.querySelectorAll('tr').forEach(tr => {
+      tr.addEventListener('click', () => {
+        state.keyId = tr.dataset.key;
+        renderScalePanel(scaleId);
+      });
+    });
+
+    // detail
+    const chords = buildChords(key, sc);
+    panel.querySelector('.detail-key-el').textContent = `${key.label} · ${sc.title}`;
+    panel.querySelector('.detail-tip').textContent = sc.tip;
+    panel.querySelector('.detail-chain').innerHTML = chords.map((c, i) => {
+      const pill = `<span class="chord-pill" title="${c.roman}">${c.name}</span>`;
+      return pill + (i < chords.length - 1 ? '<span class="arrow">→</span>' : '');
+    }).join('');
+    panel.querySelector('.detail-cadence').textContent = sc.cadence(chords.map(c => c.name));
+
+    // form picker
+    const fp = panel.querySelector('.form-picker');
+    fp.innerHTML = Object.values(SHAPES).map(f =>
+      `<button type="button" class="form-btn${f.id === state.form ? ' active' : ''}" data-form="${f.id}">${f.label}</button>`
+    ).join('');
+    fp.querySelectorAll('.form-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.form = btn.dataset.form;
+        renderScalePanel(scaleId);
+      });
+    });
+
+    const form = SHAPES[state.form];
+    panel.querySelector('.form-meta').textContent = form.meta;
+
+    const grid = panel.querySelector('.chord-diagrams');
+    grid.innerHTML = chords.map(c => {
+      const notes = form.quals[c.qual];
+      if (!notes) {
+        return `<article class="chord-card"><div class="deg">${c.roman}</div><h4>${c.name}</h4><div class="fret-hint">sem shape</div></article>`;
+      }
+      const rootFret = findRootFret(form.rootString, c.pc);
+      const placement = placeNotes(notes, rootFret);
+      const rootAbs = placement.notes.find(n => n.r).abs;
+      return `
+        <article class="chord-card">
+          <div class="deg">${c.roman}</div>
+          <h4>${c.name}</h4>
+          <div class="fret-hint">fund. ${rootAbs}</div>
+          ${renderChordSVG(placement)}
+        </article>`;
+    }).join('');
+  }
+
+  function renderPenta() {
+    const key = KEYS.find(k => k.id === state.pentaKey) || KEYS[0];
+    const rootPc = NOTE_PC[key.root];
+    const ints = [0, 3, 5, 7, 10];
+    const notes = ints.map(i => pcName((rootPc + i) % 12, key.flat));
+    const majRoot = pcName((rootPc + 3) % 12, key.flat); // relative major = +3? 
+    // A minor pent = C major pent. Minor root + 3 semitones? A=9, C=0 = +3. Yes minor→relative major penta is +3.
+    const majNotes = [0, 2, 4, 7, 9].map(i => pcName((NOTE_PC[majRoot] + i) % 12, key.flat));
+
+    const nat = SCALES.natural;
+    const field = buildChords(key, nat).map(c => c.name).join(' · ');
+
+    document.getElementById('penta-title').textContent = `${key.root} menor pentatônica`;
+    document.getElementById('penta-desc').textContent =
+      `Subconjunto da ${key.label} natural. Use sobre i, iv, ♭VII; no V7, acrescente a sensível.`;
+    document.getElementById('penta-notes').textContent = notes.join(' · ');
+    document.getElementById('penta-rel').textContent = `${majRoot} maior pentatônica (${majNotes.join(' · ')})`;
+    document.getElementById('penta-field').textContent = field;
+
+    const rootFret = findRootFret(5, rootPc);
+    const placement = placeNotes(PENTA_MIN_BOX, rootFret);
+    document.getElementById('penta-svg').innerHTML = renderScaleSVG(placement);
+
+    const pk = document.getElementById('penta-keys');
+    pk.innerHTML = KEYS.map(k =>
+      `<button type="button" class="key-btn${k.id === key.id ? ' active' : ''}" data-key="${k.id}">${k.id}</button>`
+    ).join('');
+    pk.querySelectorAll('.key-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.pentaKey = btn.dataset.key;
+        renderPenta();
+      });
+    });
+  }
+
+  // Tabs
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      const id = tab.dataset.panel;
+      document.getElementById('panel-' + id).classList.add('active');
+      if (id === 'natural' || id === 'harmonic' || id === 'melodic') {
+        state.scale = id;
+        renderScalePanel(id);
+      }
+      if (id === 'penta') renderPenta();
+    });
+  });
+
+  mountScalePanels();
+  // deep-link ?tab=
+  const params = new URLSearchParams(location.search);
+  const tab = params.get('tab');
+  if (tab && document.querySelector(`.tab[data-panel="${tab}"]`)) {
+    document.querySelector(`.tab[data-panel="${tab}"]`).click();
+  }
+})();
+</script>
+</body>
+</html>

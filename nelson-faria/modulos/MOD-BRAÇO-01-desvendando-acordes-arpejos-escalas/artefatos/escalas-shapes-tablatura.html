@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>5 digitações da escala maior — shapes, graus e tablatura | Nelson Faria</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #f0a030;
+      --accent2: #4ecdc4;
+      --root: #c0392b;
+      --border: #2d3f54;
+      --fb-bg: #fafafa;
+      --fb-string: #333;
+      --fb-fret: #999;
+      --fb-note: #111;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem 1.25rem 4rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    header { border-bottom: 1px solid var(--border); padding-bottom: 1.25rem; margin-bottom: 2rem; }
+    header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
+    header p { color: var(--muted); margin-top: 0.4rem; font-size: 0.92rem; }
+
+    h2 { font-size: 1.25rem; color: var(--accent2); margin: 2rem 0 0.75rem; }
+    h3 { font-size: 1.05rem; margin: 1.25rem 0 0.5rem; }
+    p, li { margin-bottom: 0.55rem; font-size: 0.95rem; }
+    ul, ol { padding-left: 1.25rem; margin-bottom: 1rem; }
+
+    .callout {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      padding: 0.85rem 1rem;
+      border-radius: 0 6px 6px 0;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.75rem 0 1.25rem; }
+    th, td { border: 1px solid var(--border); padding: 0.45rem 0.6rem; text-align: left; }
+    th { background: var(--surface2); color: var(--accent2); }
+    tr:nth-child(even) td { background: var(--surface); }
+    .rt { color: #ff8a80; font-weight: 700; }
+
+    /* ── Poster das 5 digitações (estilo referência) ── */
+    .poster {
+      background: #fff;
+      color: #111;
+      border-radius: 12px;
+      padding: 1.5rem 1rem 1.25rem;
+      margin: 1.5rem 0;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    }
+
+    .poster-title {
+      text-align: center;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.25rem;
+      color: #111;
+    }
+
+    .poster-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      align-items: center;
+    }
+
+    .fretboard {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .fretboard svg { display: block; width: 100%; height: auto; }
+
+    .shape-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem;
+      margin: 1.75rem 0;
+    }
+
+    .shape-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.35rem 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .shape-num {
+      background: var(--accent);
+      color: #111;
+      font-weight: 800;
+      font-size: 0.75rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .shape-head h3 { margin: 0; font-size: 1rem; }
+
+    .shape-tag {
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--surface2);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    .legend-row {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin: 0.75rem 0 1rem;
+      justify-content: center;
+    }
+
+    .legend-row span { display: flex; align-items: center; gap: 0.35rem; }
+
+    .dot-demo {
+      width: 14px; height: 14px; border-radius: 50%;
+    }
+    .dot-demo.filled { background: #111; }
+    .dot-demo.root { background: #fff; border: 2.5px solid #111; }
+
+    /* Tab com graus */
+    .tab-deg {
+      font-family: "SF Mono", Consolas, monospace;
+      font-size: 11px;
+      line-height: 1.35;
+      background: #0a0e14;
+      padding: 0.85rem 0.75rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      white-space: pre;
+      color: #9ab;
+      margin: 0.65rem 0;
+    }
+
+    .tab-deg .g { color: #ffd93d; font-size: 10px; }
+    .tab-deg .r { color: #ff6b6b; font-weight: bold; }
+
+    .example-c {
+      font-size: 0.85rem;
+      color: var(--accent2);
+      margin-top: 0.5rem;
+    }
+
+    .steps { list-style: none; padding: 0; counter-reset: s; }
+    .steps li {
+      counter-increment: s;
+      padding-left: 2.2rem;
+      position: relative;
+      margin-bottom: 0.85rem;
+    }
+    .steps li::before {
+      content: counter(s);
+      position: absolute; left: 0;
+      width: 1.5rem; height: 1.5rem;
+      background: var(--accent); color: #111;
+      border-radius: 50%;
+      font-weight: 700; font-size: 0.8rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    footer { border-top: 1px solid var(--border); padding-top: 1.25rem; font-size: 0.78rem; color: var(--muted); margin-top: 2rem; }
+
+    nav { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0; }
+    nav a {
+      color: var(--accent); text-decoration: none; font-size: 0.8rem;
+      padding: 0.3rem 0.6rem; border: 1px solid var(--border); border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>5 digitações da escala maior</h1>
+  <p>Shapes CAGED · graus funcionais · tablatura · método Nelson Faria / MOD-BRAÇO-01</p>
+</header>
+
+<nav>
+  <a href="#referencia">Diagramas</a>
+  <a href="escalas-menor-shapes-tonalidade.html">Menor · tonalidade</a>
+  <a href="escalas-shapes-tonalidade.html">Tonalidade no braço</a>
+  <a href="arpejos-ii-V-I.html">Arpejos ii–V–I</a>
+  <a href="escala-validador.html">Validador (mic)</a>
+  <a href="#como">Como funciona</a>
+  <a href="#graus">Graus</a>
+  <a href="#detalhe">Detalhe + tab</a>
+  <a href="#estudo">Orientações</a>
+</nav>
+
+<!-- ═══ POSTER (igual referência visual) ═══ -->
+<section id="referencia">
+  <h2>As 5 digitações — visão geral</h2>
+  <p>Cada diagrama cobre uma <strong>janela de 5 casas</strong> (span da mão — padrão CAGED / folha do Nelson). Bolinha preta = nota da escala. Bolinha branca = <strong>tônica (1)</strong>. Deslize o bloco inteiro pelo braço para mudar de tom. Tab ASCII: <a href="escalas-5-digitacoes-tab.txt">escalas-5-digitacoes-tab.txt</a> · SVG poster: <a href="escalas-5-digitacoes-poster.svg" download>escalas-5-digitacoes-poster.svg</a>.</p>
+
+  <div class="legend-row">
+    <span><i class="dot-demo filled"></i> nota da escala</span>
+    <span><i class="dot-demo root"></i> tônica (grau 1)</span>
+    <span style="font-family:system-ui,sans-serif;letter-spacing:0.06em">e · B · G · D · A · E</span>
+  </div>
+
+  <div class="poster">
+    <div class="poster-title">5 DIGITAÇÕES DA ESCALA MAIOR</div>
+    <div class="poster-stack" id="poster-stack"></div>
+  </div>
+
+  <figure style="margin:1.25rem 0;text-align:center;">
+    <img src="referencia-5-digitacoes-escala-maior.png" alt="Referência: 5 digitações da escala maior (Nelson Faria)" style="max-width:320px;width:100%;border-radius:8px;border:1px solid var(--border);">
+    <figcaption style="font-size:0.78rem;color:var(--muted);margin-top:0.5rem;">Referência visual do aulão · SVGs abaixo = transcrição das 5 digitações (T = tônica branca)</figcaption>
+  </figure>
+</section>
+
+<section id="como">
+  <h2>Como funciona no violão</h2>
+  <div class="callout">
+    <strong>Sistema Nelson:</strong> você aprende 5 formas fixas (digitações). A tônica “ancora” o bloco numa casa — a forma não muda, só desloca. Meta: fechar os olhos, botar a mão, tocar a escala pedida.
+  </div>
+  <p>Ordem no poster (de cima para baixo, Sistema 5 / Cifra Club): <strong>A → G → E → D → C shape</strong>. No braço, elas se encaixam como peças de quebra-cabeça — a última casa de um shape liga à primeira do seguinte.</p>
+  <p><strong>GPS da tônica — maior 2 / 4 / 2 / 4 / 2</strong> (localizar a raiz nas cordas grossas antes de tocar):</p>
+  <table>
+    <thead>
+      <tr><th>Dig.</th><th>Shape</th><th>Âncora maior</th><th>Menor (contraste)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>A</td><td><strong>2</strong> na 5ª (A)</td><td><a href="escalas-menor-shapes-tablatura.html#ancoras">1 na 5ª</a></td></tr>
+      <tr><td>2</td><td>G</td><td><strong>2</strong> na 6ª (E)</td><td>1 na 6ª</td></tr>
+      <tr><td>3</td><td>E</td><td><strong>4</strong> na 6ª (E)</td><td>4 na 6ª</td></tr>
+      <tr><td>4</td><td>D</td><td><strong>2</strong> na 4ª (D)</td><td>1 na 4ª</td></tr>
+      <tr><td>5</td><td>C</td><td><strong>4</strong> na 5ª (A)</td><td>4 na 5ª</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Cordas no diagrama:</strong> linha de cima = <code>e</code> (1ª · Mi agudo) · linha de baixo = <code>E</code> (6ª · Mi grave). Casas <em>não</em> são numeradas — o bloco é relativo e vale para qualquer tom maior.</p>
+</section>
+
+<section id="graus">
+  <h2>Graus de função — o que os números significam</h2>
+  <p>Cada nota da escala recebe um <strong>grau</strong>: sua função harmônica medida a partir da <strong>tônica (1)</strong>. Nos artefatos há <strong>duas numerações distintas</strong> — não confundir:</p>
+  <table>
+    <thead>
+      <tr><th>Camada</th><th>Onde aparece</th><th>Exemplo</th><th>Significado</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Casa relativa</strong></td><td>Linha da tab (<code>--2-4--</code>)</td><td><code>2</code>, <code>4</code></td><td>Posição física dentro do shape (1ª–5ª casa do bloco)</td></tr>
+      <tr><td><strong>Grau funcional</strong></td><td>Linha “graus” abaixo da tab</td><td><code>5</code>, <code>6</code>, <code>1</code></td><td>Função da nota na tonalidade (intervalo desde a tônica)</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <strong>Exemplo (A shape, Dó maior):</strong> na 5ª corda, casa rel <code>2</code> = nota Dó = grau <span class="r">1</span>. Na mesma corda, casa rel <code>4</code> = Ré = grau <span class="g">2</span>. Parênteses na tab = casa onde cai a tônica (<span class="r">1</span>).
+  </div>
+  <h3 style="font-size:1rem;margin:1.25rem 0 0.5rem;color:var(--accent2)">Escala maior — graus puros</h3>
+  <table>
+    <thead>
+      <tr><th>Grau</th><th>Função</th><th>Em Dó</th><th>Papel melódico</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="rt">1</td><td>Tônica</td><td>Dó</td><td>Repouso — “casa”</td></tr>
+      <tr><td>2</td><td>Supertônica</td><td>Ré</td><td>Passagem, início de frase</td></tr>
+      <tr><td>3</td><td>Mediante</td><td>Mi</td><td>Define o caráter maior</td></tr>
+      <tr><td>4</td><td>Subdominante</td><td>Fá</td><td>Afasta da tônica</td></tr>
+      <tr><td>5</td><td>Dominante</td><td>Sol</td><td>Estabilidade</td></tr>
+      <tr><td>6</td><td>Superdominante</td><td>Lá</td><td>Cor dórica / relativo menor</td></tr>
+      <tr><td>7</td><td>Sensível</td><td>Si</td><td>Tensão → puxa pro 1</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:0.75rem">Nelson canta os graus ao subir: <em>1-2-3-4-5-6-7-1</em>. Na <strong>menor</strong>, o 3º, 6º e 7º podem ser bemolizados ou alterados — ver <a href="escalas-menor-shapes-tablatura.html#graus">graus na escala menor</a>.</p>
+</section>
+
+<!-- ═══ DETALHE POR SHAPE + TAB ═══ -->
+<section id="detalhe">
+  <h2>Detalhe de cada digitação + tab com graus</h2>
+  <p>Nas tabs: <strong>casa</strong> (1–5) = posição no shape · <strong>graus</strong> = função na tonalidade. Parênteses = tônica. <span class="g">Amarelo</span> = grau · <span class="r">Vermelho</span> = tônica (1).</p>
+  <div id="shape-details"></div>
+</section>
+
+<section id="estudo">
+  <h2>Orientações de estudo</h2>
+  <ol class="steps">
+    <li>Domine <strong>uma digitação</strong> por vez — cante 1-2-3-4-5-6-7-1 ao subir.</li>
+    <li>Localize a <strong>tônica branca</strong> em cada shape — é sua âncora ao transpor.</li>
+    <li>Transponha: mesmo desenho, bloco deslocado. Ex.: A shape com tônica na 5ª corda casa 3 = Dó maior; casa 5 = Ré maior.</li>
+    <li>Ligue shapes: termine o A shape e entre no E shape <em>sem pausa</em>.</li>
+    <li>Depois das 5 maiores, repita o mapa com <strong>menor natural / harmônica / melódica</strong> —
+      <a href="escalas-menor-shapes-tonalidade.html">menor · tonalidade</a>
+      · zoom no A: <a href="escalas-menor-shapes-tablatura.html">3 tipos · A shape</a>.</li>
+    <li>Escalas = mapa; improviso = ouvido. Arpejos vêm na sequência do módulo.</li>
+  </ol>
+</section>
+
+<footer>
+  MOD-BRAÇO-01 · Janela de 5 casas · Digitações transcritas manualmente · T = tônica (bolinha branca).
+</footer>
+
+<script>
+/* 5 digitações — transcritas do aluno (T = tônica) · janela relativa 1–5
+   strings[0]=e … strings[5]=E · ordem Digitação 1–5 = A G E D C */
+
+const STRING_LABELS = ['e','B','G','D','A','E'];
+const FRETS = 5;
+
+const SHAPE_DATA = [
+  {
+    id:'A', order:1, name:'A shape — Digitação 1',
+    chord:'Forma de Lá · 2º dedo na 5ª corda',
+    exampleC:'Dó maior: tônica na 5ª corda, 3ª casa',
+    notes: [
+      [{f:2,g:5},{f:4,g:6}],
+      [{f:2,g:2},{f:4,g:3},{f:5,g:4}],
+      [{f:1,g:6},{f:3,g:7},{f:4,g:1,r:1}],
+      [{f:1,g:3},{f:2,g:4},{f:4,g:5}],
+      [{f:1,g:7},{f:2,g:1,r:1},{f:4,g:2}],
+      [{f:2,g:5},{f:4,g:6}]
+    ]
+  },
+  {
+    id:'G', order:2, name:'G shape — Digitação 2',
+    chord:'Forma de Sol · 2º dedo na 6ª corda',
+    exampleC:'Dó maior: tônica na 6ª corda, 8ª casa',
+    notes: [
+      [{f:2,g:6},{f:4,g:7},{f:5,g:1,r:1}],
+      [{f:2,g:3},{f:3,g:4},{f:5,g:5}],
+      [{f:1,g:7},{f:2,g:1,r:1},{f:4,g:2}],
+      [{f:2,g:5},{f:4,g:6}],
+      [{f:2,g:2},{f:4,g:3},{f:5,g:4}],
+      [{f:2,g:6},{f:3,g:7},{f:5,g:1,r:1}]
+    ]
+  },
+  {
+    id:'E', order:3, name:'E shape — Digitação 3',
+    chord:'Forma de Mi · 4º dedo na 6ª corda',
+    exampleC:'Dó maior: tônica na 6ª corda, 8ª casa',
+    notes: [
+      [{f:2,g:7},{f:3,g:1,r:1},{f:5,g:2}],
+      [{f:3,g:5},{f:5,g:6}],
+      [{f:2,g:2},{f:4,g:3},{f:5,g:4}],
+      [{f:2,g:6},{f:4,g:7},{f:5,g:1,r:1}],
+      [{f:2,g:3},{f:3,g:4},{f:5,g:5}],
+      [{f:2,g:7},{f:3,g:1,r:1},{f:5,g:2}]
+    ]
+  },
+  {
+    id:'D', order:4, name:'D shape — Digitação 4',
+    chord:'Forma de Ré · 2º dedo na 4ª corda',
+    exampleC:'Dó maior: tônica na 4ª corda, 10ª casa',
+    notes: [
+      [{f:2,g:2},{f:4,g:3},{f:5,g:4}],
+      [{f:2,g:6},{f:4,g:7},{f:5,g:1,r:1}],
+      [{f:1,g:3},{f:2,g:4},{f:4,g:5}],
+      [{f:1,g:7},{f:2,g:1,r:1},{f:4,g:2}],
+      [{f:2,g:5},{f:4,g:6}],
+      [{f:2,g:2},{f:4,g:3},{f:5,g:4}]
+    ]
+  },
+  {
+    id:'C', order:5, name:'C shape — Digitação 5',
+    chord:'Forma de Dó · 4º dedo na 5ª corda',
+    exampleC:'Dó maior: tônica na 5ª corda, ~15ª casa (C shape · região aguda)',
+    notes: [
+      [{f:2,g:3},{f:3,g:4},{f:5,g:5}],
+      [{f:2,g:7},{f:3,g:1,r:1},{f:5,g:2}],
+      [{f:2,g:5},{f:4,g:6}],
+      [{f:2,g:2},{f:4,g:3},{f:5,g:4}],
+      [{f:2,g:6},{f:4,g:7},{f:5,g:1,r:1}],
+      [{f:2,g:3},{f:3,g:4},{f:5,g:5}]
+    ]
+  }
+];
+
+function renderFretboardSVG(notes, compact) {
+  const W = compact ? 340 : 360;
+  const H = compact ? 92 : 108;
+  const padL = 34, padT = 10, padR = 14;
+  const fretW = (W - padL - padR) / FRETS;
+  const strH = (H - padT - 8) / 5;
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  // nut (esquerda) — sem linha vertical de fechamento à direita (shape móvel)
+  svg += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT + 5*strH}" stroke="#222" stroke-width="3"/>`;
+  // trastes internos (4 linhas = 5 espaços; sem borda direita)
+  for (let i = 1; i < FRETS; i++) {
+    const x = padL + i * fretW;
+    svg += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + 5*strH}" stroke="#aaa" stroke-width="1"/>`;
+  }
+  // cordas + rótulos E A D G B e (6ª → 1ª)
+  for (let s = 0; s < 6; s++) {
+    const y = padT + s * strH;
+    const thick = s === 5 ? 2.2 : 1;
+    svg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#444" stroke-width="${thick}"/>`;
+    svg += `<text x="6" y="${y + 3.5}" font-size="${compact ? 9 : 10}" fill="#555" font-family="system-ui,sans-serif" font-weight="600">${STRING_LABELS[s]}</text>`;
+  }
+  // notas
+  notes.forEach((stringNotes, s) => {
+    stringNotes.forEach(n => {
+      const x = padL + (n.f - 0.5) * fretW;
+      const y = padT + s * strH;
+      if (n.r) {
+        svg += `<circle cx="${x}" cy="${y}" r="5.5" fill="#fff" stroke="#111" stroke-width="2"/>`;
+      } else {
+        svg += `<circle cx="${x}" cy="${y}" r="4.5" fill="#111"/>`;
+      }
+    });
+  });
+  svg += '</svg>';
+  return svg;
+}
+
+function renderTab(notes) {
+  return notes.map((stringNotes, s) => {
+    const label = STRING_LABELS[s];
+    let row = `${label} |`;
+    for (let f = 1; f <= FRETS; f++) {
+      const n = stringNotes.find(x => x.f === f);
+      if (!n) row += '---|';
+      else if (n.r) row += `(${n.f})|`;
+      else row += `-${n.f}-|`;
+    }
+    return row;
+  }).join('\n') + '\n\n    graus (por corda):\n' + notes.map((stringNotes, s) => {
+    let g = '      ';
+    for (let f = 1; f <= FRETS; f++) {
+      const n = stringNotes.find(x => x.f === f);
+      g += n ? (n.r ? ` <span class="r">${n.g}</span>  ` : ` <span class="g">${n.g}</span>  `) : ' ·   ';
+    }
+    return g;
+  }).join('\n');
+}
+
+// Poster
+const poster = document.getElementById('poster-stack');
+SHAPE_DATA.forEach(shape => {
+  const div = document.createElement('div');
+  div.className = 'fretboard';
+  div.innerHTML = renderFretboardSVG(shape.notes, true);
+  poster.appendChild(div);
+});
+
+// Details
+const details = document.getElementById('shape-details');
+SHAPE_DATA.forEach(shape => {
+  const block = document.createElement('div');
+  block.className = 'shape-block';
+  block.innerHTML = `
+    <div class="shape-head">
+      <span class="shape-num">${shape.order}</span>
+      <h3>${shape.name}</h3>
+      <span class="shape-tag">${shape.chord}</span>
+    </div>
+    <div class="fretboard">${renderFretboardSVG(shape.notes, false)}</div>
+    <p class="example-c">Exemplo ${shape.exampleC}</p>
+    <div class="tab-deg">${renderTab(shape.notes)}</div>
+  `;
+  details.appendChild(block);
+});
+</script>
+
+</body>
+</html>

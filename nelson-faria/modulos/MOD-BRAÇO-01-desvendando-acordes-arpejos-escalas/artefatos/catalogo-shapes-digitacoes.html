@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo · shapes & digitações | MOD-BRAÇO-01</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #f0a030;
+      --accent2: #4ecdc4;
+      --ok: #69db7c;
+      --warn: #ff6b6b;
+      --border: #2d3f54;
+      --purple: #a78bfa;
+      --shape-a: #4ecdc4;
+      --shape-g: #a78bfa;
+      --shape-e: #f0a030;
+      --shape-d: #ff6b6b;
+      --shape-c: #69db7c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 1rem 0.85rem 3rem;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.85rem;
+      margin-bottom: 0.85rem;
+    }
+
+    header .eyebrow {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+
+    header h1 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 0.35rem;
+    }
+
+    nav.crumbs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.85rem;
+    }
+
+    nav.crumbs a,
+    .jump a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.72rem;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+    }
+
+    nav.crumbs a:hover,
+    .jump a:hover { border-color: var(--accent); }
+
+    .jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-bottom: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(6px);
+      padding: 0.35rem 0;
+    }
+
+    .callout {
+      background: var(--surface);
+      border-left: 3px solid var(--accent2);
+      padding: 0.7rem 0.85rem;
+      border-radius: 0 8px 8px 0;
+      margin: 0 0 1rem;
+      font-size: 0.85rem;
+    }
+
+    .callout .label {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .legend-caged {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.75rem;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.55rem 0.7rem;
+      margin-bottom: 1rem;
+      font-size: 0.78rem;
+    }
+
+    .legend-caged .title {
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      width: 100%;
+      margin-bottom: 0.15rem;
+    }
+
+    .swatch {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-weight: 700;
+    }
+
+    .swatch i {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .swatch .ring {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #888;
+      display: inline-block;
+    }
+
+    h2 {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 1.35rem 0 0.5rem;
+      padding-top: 0.35rem;
+    }
+
+    h2 .count {
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+      margin-left: 0.35rem;
+    }
+
+    .hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+      gap: 0.5rem;
+    }
+
+    .hub-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 0.75rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      border-left: 3px solid var(--card-accent, var(--border));
+      min-height: 7.5rem;
+    }
+
+    .hub-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+
+    .hub-card.disabled {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .hub-card h3 {
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .hub-card .meta {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.35;
+      flex: 1;
+    }
+
+    .hub-card .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      margin-top: 0.15rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.55rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.12rem 0.35rem;
+      border-radius: 999px;
+    }
+
+    .badge.ready { background: #69db7c33; color: #69db7c; }
+    .badge.partial { background: #f0a03033; color: #f0a030; }
+    .badge.planned { background: #8b9cb333; color: #8b9cb3; }
+    .badge.view { background: #4ecdc433; color: #4ecdc4; }
+    .badge.drill { background: #a78bfa33; color: #a78bfa; }
+    .badge.poster { background: #ff6b6b33; color: #ff6b6b; }
+
+    .file {
+      font-family: "SF Mono", Consolas, monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      opacity: 0.85;
+      word-break: break-all;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      margin: 0.35rem 0 0.75rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.5rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--surface2);
+      color: var(--accent2);
+      font-weight: 700;
+      font-size: 0.72rem;
+    }
+
+    tr:nth-child(even) td { background: var(--surface); }
+
+    .ok { color: var(--ok); font-weight: 700; }
+    .partial { color: var(--accent); font-weight: 700; }
+    .miss { color: var(--muted); }
+
+    .mono {
+      font-family: "SF Mono", Consolas, monospace;
+      font-size: 0.88em;
+    }
+
+    .formula {
+      display: inline-block;
+      font-family: "SF Mono", Consolas, monospace;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.08rem 0.35rem;
+      font-size: 0.72rem;
+      color: var(--accent);
+    }
+
+    footer {
+      margin-top: 1.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--accent); }
+
+    .ring-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin: 0.35rem 0 0.85rem;
+    }
+
+    .ring-chip {
+      min-width: 2rem;
+      text-align: center;
+      padding: 0.35rem 0.55rem;
+      border-radius: 6px;
+      font-weight: 900;
+      font-size: 0.95rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">MOD-BRAÇO-01 · Inventário visual</div>
+  <h1>Catálogo de shapes & digitações</h1>
+  <p>
+    Índice dos artefatos HTML que mostram <strong>diagramas de braço</strong>,
+    <strong>shapes CAGED</strong> e <strong>digitações</strong> de escalas e arpejos/acordes.
+    Foco: visualizar e abrir — não teoria narrativa.
+  </p>
+</header>
+
+<nav class="crumbs">
+  <a href="estudo-arpejos/index.html">Estudo arpejos</a>
+  <a href="../../escalas-arpejos-treino/pages/index.html">Ginásio →</a>
+  <a href="escalas-shapes-tonalidade.html">Maior · tonalidade</a>
+  <a href="formacao-acordes-braco.html">28 acordes</a>
+</nav>
+
+<div class="callout">
+  <span class="label">Como usar</span>
+  Cada card abre o HTML correspondente. Badges:
+  <span class="badge ready">ready</span> digitação completa ·
+  <span class="badge partial">partial</span> parcial / 1 shape ·
+  <span class="badge view">view</span> mapa interativo ·
+  <span class="badge drill">drill</span> treino com timer ·
+  <span class="badge poster">poster</span> referência estática.
+</div>
+
+<div class="legend-caged">
+  <div class="title">Sistema 5 (CAGED) · cores padrão dos artefatos</div>
+  <span class="swatch"><i style="background:var(--shape-a)"></i> A</span>
+  <span class="swatch"><i style="background:var(--shape-g)"></i> G</span>
+  <span class="swatch"><i style="background:var(--shape-e)"></i> E</span>
+  <span class="swatch"><i style="background:var(--shape-d)"></i> D</span>
+  <span class="swatch"><i style="background:var(--shape-c)"></i> C</span>
+  <span class="swatch"><span class="ring"></span> tônica</span>
+  <span style="color:var(--muted);font-size:0.72rem">Anel no braço: A → G → E → D → C</span>
+</div>
+
+<div class="ring-row" aria-hidden="true">
+  <span class="ring-chip" style="color:var(--shape-a);border-color:var(--shape-a)">A</span>
+  <span class="ring-chip" style="color:var(--shape-g);border-color:var(--shape-g)">G</span>
+  <span class="ring-chip" style="color:var(--shape-e);border-color:var(--shape-e)">E</span>
+  <span class="ring-chip" style="color:var(--shape-d);border-color:var(--shape-d)">D</span>
+  <span class="ring-chip" style="color:var(--shape-c);border-color:var(--shape-c)">C</span>
+</div>
+
+<nav class="jump" aria-label="Seções">
+  <a href="#escalas-interativo">Escalas interativas</a>
+  <a href="#escalas-poster">Posters / TAB</a>
+  <a href="#acordes">Acordes · grips</a>
+  <a href="#arpejos">Arpejos</a>
+  <a href="#ginasio">Ginásio</a>
+  <a href="#matriz">Matriz de cobertura</a>
+  <a href="#lacunas">Lacunas</a>
+</nav>
+
+<!-- ═══════════════ ESCALAS INTERATIVAS ═══════════════ -->
+<h2 id="escalas-interativo">Escalas · mapa no braço <span class="count">4 páginas</span></h2>
+<div class="hub-grid">
+
+  <a class="hub-card" href="escalas-shapes-tonalidade.html" style="--card-accent:var(--shape-e)">
+    <div class="tags">
+      <span class="badge ready">ready</span>
+      <span class="badge view">view</span>
+      <span class="badge drill">drill</span>
+    </div>
+    <h3>Maior · tonalidade</h3>
+    <p class="meta">5 shapes CAGED em casas absolutas. Mapa do braço + cards por digitação + treino aleatório.</p>
+    <span class="file">escalas-shapes-tonalidade.html</span>
+  </a>
+
+  <a class="hub-card" href="escalas-shapes-treino-colunas.html" style="--card-accent:var(--shape-a)">
+    <div class="tags">
+      <span class="badge ready">ready</span>
+      <span class="badge drill">drill</span>
+    </div>
+    <h3>Maior · treino colunas</h3>
+    <p class="meta">Cockpit tom | shape atual/próximo | pulso. Layout em colunas para prática contínua.</p>
+    <span class="file">escalas-shapes-treino-colunas.html</span>
+  </a>
+
+  <a class="hub-card" href="escalas-menor-shapes-tonalidade.html" style="--card-accent:var(--purple)">
+    <div class="tags">
+      <span class="badge ready">ready</span>
+      <span class="badge view">view</span>
+      <span class="badge drill">drill</span>
+    </div>
+    <h3>Menor · tonalidade</h3>
+    <p class="meta">Natural / harmônica / melódica × 5 shapes. Mesmo layout da maior; shapes gerados por intervalos.</p>
+    <span class="file">escalas-menor-shapes-tonalidade.html</span>
+  </a>
+
+  <a class="hub-card" href="escalas-menor-shapes-treino-colunas.html" style="--card-accent:var(--ok)">
+    <div class="tags">
+      <span class="badge ready">ready</span>
+      <span class="badge drill">drill</span>
+    </div>
+    <h3>Menor · treino colunas</h3>
+    <p class="meta">Cockpit do menor com seletor de tipo (nat / harm / mel) + shapes A–G–E–D–C.</p>
+    <span class="file">escalas-menor-shapes-treino-colunas.html</span>
+  </a>
+
+</div>
+
+<!-- ═══════════════ POSTERS ═══════════════ -->
+<h2 id="escalas-poster">Escalas · posters & tablatura <span class="count">3 páginas</span></h2>
+<div class="hub-grid">
+
+  <a class="hub-card" href="escalas-shapes-tablatura.html" style="--card-accent:var(--accent2)">
+    <div class="tags">
+      <span class="badge ready">ready</span>
+      <span class="badge poster">poster</span>
+    </div>
+    <h3>Maior · 5 digitações + TAB</h3>
+    <p class="meta">Poster branco com shapes relativos, graus e tablatura. Molde de referência (não muda de tom).</p>
+    <span class="file">escalas-shapes-tablatura.html</span>
+  </a>
+
+  <a class="hub-card" href="escalas-menor-shapes-tablatura.html" style="--card-accent:var(--purple)">
+    <div class="tags">
+      <span class="badge partial">partial</span>
+      <span class="badge poster">poster</span>
+    </div>
+    <h3>Menor · 3 tipos · A shape</h3>
+    <p class="meta">Natural, harmônica e melódica no shape A — comparação lado a lado com TAB.</p>
+    <span class="file">escalas-menor-shapes-tablatura.html</span>
+  </a>
+
+  <a class="hub-card" href="escalas-menor-5-digitacoes.html" style="--card-accent:var(--border)">
+    <div class="tags">
+      <span class="badge view">redirect</span>
+    </div>
+    <h3>Menor · atalho 5 digitações</h3>
+    <p class="meta">Redirect para <span class="mono">escalas-menor-shapes-tonalidade.html</span>.</p>
+    <span class="file">escalas-menor-5-digitacoes.html</span>
+  </a>
+
+</div>
+
+<!-- ═══════════════ ACORDES ═══════════════ -->
+<h2 id="acordes">Acordes · grips no braço <span class="count">3 páginas</span></h2>
+<div class="hub-grid">
+
+  <a class="hub-card" href="formacao-acordes-braco.html" style="--card-accent:var(--accent)">
+    <div class="tags">
+      <span class="badge ready">ready</span>
+      <span class="badge view">view</span>
+    </div>
+    <h3>28 shapes · Nelson Faria</h3>
+    <p class="meta">7 qualidades × 4 formações (4.1–4.4). Diagramas SVG de grip — base visual dos arpejos.</p>
+    <span class="file">formacao-acordes-braco.html</span>
+  </a>
+
+  <a class="hub-card" href="campo-harmonico-maior.html" style="--card-accent:var(--ok)">
+    <div class="tags">
+      <span class="badge ready">ready</span>
+      <span class="badge view">view</span>
+    </div>
+    <h3>Campo harmônico maior</h3>
+    <p class="meta">Graus I–VII com shapes no braço por tonalidade. Liga digitação ↔ função.</p>
+    <span class="file">campo-harmonico-maior.html</span>
+  </a>
+
+  <a class="hub-card" href="campos-harmonicos-menor-pentatonica.html" style="--card-accent:var(--warn)">
+    <div class="tags">
+      <span class="badge ready">ready</span>
+      <span class="badge view">view</span>
+    </div>
+    <h3>Campos menores + penta</h3>
+    <p class="meta">3 campos menores (nat/harm/mel) com grips 4.x + box 1 da pentatônica menor.</p>
+    <span class="file">campos-harmonicos-menor-pentatonica.html</span>
+  </a>
+
+</div>
+
+<!-- ═══════════════ ARPEJOS ═══════════════ -->
+<h2 id="arpejos">Arpejos · visual & estudo <span class="count">3 entradas</span></h2>
+<div class="hub-grid">
+
+  <a class="hub-card" href="arpejos-ii-V-I.html" style="--card-accent:var(--accent2)">
+    <div class="tags">
+      <span class="badge partial">partial</span>
+      <span class="badge view">view</span>
+    </div>
+    <h3>Poster ii–V–I</h3>
+    <p class="meta">Um arpejo por linha (ii · V · I), casas absolutas na janela A shape. Bom para encadeamento visual.</p>
+    <span class="file">arpejos-ii-V-I.html</span>
+  </a>
+
+  <a class="hub-card" href="estudo-arpejos/04-shapes-digitacao.html" style="--card-accent:var(--purple)">
+    <div class="tags">
+      <span class="badge poster">poster</span>
+    </div>
+    <h3>Cap. 04 · shapes & digitação</h3>
+    <p class="meta">Âncoras CAGED, esquema E-shape, tabela de formas. Texto + SVG didático.</p>
+    <span class="file">estudo-arpejos/04-shapes-digitacao.html</span>
+  </a>
+
+  <a class="hub-card" href="estudo-arpejos/index.html" style="--card-accent:var(--border)">
+    <div class="tags">
+      <span class="badge view">hub</span>
+    </div>
+    <h3>Trilha estudo de arpejos</h3>
+    <p class="meta">8 capítulos (definição → rotina). Shapes concentrados no cap. 04; resto é método.</p>
+    <span class="file">estudo-arpejos/index.html</span>
+  </a>
+
+</div>
+
+<!-- ═══════════════ GINÁSIO ═══════════════ -->
+<h2 id="ginasio">Ginásio · engines de treino <span class="count">módulo irmão</span></h2>
+<div class="hub-grid">
+
+  <a class="hub-card" href="../../escalas-arpejos-treino/pages/index.html" style="--card-accent:var(--accent)">
+    <div class="tags">
+      <span class="badge view">hub</span>
+    </div>
+    <h3>Hub Escalas & Arpejos</h3>
+    <p class="meta">Catálogo com status ready/partial/planned + links para drills.</p>
+    <span class="file">escalas-arpejos-treino/pages/index.html</span>
+  </a>
+
+  <a class="hub-card" href="../../escalas-arpejos-treino/pages/drill-escala.html" style="--card-accent:var(--shape-a)">
+    <div class="tags">
+      <span class="badge ready">ready</span>
+      <span class="badge drill">drill</span>
+    </div>
+    <h3>Drill escala</h3>
+    <p class="meta">Maior: 5 CAGED. Menores: shape A (partial). Dados em <span class="mono">js/data/scales/</span>.</p>
+    <span class="file">drill-escala.html</span>
+  </a>
+
+  <a class="hub-card" href="../../escalas-arpejos-treino/pages/drill-arpejo.html" style="--card-accent:var(--shape-d)">
+    <div class="tags">
+      <span class="badge partial">partial</span>
+      <span class="badge drill">drill</span>
+    </div>
+    <h3>Drill arpejo</h3>
+    <p class="meta">Qualidades maj7 / dom7 / min7 + ii–V–I. m7♭5 e °7 ainda planned.</p>
+    <span class="file">drill-arpejo.html</span>
+  </a>
+
+</div>
+
+<!-- ═══════════════ MATRIZ ═══════════════ -->
+<h2 id="matriz">Matriz de cobertura visual</h2>
+
+<p style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem">
+  O que já tem <strong>diagrama / shape / digitação</strong> nos HTMLs (não conta só texto teórico).
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Família</th>
+      <th>Fórmula</th>
+      <th>Shapes no HTML</th>
+      <th>Onde ver</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Escala maior</td>
+      <td><span class="formula">1 2 3 4 5 6 7</span></td>
+      <td><span class="ok">5 · A G E D C</span></td>
+      <td>tonalidade · colunas · tablatura · drill</td>
+    </tr>
+    <tr>
+      <td>Menor natural</td>
+      <td><span class="formula">1 2 ♭3 4 5 ♭6 ♭7</span></td>
+      <td><span class="ok">5 · A G E D C</span></td>
+      <td>menor-tonalidade · colunas · TAB (A)</td>
+    </tr>
+    <tr>
+      <td>Menor harmônica</td>
+      <td><span class="formula">1 2 ♭3 4 5 ♭6 7</span></td>
+      <td><span class="ok">5 · A G E D C</span></td>
+      <td>menor-tonalidade · colunas · TAB (A)</td>
+    </tr>
+    <tr>
+      <td>Menor melódica</td>
+      <td><span class="formula">1 2 ♭3 4 5 6 7</span></td>
+      <td><span class="ok">5 · A G E D C</span></td>
+      <td>menor-tonalidade · colunas · TAB (A)</td>
+    </tr>
+    <tr>
+      <td>Pentatônica menor</td>
+      <td><span class="formula">1 ♭3 4 5 ♭7</span></td>
+      <td><span class="partial">1 box</span></td>
+      <td>campos-harmonicos-menor-pentatonica</td>
+    </tr>
+    <tr>
+      <td>Pentatônica maior</td>
+      <td><span class="formula">1 2 3 5 6</span></td>
+      <td><span class="miss">—</span></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Blues</td>
+      <td><span class="formula">1 ♭3 4 ♭5 5 ♭7</span></td>
+      <td><span class="miss">—</span></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Simétricas / modos</td>
+      <td>—</td>
+      <td><span class="miss">—</span></td>
+      <td>só planejado no ginásio</td>
+    </tr>
+    <tr>
+      <td>Acordes tétrade (7 tipos)</td>
+      <td>7M m7 7 m7♭5 …</td>
+      <td><span class="ok">4 grips × 7 = 28</span></td>
+      <td>formacao-acordes-braco · campos</td>
+    </tr>
+    <tr>
+      <td>Arpejo ii–V–I</td>
+      <td>m7 · 7 · 7M</td>
+      <td><span class="partial">progressão</span></td>
+      <td>arpejos-ii-V-I · drill-arpejo</td>
+    </tr>
+    <tr>
+      <td>Arpejo CAGED completo</td>
+      <td>por qualidade</td>
+      <td><span class="miss">sem viewer 5 shapes</span></td>
+      <td>cap. 04 (texto) · grips 28</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Formato</th>
+      <th>O que entrega</th>
+      <th>Exemplos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Tonalidade no braço</strong></td>
+      <td>Tom → casas absolutas + mapa colorido + 5 cards</td>
+      <td>escalas-*-shapes-tonalidade</td>
+    </tr>
+    <tr>
+      <td><strong>Treino colunas</strong></td>
+      <td>Cockpit sticky: agora / próximo / metrônomo visual</td>
+      <td>escalas-*-treino-colunas</td>
+    </tr>
+    <tr>
+      <td><strong>Poster + TAB</strong></td>
+      <td>Shape relativo + graus + tablatura (referência fixa)</td>
+      <td>escalas-*-tablatura</td>
+    </tr>
+    <tr>
+      <td><strong>Grid de grips</strong></td>
+      <td>Voicing estático por formação (4.1–4.4)</td>
+      <td>formacao-acordes-braco</td>
+    </tr>
+    <tr>
+      <td><strong>Campo harmônico</strong></td>
+      <td>Grau → acorde → shape no tom escolhido</td>
+      <td>campo-harmonico-maior · campos-menor</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ═══════════════ LACUNAS ═══════════════ -->
+<h2 id="lacunas">Lacunas (ainda sem HTML de shape)</h2>
+<div class="callout" style="border-left-color:var(--warn)">
+  <span class="label">Backlog visual — só diagramas</span>
+  Prioridade sugerida se o objetivo for documentar digitações como na apostila Marcos Lima:
+  <ol style="margin:0.4rem 0 0 1.1rem;font-size:0.85rem">
+    <li><strong>Pentatônica maior / menor</strong> — 5 boxes (hoje só box 1 menor).</li>
+    <li><strong>Blues maior / menor</strong> — 5 shapes com blue note marcada.</li>
+    <li><strong>Arpejos tétrade CAGED</strong> — viewer tipo <span class="mono">*-tonalidade</span> para 7M, m7, 7, m7♭5, m7M, 7M(#5), °.</li>
+    <li><strong>Tríades</strong> — maior / menor / aum. / dim. em 5 (ou 2) shapes.</li>
+    <li><strong>Simétricas</strong> — diminuta WH, dim-dom HW, tons inteiros.</li>
+    <li><strong>Modos</strong> — 7 da maior (+ harmônica / melódica se quiser paridade com a apostila).</li>
+  </ol>
+</div>
+
+<footer>
+  MOD-BRAÇO-01 · Nelson Faria · artefatos visuais ·
+  <a href="escalas-shapes-tonalidade.html">começar pela maior</a> ·
+  <a href="formacao-acordes-braco.html">28 grips</a> ·
+  <a href="../../escalas-arpejos-treino/pages/index.html">ginasio</a>
+</footer>
+
+</body>
+</html>

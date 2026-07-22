@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apêndice — O Que Será: cifra melódica + violão (Dm)</title>
+  <link rel="stylesheet" href="css/curso.css">
+  <style>
+    .toc-apendice a { display:block; padding:0.35rem 1.25rem; font-size:0.85rem; color:var(--text-muted); text-decoration:none; }
+    .toc-apendice a:hover { color:var(--accent); background:var(--accent-soft); }
+    .toc-apendice .toc-section { font-weight:700; color:var(--text); padding-top:0.75rem; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em; }
+    .nav-back { display:block; padding:0.5rem 1.25rem; font-size:0.85rem; color:var(--accent); }
+    .video-meta { display:flex; flex-wrap:wrap; gap:1rem; margin:1rem 0; align-items:center; }
+    .video-meta a { color:var(--accent); font-weight:600; }
+
+    .player-bar {
+      display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center;
+      padding:1rem 1.25rem; background:var(--bg-card); border:1px solid var(--border);
+      border-radius:var(--radius); margin:1.5rem 0; box-shadow:var(--shadow);
+    }
+    .player-bar button {
+      font-family:var(--font); font-size:0.9rem; padding:0.5rem 1rem;
+      border-radius:8px; border:1px solid var(--border); background:var(--accent-soft);
+      color:var(--text); cursor:pointer; font-weight:600;
+    }
+    .player-bar button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .player-bar button:hover { filter:brightness(0.97); }
+    #player-status, #midi-meta { font-size:0.85rem; color:var(--text-muted); margin:0; }
+
+    .motif-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:0.75rem; margin:1.25rem 0; }
+    .motif-card { padding:0.75rem 1rem; border:1px solid var(--border); border-radius:8px; background:var(--bg-card); font-size:0.85rem; }
+    .motif-card code { font-size:0.8rem; color:var(--accent); }
+
+    .stanza-section { margin-bottom:2.5rem; }
+    .stanza-meta { font-size:0.9rem; color:var(--text-muted); margin:-0.5rem 0 1rem; }
+
+    .melody-line { margin-bottom:1rem; padding:1rem 1.1rem !important; }
+    .chord-row { display:flex; flex-wrap:wrap; gap:0.5rem 1rem; align-items:baseline; margin-bottom:0.65rem; }
+    .chord-label { font-family:var(--font-mono); font-size:0.82rem; font-weight:700; color:var(--tonic); }
+    .motif-tag { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); background:var(--accent-soft); padding:0.15rem 0.45rem; border-radius:4px; }
+
+    .syl-row { display:flex; flex-wrap:wrap; gap:3px; margin-bottom:0.5rem; }
+    .syl {
+      display:flex; flex-direction:column; align-items:center; min-width:2.1rem;
+      padding:0.2rem 0.15rem; border-radius:5px; border:1px solid transparent;
+    }
+    .syl-note { font-size:0.68rem; font-weight:700; line-height:1.1; opacity:0.9; }
+    .syl-text { font-size:0.78rem; line-height:1.2; }
+    .syl-strong .syl-note { color:var(--dom); font-size:0.72rem; }
+    .lyric-full { font-size:0.8rem; color:var(--text-muted); margin:0; font-style:italic; }
+
+  .n-c  { background:#e8f4fc; border-color:#b8d4e8; } .n-c  .syl-note { color:#1a5f7a; }
+  .n-cs { background:#dce8f8; border-color:#a8c0e0; } .n-cs .syl-note { color:#2a4a8a; }
+  .n-d  { background:#e8f8e8; border-color:#b8d8b8; } .n-d  .syl-note { color:#2d6a4f; }
+  .n-e  { background:#f0f8e8; border-color:#c8d8b0; } .n-e  .syl-note { color:#4a6a2a; }
+  .n-f  { background:#f8f0e8; border-color:#e0d0b8; } .n-f  .syl-note { color:#8a5a2a; }
+  .n-fs { background:#f8ece8; border-color:#e0c0b0; } .n-fs .syl-note { color:#9b2226; }
+  .n-g  { background:#f0e8f8; border-color:#d0b8e0; } .n-g  .syl-note { color:#5a2a8a; }
+  .n-a  { background:#fde8e8; border-color:#e8b8b8; } .n-a  .syl-note { color:#9b2226; }
+  .n-b  { background:#fce8f0; border-color:#e8b8d0; } .n-b  .syl-note { color:#7a2a5a; }
+
+    .guitar-block {
+      background:var(--bg-code); color:#cdd6f4; border-radius:var(--radius);
+      padding:1.25rem 1.5rem; font-family:var(--font-mono); font-size:0.78rem;
+      line-height:1.55; overflow-x:auto; white-space:pre; margin:1rem 0;
+    }
+    .guitar-block .ch { color:#a6e3a1; }
+    .guitar-block .ly { color:#bac2de; }
+
+    .legend-notes { display:flex; flex-wrap:wrap; gap:0.4rem; margin:0.75rem 0; }
+    .legend-notes span { font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h1>O Que Será</h1>
+      <p>Melodia + violão · Dm</p>
+    </div>
+    <a class="nav-back" href="index.html">← Voltar ao curso</a>
+    <a class="nav-back" href="apendice-ozeias-cinco-acordes.html">← Apêndice Ozeias</a>
+    <nav class="toc-apendice">
+      <div class="toc-section">Estudo</div>
+      <a href="#visao">Visão geral</a>
+      <a href="#player">Player MIDI</a>
+      <a href="#motivos">8 motivos</a>
+      <a href="#legenda">Legenda de notas</a>
+      <div class="toc-section">Cifra violão</div>
+      <a href="#violao-completo">Cifra completa</a>
+      <div class="toc-section">Melodia sílaba a sílaba</div>
+      <a href="#e1">Estrofe 1</a>
+      <a href="#e2">Estrofe 2</a>
+      <a href="#e3">Ponte (Gm)</a>
+      <a href="#e4">Estrofe 4</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="hero">
+      <h1>O Que Será — cifra melódica e harmonia</h1>
+      <p class="lead">Apêndice didático para <strong>Chico Buarque / Francis Hime</strong> (*À Flor da Terra*). Tom <strong>Dm</strong>, alinhado à cifra de violão do repertório Stefano. Inclui melodia <strong>sílaba a sílaba</strong>, motivos repetitivos, cifra harmônica e <strong>MIDI da linha vocal</strong> (~120 BPM).</p>
+    </header>
+
+    <div class="video-meta">
+      <span>🎵 Tom: <strong>Dm</strong></span>
+      <span>⏱ ~120 BPM</span>
+      <span>📁 Cifra: <code>vozes/stefano/cifras/01-o-que-sera.txt</code></span>
+      <a href="midi/o-que-sera-melodia-dm.mid" download>Download MIDI estático ↗</a>
+      <a href="https://www.youtube.com/watch?v=_szSyzZVV4c" target="_blank" rel="noopener">Stefano Mota (YouTube) ↗</a>
+    </div>
+
+    <section id="visao">
+      <h2>1. Visão geral</h2>
+      <p>Esta obra é um laboratório de <strong>melodia declamatória</strong> sobre <strong>harmonia cromática horizontal</strong>. Chico repete a mesma pergunta melódica enquanto os acordes deslizam — a letra enigmática espelha a indeterminação harmônica.</p>
+      <blockquote>A melodia usa poucos motivos. A harmonia muda o contexto. Estudar os <strong>8 motivos</strong> abaixo equivale a estudar quase a canção inteira.</blockquote>
+      <ul>
+        <li><strong>Gancho</strong> — <code>lá dó ré fá ré</code> (5ª → b7 → tônica → b3)</li>
+        <li><strong>Versos A–D</strong> — quatro finais distintos (sustentação, lá, mi, LÁ)</li>
+        <li><strong>Refrão filosófico</strong> — desce até a tônica <code>ré</code></li>
+        <li><strong>Ponte</strong> — mesma melodia absoluta; harmonia migra para <strong>Gm</strong></li>
+      </ul>
+    </section>
+
+    <section id="player">
+      <h2>2. Player e MIDI da melodia</h2>
+      <p>O MIDI abaixo é a <strong>linha vocal simplificada</strong> (uma nota por sílaba, sem rubato). Serve para ear training, importar no DAW ou comparar com a gravação. O sintetizador do browser usa onda triangular — apenas referência pitch.</p>
+      <div class="player-bar">
+        <button type="button" class="primary" id="btn-play">▶ Tocar melodia</button>
+        <button type="button" id="btn-stop">■ Parar</button>
+        <button type="button" id="btn-download-midi">⬇ Gerar .mid</button>
+        <p id="player-status">Pronto.</p>
+        <p id="midi-meta"></p>
+      </div>
+      <div class="tip">Arquivo estático também em <a href="midi/o-que-sera-melodia-dm.mid"><code>midi/o-que-sera-melodia-dm.mid</code></a> — gerado a partir dos mesmos dados desta página.</div>
+    </section>
+
+    <section id="motivos">
+      <h2>3. Os 8 motivos melódicos</h2>
+      <div class="motif-grid">
+        <div class="motif-card"><strong>Gancho</strong><br><code>lá lá dó ré | fá ré fá</code><br>sobre Dm + cliché</div>
+        <div class="motif-card"><strong>A</strong><br><code>ré mi fá# mi ré … lá</code><br>Dm6 → Am</div>
+        <div class="motif-card"><strong>B</strong><br><code>… lá lá lá</code><br>Am6 → Gm (5ª)</div>
+        <div class="motif-card"><strong>C</strong><br><code>dó# ré mi ré dó# … mi</code><br>Gm6 → Bbm</div>
+        <div class="motif-card"><strong>D</strong><br><code>… LÁ LÁ LÁ</code><br>A7(b13) → Dm</div>
+        <div class="motif-card"><strong>E</strong><br><code>fá# dó ré dó fá# … dó</code><br>grupeto intermediário</div>
+        <div class="motif-card"><strong>F</strong><br><code>lá dó ré dó lá → ré</code><br>refrão filosófico</div>
+        <div class="motif-card"><strong>G / H</strong><br><code>dó# … ré</code> / <code>si dó# ré … si</code><br>tríade negativa / cadência</div>
+      </div>
+    </section>
+
+    <section id="legenda">
+      <h2>4. Legenda (dó-fixo)</h2>
+      <p>Notação brasileira com <strong>dó = C</strong>. Sílabas em <strong>MAIÚSCULO</strong> na partitura indicam notas sustentadas com mais tensão (ex.: <code>LÁ</code> na cadência).</p>
+      <div class="legend-notes">
+        <span class="n-d">ré = D</span>
+        <span class="n-e">mi = E</span>
+        <span class="n-f">fá = F</span>
+        <span class="n-fs">fá# = F#</span>
+        <span class="n-g">sol = G</span>
+        <span class="n-a">lá = A</span>
+        <span class="n-b">si = B</span>
+        <span class="n-c">dó = C</span>
+        <span class="n-cs">dó# = C#</span>
+      </div>
+    </section>
+
+    <section id="violao-completo">
+      <h2>5. Cifra para violão (completa)</h2>
+      <p>Referência harmônica lado a lado com a melodia nas seções seguintes. Fonte: arranjo Stefano Mota (~120 BPM).</p>
+      <div class="guitar-block" id="guitar-cifra"></div>
+    </section>
+
+    <h2 id="melodia-titulo">6. Melodia sílaba a sílaba + acordes</h2>
+    <p>Cada cartão: <span class="chord-label">acordes</span> na linha superior; células com <em>nota</em> + <em>sílaba</em>; letra completa abaixo.</p>
+
+    <div id="stanzas-root"></div>
+
+    <footer class="module-nav">
+      <a href="index.html">← Curso principal</a>
+      <a href="apendice-ozeias-cinco-acordes.html">Apêndice Ozeias</a>
+    </footer>
+  </main>
+</div>
+
+<script>
+const GUITAR_CIFRA = `Dm      Dm7M      Dm7
+O que será, que será
+    Dm6        Am      Am7M    Am7
+Que andam suspirando pelas alcovas
+    Am6    Gm        Gm7M     Gm7
+Que andam sussurrando em versos e trovas
+    Gm6        Bbm    Bbm7M        Em7(5-)
+Que andam combinando no breu das tocas
+    A7(13-)    Dm       Dm7M      Dm7
+Que anda nas cabeças, anda nas bocas
+    Dm6       Am      Am7M        Am7
+Que andam acendendo velas nos becos
+  Am6     Gm     Gm7M      Gm7
+Estão falando alto pelos botecos
+  Gm6           Bbm     Bbm7M     Em7(5-)
+E gritam nos mercados que com certeza
+  A7(13-)   Dm      Dm7M       Dm7
+Está na natureza, será que será
+  Dm6           Bbm     Bbm7M   Bbm7
+O que não tem certeza, nem nunca terá
+  Bbm6           F/A        Abº      Gm7
+O que não tem conserto, nem nunca terá
+  A7(13-)        Dm   A7(13-)
+O que não tem tamanho
+
+Dm      Dm7M        Dm7
+O que será, que será
+    Dm6       Am      Am7M        Am7
+Que vive nas idéias desses amantes
+    Am6     Gm        Gm7M     Gm7
+Que cantam os poetas mais delirantes
+    Gm6         Bbm   Bbm7M    Em7(5-)
+Que juram os profetas embriagados
+    A7(13-)     Dm      Dm7M    Dm7
+Que está na romaria dos mutilados
+    Dm6          Am      Am7M     Am7
+Que está na fantasia dos infelizes
+  Am6     Gm      Gm7M      Gm7
+Está no dia-a-dia das meretrizes
+   Gm6          Bbm      Bbm7M    Em7(5-)
+No plano dos bandidos, dos desvalidos
+   A7(13-)     Dm       Dm7M       Dm7
+Em todos os sentidos, será que será
+  Dm6           Bbm       Bbm7M    Bbm7
+O que não tem decência, nem nunca terá
+  Bbm6           F/A       Abº      Gm7
+O que não tem censura, nem nunca terá
+  A7(13-)        Dm   D7
+O que não faz sentido
+
+Gm      Gm7M        Gm7
+O que será, que será
+    Gm6       Dm        Dm7M     Dm7
+Que todos os avisos não vão evitar
+   Abº     Cm        Cm7M   Cm7
+Porque todos os risos vão desafiar
+   Cm6          Ebm    Ebm7M     Am7(5-)
+Porque todos os sinos irão repicar
+    D7(9-)      Gm     Gm7M        Gm7
+Porque todos os hinos irão consagrar
+  Gm6        Dm        Dm7M     Dm7
+E todos os meninos vão desembestar
+  G7/B        Cm     Cm7M          Cm7
+E todos os destinos irão se encontrar
+  Cm6            Ebm        Ebm7M      Am7(5-)
+E mesmo o padre eterno, que nunca foi lá
+ D7(9-)          Gm         Gm7M   Gm7
+Olhando aquele inferno, vai abençoar
+  Gm6           Ebm        Ebm7M   Ebm7
+O que não tem governo, nem nunca terá
+  Ebm6           Bb/D       C#º      Cm7
+O que não tem vergonha, nem nunca terá
+  D7            Gm  E7
+O que não tem juízo
+
+[Solo] Am  Am7M  Am7  Am6  Em  Em7M  Em7  Em6
+       Dm  Dm7M  Dm7  Dm6  Fm  Fm7M  Bm7(5-)  E7(9-)
+       Am  Am7M  Am7  Am6  Em  Em7M  Em7  Em6
+
+Dm      Dm7M       Dm7
+O que será, que será
+    Dm6       Am        Am7M    Am7
+Que todos os avisos não vão evitar
+   Am6      Gm        Gm7M   Gm7
+Porque todos os risos vão desafiar
+   Gm6          Bbm  Bbm7M    Em7(5-)
+Porque todos os sinos irão repicar
+   A7(13-)      Dm     Dm7M     Dm7
+Porque todos os hinos irão consagrar
+  Dm6        Am        Am7M      Am7
+E todos os meninos vão desembestar
+  Am6      Gm     Gm7M           Gm7
+E todos os destinos irão se encontrar
+  Gm6            Bbm      Bbm7M      Em7(5-)
+E mesmo o padre eterno, que nunca foi lá
+ A7(13-)         Dm         Dm7M   Dm7
+Olhando aquele inferno, vai abençoar
+  Dm6          Bbm     Bbm7M    Bbm7
+O que não tem governo, nem nunca terá
+  Bbm6           F/A        Abº      Gm7
+O que não tem vergonha, nem nunca terá
+  A7(13-)       Dm  G7(13)
+O que não tem juízo`;
+document.getElementById('guitar-cifra').textContent = GUITAR_CIFRA;
+</script>
+<script src="js/o-que-sera-melodia.js"></script>
+</body>
+</html>

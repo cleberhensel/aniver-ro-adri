@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arpejos ii–V–I · Eat</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/pickers.css">
+  <link rel="stylesheet" href="../css/hub.css">
+  <style>
+    .arp-layout { display: grid; gap: 0.65rem; }
+    .arp-key { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.55rem; }
+    .arp-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0.5rem; }
+    .arp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.55rem;
+      cursor: pointer;
+    }
+    .arp-card.active { border-color: var(--accent); }
+    .arp-card h3 { font-size: 0.92rem; margin-bottom: 0.25rem; }
+    .arp-card p { font-size: 0.68rem; color: var(--muted); margin-bottom: 0.35rem; }
+    .neck-mini { overflow-x: auto; }
+    .neck-mini svg { display: block; min-width: 100%; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Arpejos · ii–V–I maior</h1>
+  <p><a href="index.html">hub</a> · <a href="../../MOD-BRAÇO-01-desvendando-acordes-arpejos-escalas/artefatos/arpejos-ii-V-I.html">poster ii–V–I</a> · <a href="../../MOD-BRAÇO-01-desvendando-acordes-arpejos-escalas/artefatos/estudo-arpejos/index.html">estudo profundo</a></p>
+</header>
+
+<section class="arp-layout">
+  <div class="arp-key">
+    <div class="panel-label" style="font-size:0.55rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.25rem">Tom</div>
+    <div class="tonic-big" id="key-display">C</div>
+    <div class="key-grid" id="key-grid"></div>
+  </div>
+  <div class="arp-cards" id="arp-cards"></div>
+</section>
+
+<footer>
+  <a href="drill-escala.html">Drill escalas</a> · <a href="index.html">Hub</a>
+</footer>
+
+<script src="../js/data/meta/tuning.js"></script>
+<script src="../js/data/arpeggios/qualities.js"></script>
+<script src="../js/data/arpeggios/progressions/ii-V-I-major.js"></script>
+<script src="../js/data/arpeggios/index.js"></script>
+<script src="../js/data/catalog.js"></script>
+<script src="../js/pages/drill-arpejo-app.js"></script>
+</body>
+</html>

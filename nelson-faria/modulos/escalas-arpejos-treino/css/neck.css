@@ -1,0 +1,43 @@
+.neck-section { margin-top: 0.15rem; }
+.neck-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.65rem;
+  margin-bottom: 0.3rem;
+}
+.neck-head h2 {
+  font-size: 0.85rem;
+  color: #4ecdc4;
+  margin: 0;
+}
+.neck-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem 0.4rem;
+  overflow-x: auto;
+}
+.neck-wrap svg { display: block; min-width: 100%; height: auto; }
+.legend-shapes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.3rem;
+  font-size: 0.7rem;
+}
+.legend-shapes button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.15rem 0.35rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-size: inherit;
+}
+.legend-shapes button:hover { background: var(--surface2); }
+.legend-shapes button.dim { opacity: 0.35; }
+.legend-shapes button.active { border-color: var(--border); background: var(--surface2); }
+.swatch { width: 10px; height: 10px; border-radius: 50%; }

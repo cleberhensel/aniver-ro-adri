@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Módulo 06 — Progressões e predição</title>
+  <link rel="stylesheet" href="css/curso.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h1>Harmonia Funcional</h1>
+      <p>Tocar de ouvido — técnica, não magia</p>
+    </div>
+    <nav id="sidebar-nav"></nav>
+    <div style="padding:0 1.25rem 1rem">
+      <div id="course-progress-label" style="font-size:0.8rem;color:var(--text-muted)">0/11 módulos</div>
+      <div class="progress-bar-wrap"><div id="course-progress-bar" class="progress-bar-fill" style="width:0"></div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="hero">
+      <h1>Progressões: padrões, estatística e predição</h1>
+      <p class="lead">Funções e qualidades são peças; progressões são frases completas. Este módulo mapeia os padrões que se repetem em milhões de músicas — e como usar probabilidade como aposta inicial ao tocar de ouvido.</p>
+    </header>
+
+    <h2>As três progressões que você precisa conhecer</h2>
+
+    <h3>Axis — I → V → vi → IV</h3>
+    <p>A progressão mais gravada da história recente. Quatro acordes, loop infinito, funciona em pop, rock, country e MPB simplificada.</p>
+    <table>
+      <tr><th>Grau</th><th>Função</th><th>Em Dó</th><th>Em Sol</th><th>Em Lá</th></tr>
+      <tr><td>I</td><td><span class="fn-badge fn-badge-T">T</span></td><td>C</td><td>G</td><td>A</td></tr>
+      <tr><td>V</td><td><span class="fn-badge fn-badge-D">D</span></td><td>G</td><td>D</td><td>E</td></tr>
+      <tr><td>vi</td><td><span class="fn-badge fn-badge-T">T</span></td><td>Am</td><td>Em</td><td>F#m</td></tr>
+      <tr><td>IV</td><td><span class="fn-badge fn-badge-SD">SD</span></td><td>F</td><td>C</td><td>D</td></tr>
+    </table>
+    <div class="chord-pills">
+      <span class="chord-pill">C</span><span class="chord-pill">→</span>
+      <span class="chord-pill">G</span><span class="chord-pill">→</span>
+      <span class="chord-pill">Am</span><span class="chord-pill">→</span>
+      <span class="chord-pill">F</span>
+    </div>
+    <div class="progression-diagram" data-chords="C,G,Am,F"></div>
+    <p><strong>Exemplos:</strong> "With or Without You" (U2), "No Woman No Cry", dezenas de hits brasileiros. Sensação: otimismo → tensão → melancolia → abertura → loop.</p>
+
+    <h3>Doo-wop — I → vi → IV → V</h3>
+    <p>A progressão clássica dos anos 50 — base de baladas, soul e rock'n'roll.</p>
+    <table>
+      <tr><th>Grau</th><th>Função</th><th>Em Dó</th><th>Em Sol</th><th>Em Lá</th></tr>
+      <tr><td>I</td><td><span class="fn-badge fn-badge-T">T</span></td><td>C</td><td>G</td><td>A</td></tr>
+      <tr><td>vi</td><td><span class="fn-badge fn-badge-T">T</span></td><td>Am</td><td>Em</td><td>F#m</td></tr>
+      <tr><td>IV</td><td><span class="fn-badge fn-badge-SD">SD</span></td><td>F</td><td>C</td><td>D</td></tr>
+      <tr><td>V</td><td><span class="fn-badge fn-badge-D">D</span></td><td>G</td><td>D</td><td>E</td></tr>
+    </table>
+    <div class="chord-pills">
+      <span class="chord-pill">C</span><span class="chord-pill">→</span>
+      <span class="chord-pill">Am</span><span class="chord-pill">→</span>
+      <span class="chord-pill">F</span><span class="chord-pill">→</span>
+      <span class="chord-pill">G</span>
+    </div>
+    <div class="progression-diagram" data-chords="C,Am,F,G"></div>
+    <p><strong>Exemplos:</strong> "Stand By Me", "Earth Angel", "Unchained Melody". Sensação: repouso → melancolia → abertura → tensão → resolve em I no loop.</p>
+
+    <h3>ii–V–I — o DNA do jazz e da bossa</h3>
+    <p>A cadeia SD → D → T em sua forma mais pura. Em jazz/bossa, quase sempre com 7ªs.</p>
+    <table>
+      <tr><th>Grau</th><th>Qualidade jazz</th><th>Função</th><th>Em Dó</th><th>Em Sol</th></tr>
+      <tr><td>ii</td><td>m7</td><td><span class="fn-badge fn-badge-SD">SD</span></td><td>Dm7</td><td>Am7</td></tr>
+      <tr><td>V</td><td>7</td><td><span class="fn-badge fn-badge-D">D</span></td><td>G7</td><td>D7</td></tr>
+      <tr><td>I</td><td>maj7</td><td><span class="fn-badge fn-badge-T">T</span></td><td>Cmaj7</td><td>Gmaj7</td></tr>
+    </table>
+    <div class="chord-pills">
+      <span class="chord-pill">Dm7</span><span class="chord-pill">→</span>
+      <span class="chord-pill">G7</span><span class="chord-pill">→</span>
+      <span class="chord-pill">Cmaj7</span>
+    </div>
+    <div class="progression-diagram" data-chords="Dm7,G7,Cmaj7"></div>
+    <p><strong>Exemplos:</strong> "Garota de Ipanema", "Autumn Leaves", praticamente todo standard. Em MPB, aparece mesmo em músicas "pop" com harmonia sofisticada.</p>
+
+    <div class="tip">Se ouvir maj7 no repouso + m7 preparando → aposte ii–V–I. Se ouvir triades maiores em loop → aposte Axis ou doo-wop.</div>
+
+    <h2>Comparando as três progressões</h2>
+    <table>
+      <tr><th>Progressão</th><th>Números</th><th>Rom.</th><th>Gênero</th><th>Característica</th></tr>
+      <tr><td>Axis</td><td>1 – 5 – 6 – 4</td><td>I – V – vi – IV</td><td>Pop universal</td><td>Loop otimista, vi como "pseudo-repouso"</td></tr>
+      <tr><td>Doo-wop</td><td>1 – 6 – 4 – 5</td><td>I – vi – IV – V</td><td>Balada clássica</td><td>Termina em tensão (V), resolve no loop</td></tr>
+      <tr><td>ii–V–I</td><td>2 – 5 – 1</td><td>ii – V – I</td><td>Jazz/bossa/MPB</td><td>Cadência funcional pura, com 7ªs</td></tr>
+      <tr><td>Axis invertida</td><td>6 – 4 – 1 – 5</td><td>vi – IV – I – V</td><td>Pop melancólico</td><td>Começa em vi — sensação introspectiva</td></tr>
+    </table>
+
+    <h2>Probabilidades de Markov — apostas informadas</h2>
+    <p>Análises de milhares de músicas pop (Hooktheory e similares) revelam que certos graus tendem a ser seguidos por outros com frequência estatisticamente significativa. Isso <strong>não substitui o ouvido</strong>, mas dá uma aposta inicial quando você está em dúvida.</p>
+
+    <h3>Dados pop anglo (referência)</h3>
+    <table>
+      <tr><th>Após grau…</th><th>Destino mais provável</th><th>Probabilidade</th><th>2º destino</th><th>Prob.</th></tr>
+      <tr><td><strong>I</strong></td><td>V</td><td>~31%</td><td>vi</td><td>~22%</td></tr>
+      <tr><td><strong>V</strong></td><td>I</td><td>~45%</td><td>vi</td><td>~20%</td></tr>
+      <tr><td><strong>vi</strong></td><td>IV</td><td>~35%</td><td>V</td><td>~25%</td></tr>
+      <tr><td><strong>IV</strong></td><td>I</td><td>~30%</td><td>V</td><td>~28%</td></tr>
+      <tr><td><strong>ii</strong></td><td>V</td><td>~50%</td><td>—</td><td>—</td></tr>
+    </table>
+
+    <blockquote>Após I, V aparece em ~31% das transições no pop anglo — mas confirme sempre pelo baixo e pela melodia. Estatística é mapa, não GPS.</blockquote>
+
+    <h2>Ferramenta interativa — preditor de próximo acorde</h2>
+    <div class="interactive" id="predictor-tool">
+      <h3 style="margin-top:0">Qual acorde provavelmente vem depois?</h3>
+      <label for="pred-genre">Estilo / gênero</label>
+      <select id="pred-genre">
+        <option value="pop">Pop anglo / rock / sertanejo</option>
+        <option value="bossa">Bossa nova / MPB harmônica</option>
+        <option value="samba">Samba / choro funcional</option>
+      </select>
+      <label for="pred-after">Acorde atual (grau)</label>
+      <select id="pred-after"></select>
+      <button id="pred-run" class="btn">Calcular probabilidades</button>
+      <div id="pred-result" class="result-box">Selecione e clique em calcular.</div>
+    </div>
+
+    <h2>Defaults por gênero</h2>
+    <p>As probabilidades mudam conforme o estilo. Use o preditor acima ou memorize estes padrões:</p>
+
+    <div class="card">
+      <h3 style="margin-top:0">Pop anglo / rock / sertanejo</h3>
+      <ul>
+        <li>Progressão favorita: <strong>Axis</strong> (1–5–6–4) ou doo-wop (1–6–4–5)</li>
+        <li>Após I → V (31%) ou vi (22%)</li>
+        <li>Após V → I (45%) — cadência forte</li>
+        <li>Triades maiores/menores, raramente 7ªs exceto V7 ocasional</li>
+        <li>Aposta segura: se ouvir 4 acordes em loop, teste Axis primeiro</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Bossa nova / MPB harmônica</h3>
+      <ul>
+        <li>Progressão favorita: <strong>ii7–V7–Imaj7</strong> e variações com dispositivos (bIImaj7, dim7 passagem)</li>
+        <li>Após I → ii (40%) — preparação jazzística</li>
+        <li>Após ii → V (55%) — cadeia SD→D quase automática</li>
+        <li>Após V → I (50%) com maj7</li>
+        <li>7ªs em quase todos os acordes; maj7 na tônica é sinal forte de bossa</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Samba / choro funcional</h3>
+      <ul>
+        <li>Progressão favorita: ciclo de quintas, <strong>I–IV–V</strong> com passagens por ii</li>
+        <li>Após I → IV (28%) ou V (26%) — movimento por quintas</li>
+        <li>Após IV → V (30%) ou I (28%)</li>
+        <li>Após ii → V (48%) — dominante sempre à espreita</li>
+        <li>Dispositivos: m6 como dominante (Cm6 = F7), diminutas de passagem</li>
+      </ul>
+    </div>
+
+    <h2>Pipeline de predição ao vivo</h2>
+    <div class="pipeline">
+      <div class="pipeline-step"><strong>1</strong><br>Identifique<br>grau atual</div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-step"><strong>2</strong><br>Consulte<br>função (T/SD/D)</div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-step"><strong>3</strong><br>Aposte pelo<br>gênero</div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-step"><strong>4</strong><br>Confirme<br>pelo baixo</div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-step"><strong>5</strong><br>Corrija se<br>necessário</div>
+    </div>
+
+    <h3>Exemplos práticos de predição</h3>
+    <table>
+      <tr><th>Situação</th><th>Grau atual</th><th>Estilo</th><th>Aposta</th><th>Alternativa</th></tr>
+      <tr><td>Refrão pop, acabou de tocar C</td><td>I</td><td>Pop</td><td>G (V) 31%</td><td>Am (vi) 22%</td></tr>
+      <tr><td>Balada, acabou de tocar G7</td><td>V</td><td>Qualquer</td><td>C (I) 45%</td><td>Am (vi) decepção</td></tr>
+      <tr><td>Bossa, acabou de tocar Dm7</td><td>ii</td><td>Bossa</td><td>G7 (V) 55%</td><td>Em7 (iii)</td></tr>
+      <tr><td>Samba, acabou de tocar F</td><td>IV</td><td>Samba</td><td>G (V) 30%</td><td>C (I) 28%</td></tr>
+      <tr><td>Axis loop, acabou de tocar Am</td><td>vi</td><td>Pop</td><td>F (IV) 35%</td><td>G (V) 25%</td></tr>
+    </table>
+
+    <h2>Exercícios</h2>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">1</span> Axis em 3 tons</div>
+      <p>Toque I–V–vi–IV em Dó, Sol e Lá sem olhar cifra. Cante os números. Depois inverta: vi–IV–I–V (Axis invertida).</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">2</span> Doo-wop clássico</div>
+      <p>Toque I–vi–IV–V em Dó (C–Am–F–G). Sinta como V "pede" voltar a I. Repita em Sol e Lá. Identifique esta progressão em 3 músicas da sua playlist.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">3</span> ii–V–I com 7ªs</div>
+      <p>Toque Dm7 → G7 → Cmaj7 em todos os tons que domina. Use voicings compactos do Módulo 05. Meta: transpor em tempo real quando alguém disser o tom.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">4</span> Predição ao vivo</div>
+      <p>Coloque uma música pop desconhecida. A cada mudança de acorde:</p>
+      <ol>
+        <li>Nomeie o grau atual</li>
+        <li>Aposte o próximo (use preditor ou tabela)</li>
+        <li>Confirme ou corrija</li>
+      </ol>
+      <p>Anote taxa de acerto após 5 músicas. Meta: ≥ 60% na primeira aposta.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">5</span> Gênero em 10 segundos</div>
+      <p>Ouça 10 segundos de uma música e decida: pop (triades, Axis), bossa (maj7, ii–V) ou samba (quintas, m6)? Depois confira a progressão completa.</p>
+    </div>
+
+    <div class="tip">Quando errar a predição, analise <em>por que</em> errou: gênero errado? Função mal classificada? Acorde de passagem não diatônico? Erros são dados de treino.</div>
+
+    <h2>Checklist de domínio</h2>
+    <div class="card" data-checklist="mod06">
+      <div class="checklist-item"><input type="checkbox" id="c06-1"><label for="c06-1">Toque Axis, doo-wop e ii–V–I em 3 tons</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c06-2"><label for="c06-2">Sei que após I, V aparece ~31% no pop</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c06-3"><label for="c06-3">Ajusto apostas por gênero (pop vs bossa vs samba)</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c06-4"><label for="c06-4">Uso preditor + ouvido em música real</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c06-5"><label for="c06-5">Identifico Axis/doo-wop/ii–V–I em 30 segundos</label></div>
+    </div>
+
+    <p style="margin-top:2rem">
+      <button id="mark-module-complete" class="btn" data-module="06">Marcar módulo como concluído</button>
+    </p>
+
+    <div class="nav-footer">
+      <a href="05-acordes-qualidades.html">← Módulo 05: Acordes e 7ªs</a>
+      <a href="07-transposicao.html">Módulo 07: Transposição →</a>
+    </div>
+  </main>
+</div>
+<script src="js/chords-dict.js"></script>
+<script src="js/chord-diagrams.js"></script>
+<script src="js/chord-auto.js"></script>
+<script src="js/theory-data.js"></script>
+<script src="js/curso.js"></script>
+</body>
+</html>

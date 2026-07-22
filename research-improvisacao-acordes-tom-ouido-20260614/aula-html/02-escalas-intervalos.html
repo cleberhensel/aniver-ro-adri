@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Módulo 02 — Escalas e intervalos | Harmonia Funcional</title>
+  <link rel="stylesheet" href="css/curso.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h1>Harmonia Funcional</h1>
+      <p>Tocar de ouvido — técnica, não magia</p>
+    </div>
+    <nav id="sidebar-nav"></nav>
+    <div style="padding:0 1.25rem 1rem">
+      <div id="course-progress-label" style="font-size:0.8rem;color:var(--text-muted)">0/11 módulos</div>
+      <div class="progress-bar-wrap"><div id="course-progress-bar" class="progress-bar-fill" style="width:0"></div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="hero">
+      <h1>Escalas maiores e intervalos</h1>
+      <p class="lead">O campo harmônico, as funções T–SD–D e até o pipeline mental do módulo anterior dependem de um alicerce: saber construir a escala maior, nomear intervalos com precisão e ouvir a diferença entre terça maior e menor — a distinção que define se um acorde é alegre ou melancólico.</p>
+    </header>
+
+    <h2>Por que escalas vêm antes dos acordes</h2>
+    <p>Acorde não é uma etiqueta mágica colada em um grupo de notas. Acorde é <strong>seleção de notas dentro de uma escala</strong> (ou fora dela, quando há cromatismo). Se você não domina a escala maior em um tom, não consegue:</p>
+    <ul>
+      <li>Derivar os 7 acordes diatônicos (módulo 03)</li>
+      <li>Classificar funções com segurança (módulo 04)</li>
+      <li>Entender por que ii é menor e V é maior no mesmo tom</li>
+      <li>Transpor mentalmente quando o cantor muda de tom</li>
+    </ul>
+    <p>Este módulo constrói o vocabulário: <strong>nota → intervalo → grau → acorde</strong>. Sem atalhos.</p>
+
+    <h2>Construção da escala maior</h2>
+    <p>A escala maior é uma sequência de 7 notas (e a oitava) organizada por um padrão fixo de intervalos a partir da tônica:</p>
+    <pre><code>Tônica → 2M → 2M → 2m → 2M → 2M → 2M → 2m (oitava)
+         ↑    ↑    ↑    ↑    ↑    ↑    ↑
+       W    W   H    W    W    W   H
+
+W = tom inteiro (2 semitons)   |   H = semitom (1 semitom)</code></pre>
+    <p>Em linguagem de intervalos: <strong>2M – 2M – 2m – 2M – 2M – 2M – 2m</strong> (onde 2M = segunda maior, 2m = segunda menor).</p>
+
+    <h3>Exemplo: escala de Dó maior</h3>
+    <table>
+      <tr><th>Grau</th><th>Nota</th><th>Intervalo desde Dó</th><th>Solfejo fixo</th><th>Solfejo móvel (tom Dó)</th></tr>
+      <tr><td>I</td><td>Dó</td><td>Uníssona (1J)</td><td>Dó</td><td>Dó (1)</td></tr>
+      <tr><td>II</td><td>Ré</td><td>2M</td><td>Ré</td><td>Ré (2)</td></tr>
+      <tr><td>III</td><td>Mi</td><td>3M</td><td>Mi</td><td>Mi (3)</td></tr>
+      <tr><td>IV</td><td>Fá</td><td>4J</td><td>Fá</td><td>Fá (4)</td></tr>
+      <tr><td>V</td><td>Sol</td><td>5J</td><td>Sol</td><td>Sol (5)</td></tr>
+      <tr><td>VI</td><td>Lá</td><td>6M</td><td>Lá</td><td>Lá (6)</td></tr>
+      <tr><td>VII</td><td>Si</td><td>7M</td><td>Si</td><td>Si (7)</td></tr>
+      <tr><td>VIII</td><td>Dó</td><td>8J (oitava)</td><td>Dó</td><td>Dó (1)</td></tr>
+    </table>
+
+    <h3>Exemplo: escala de Sol maior</h3>
+    <p>Aplicando o mesmo padrão a partir de Sol: <strong>Sol – Lá – Si – Dó – Ré – Mi – Fá# – Sol</strong>. Note o Fá# (único acidente). Construa você mesmo as escalas de Fá (1 bemol: Si♭), Ré (2 sustenidos: Fá#, Dó#) e Lá (3 sustenidos) no instrumento — a escrita fixa importa menos do que o <strong>padrão de tons e semitons</strong>.</p>
+
+    <h2>Mapa completo de intervalos</h2>
+    <p>Intervalo é a distância em altura entre duas notas, medida em semitons e nomeada por qualidade (maior, menor, justa, aumentada, diminuta).</p>
+    <table>
+      <tr><th>Abrev.</th><th>Nome</th><th>Semitons</th><th>Exemplo (desde Dó)</th><th>Uso harmônico</th></tr>
+      <tr><td>1J / uníssona</td><td>Uníssona / Primeira justa</td><td>0</td><td>Dó – Dó</td><td>Tônica, uníssono</td></tr>
+      <tr><td>2m</td><td>Segunda menor</td><td>1</td><td>Dó – Dó#</td><td>Cromatismo, approach</td></tr>
+      <tr><td>2M</td><td>Segunda maior</td><td>2</td><td>Dó – Ré</td><td>Passo entre graus da escala</td></tr>
+      <tr><td>3m</td><td>Terça menor</td><td>3</td><td>Dó – Mi♭</td><td><strong>Base do acorde menor</strong></td></tr>
+      <tr><td>3M</td><td>Terça maior</td><td>4</td><td>Dó – Mi</td><td><strong>Base do acorde maior</strong></td></tr>
+      <tr><td>4J</td><td>Quarta justa</td><td>5</td><td>Dó – Fá</td><td>Subdominante, sus4</td></tr>
+      <tr><td>4A / trítono</td><td>Quarta aumentada</td><td>6</td><td>Dó – Fá#</td><td>Tensão, Lydian</td></tr>
+      <tr><td>5J</td><td>Quinta justa</td><td>7</td><td>Dó – Sol</td><td>Estabilidade do acorde</td></tr>
+      <tr><td>5dim</td><td>Quinta diminuta</td><td>6</td><td>Dó – Sol♭</td><td>Acordes diminutos</td></tr>
+      <tr><td>6M</td><td>Sexta maior</td><td>9</td><td>Dó – Lá</td><td>Extensão 6, relativa menor</td></tr>
+      <tr><td>7m</td><td>Sétima menor</td><td>10</td><td>Dó – Si♭</td><td>Dom7, blues</td></tr>
+      <tr><td>7M</td><td>Sétima maior</td><td>11</td><td>Dó – Si</td><td>Maj7, repouso jazz</td></tr>
+      <tr><td>8J</td><td>Oitava justa</td><td>12</td><td>Dó – Dó</td><td>Repetição da tônica</td></tr>
+    </table>
+
+    <h3>Como ouvir e medir intervalos no violão</h3>
+    <p>No braço do violão, cada traste = 1 semitom. Para medir um intervalo:</p>
+    <ol>
+      <li>Toque a nota referência (ex.: Dó na 3ª casa da corda 5)</li>
+      <li>Conte os trastes até a segunda nota sem pular</li>
+      <li>3 semitons = 3m (terça menor) → som "triste" isolado</li>
+      <li>4 semitons = 3M (terça maior) → som "alegre" isolado</li>
+      <li>7 semitons = 5J (quinta justa) → som estável, "potente"</li>
+    </ol>
+
+    <h2>Solfejo fixo vs solfejo móvel</h2>
+    <p>Esta distinção confunde muitos músicos populares, mas é central para acompanhar cantores em qualquer tom.</p>
+
+    <h3>Solfejo fixo (Dó = Dó, Ré = Ré…)</h3>
+    <p>Cada sílaba corresponde a um nome absoluto de nota. Dó é sempre a nota C, em qualquer música. Usado em conservatórios, coral clássico e leitura à primeira vista em tom fixo.</p>
+    <p><strong>Vantagem:</strong> precisão na escrita e na comunicação com tecladistas clássicos.<br>
+    <strong>Limitação:</strong> ao mudar de tom, você precisa reaprender sílabas (em tom de Sol, a tônica vira Sol, não Dó).</p>
+
+    <h3>Solfejo móvel (Dó = 1, qualquer tônica)</h3>
+    <p>A sílaba <strong>Dó</strong> representa sempre o <strong>primeiro grau</strong> — a tônica da música, seja ela C, G, A ou F#. Ré = 2, Mi = 3, etc. É o sistema do Nashville Number System e do pipeline mental deste curso.</p>
+    <p><strong>Vantagem:</strong> uma vez internalizado o som de "Mi para Fá" (3 para 4), funciona em todos os tons.<br>
+    <strong>Limitação:</strong> exige treino auditivo para não confundir com solfejo fixo.</p>
+
+    <table>
+      <tr><th>Grau</th><th>Solfejo móvel</th><th>Em tom de Dó</th><th>Em tom de Sol</th><th>Em tom de Lá</th></tr>
+      <tr><td>1</td><td>Dó</td><td>C</td><td>G</td><td>A</td></tr>
+      <tr><td>2</td><td>Ré</td><td>D</td><td>A</td><td>B</td></tr>
+      <tr><td>3</td><td>Mi</td><td>E</td><td>B</td><td>C#</td></tr>
+      <tr><td>4</td><td>Fá</td><td>F</td><td>C</td><td>D</td></tr>
+      <tr><td>5</td><td>Sol</td><td>G</td><td>D</td><td>E</td></tr>
+      <tr><td>6</td><td>Lá</td><td>A</td><td>E</td><td>F#</td></tr>
+      <tr><td>7</td><td>Si</td><td>B</td><td>F#</td><td>G#</td></tr>
+    </table>
+
+    <blockquote>Para acompanhar de ouvido, priorize solfejo móvel. Cante "Sol – Lá – Si – Dó" como "5 – 6 – 7 – 1", não como nomes fixos de nota.</blockquote>
+
+    <h2>Como intervalos constroem tríades</h2>
+    <p>Tríade = três notas empilhadas em terças. É o bloco fundamental dos acordes que você toca no violão (mesmo quando dedilha 4, 5 ou 6 cordas, o núcleo harmônico é a tríade).</p>
+
+    <h3>Tríade maior (3M + 3m)</h3>
+    <p>Partindo de Dó: Dó → Mi (3M = 4 semitons) → Sol (3m a partir de Mi = 3 semitons). Notas: <strong>Dó – Mi – Sol</strong>. Sensação: brilhante, estável, "aberto".</p>
+    <pre><code>Fundamental (1) + 3M + 5J
+Ex.: C = C + E + G  |  G = G + B + D  |  F = F + A + C</code></pre>
+
+    <h3>Tríade menor (3m + 3M)</h3>
+    <p>Partindo de Lá: Lá → Dó (3m = 3 semitons) → Mi (3M a partir de Dó). Notas: <strong>Lá – Dó – Mi</strong>. Sensação: fechada, melancólica, introspectiva.</p>
+    <pre><code>Fundamental (1) + 3m + 5J
+Ex.: Am = A + C + E  |  Dm = D + F + A  |  Em = E + G + B</code></pre>
+
+    <h3>Tríade diminuta (3m + 3m)</h3>
+    <p>Partindo de Si: Si → Ré (3m) → Fá (3m). Notas: <strong>Si – Ré – Fá</strong>. Sensação: instável, suspense, quer resolver.</p>
+    <pre><code>Fundamental (1) + 3m + 5dim
+Ex.: Bdim = B + D + F  — grau vii° no campo de Dó</code></pre>
+
+    <h3>Tríades nos graus da escala maior</h3>
+    <p>Empilhando terças <em>dentro</em> da escala maior de Dó, as qualidades aparecem em padrão fixo:</p>
+    <table>
+      <tr><th>Grau</th><th>Notas da tríade</th><th>Intervalo 1→3</th><th>Qualidade</th><th>Acorde em Dó</th></tr>
+      <tr><td>I</td><td>Dó – Mi – Sol</td><td>3M</td><td>Maior</td><td>C</td></tr>
+      <tr><td>II</td><td>Ré – Fá – Lá</td><td>3m</td><td>Menor</td><td>Dm</td></tr>
+      <tr><td>III</td><td>Mi – Sol – Si</td><td>3m</td><td>Menor</td><td>Em</td></tr>
+      <tr><td>IV</td><td>Fá – Lá – Dó</td><td>3M</td><td>Maior</td><td>F</td></tr>
+      <tr><td>V</td><td>Sol – Si – Ré</td><td>3M</td><td>Maior</td><td>G</td></tr>
+      <tr><td>VI</td><td>Lá – Dó – Mi</td><td>3m</td><td>Menor</td><td>Am</td></tr>
+      <tr><td>VII</td><td>Si – Ré – Fá</td><td>3m</td><td>Diminuta</td><td>Bdim</td></tr>
+    </table>
+    <p>Padrão mnemônico: <strong>M – m – m – M – M – m – dim</strong>. Este padrão se repete em <em>qualquer</em> tom maior. É o assunto do próximo módulo, mas já nasce aqui, dos intervalos.</p>
+
+    <div class="tip">
+      Para distinguir 3M de 3m rapidamente: cante a nota referência e depois a terça. Se a segunda nota soa como início de "Óda à Alegria" (Mi após Dó), é terça maior. Se soa como início de "Fim de Linha" ou tema de suspense menor (Mi♭ após Dó), é terça menor. Associe músicas internas — o ouvido aprende por referência, não por teoria abstrata.
+    </div>
+
+    <h2>Relação com o pipeline mental (módulo 01)</h2>
+    <p>Quando o pipeline chega ao passo 5 (qualidade do acorde), o que seu ouvido decide é, em essência: <strong>a terça sobre o baixo é maior ou menor?</strong> O baixo (passo 3) dá a fundamental. A terça define M ou m. A sétima (quando existe) define 7, maj7, m7, etc. Tudo começa nos intervalos deste módulo.</p>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">1</span> Cantar a escala maior em solfejo móvel</div>
+      <p><strong>Objetivo:</strong> internalizar o padrão W–W–H–W–W–W–H pelo ouvido, não pela memória visual.</p>
+      <p><strong>Procedimento:</strong></p>
+      <ol>
+        <li>Escolha uma tônica por dia (C, G, D, A, E, F — ciclo de 6 dias).</li>
+        <li>Toque a tônica no violão. Cante em solfejo móvel: <em>Dó – Ré – Mi – Fá – Sol – Lá – Si – Dó</em> (1 – 2 – 3 – 4 – 5 – 6 – 7 – 1).</li>
+        <li>Desca a escala: <em>Dó – Si – Lá – Sol – Fá – Mi – Ré – Dó</em>.</li>
+        <li>Sem violão: cante a escala no ar, depois confira no instrumento.</li>
+        <li>Variação avançada: cante "3 – 4 – 5" (Mi – Fá – Sol) isoladamente — é o núcleo da cadência T–SD–D em melodias.</li>
+      </ol>
+      <p><strong>Tempo:</strong> 5 minutos por tom. Meta: 6 tons sem hesitar em uma semana.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">2</span> Identificar terça maior vs terça menor</div>
+      <p><strong>Objetivo:</strong> treinar o ouvido para o passo 5 do pipeline (qualidade do acorde).</p>
+      <p><strong>Procedimento:</strong></p>
+      <ol>
+        <li>No violão, toque duas notas simultâneas: fundamental na corda 5 ou 6, terça na corda 4 ou 3.</li>
+        <li>Exemplos em Dó: C+E (3M) vs C+Eb (3m). Em Sol: G+B (3M) vs G+Bb (3m).</li>
+        <li>Feche os olhos. Um parceiro (ou app de intervalo) alterna 3M e 3m aleatoriamente.</li>
+        <li>Responda em voz alta: "maior" ou "menor" antes de abrir os olhos.</li>
+        <li>Registre acertos. Meta: 8/10 em sequência antes de avançar ao módulo 03.</li>
+      </ol>
+      <p><strong>Extensão:</strong> depois de dominar a terça, adicione a quinta justa (5J) e toque tríades completas sem olhar — identifique apenas M ou m.</p>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-header"><span class="exercise-num">3</span> Construir escalas em 5 tons no braço</div>
+      <p><strong>Objetivo:</strong> conectar teoria de intervalos com o mapa físico do violão.</p>
+      <ol>
+        <li>Construa a escala maior de C, G, D, A e E subindo em uma única corda (preferência corda 2 ou 1 para visualizar trastes).</li>
+        <li>Para cada escala, escreva os intervalos entre graus consecutivos (2M ou 2m).</li>
+        <li>Destaque onde aparece o 2m (semitom) — são sempre os mesmos dois lugares no padrão.</li>
+        <li>Toque graus 1 – 3 – 5 de cada escala e nomeie a qualidade da tríade (M, m ou dim).</li>
+      </ol>
+    </div>
+
+    <h2>Erros comuns nesta fase</h2>
+    <div class="warn">
+      <strong>Confundir solfejo fixo com móvel:</strong> cantar "Mi" pensando na nota E quando a tônica é G (onde E é de fato o 3, mas em outro tom Mi pode ser outra nota). Sempre pergunte: "Mi de qual tônica?"
+    </div>
+    <ul>
+      <li><strong>Pular a escala e ir direto para cifras</strong> — você decora formas sem entender por que Am é menor no tom de C</li>
+      <li><strong>Não cantar</strong> — o músculo vocal acelera o ouvido interno; violonistas que só dedilham progridem mais devagar no ear training</li>
+      <li><strong>Ignorar o trítono (4A)</strong> — aparece em dominantes e em dispositivos de MPB; voltará no módulo 10</li>
+    </ul>
+
+    <h2>Checklist deste módulo</h2>
+    <div data-checklist="mod02">
+      <div class="checklist-item"><input type="checkbox" id="c02a"><label for="c02a">Construo escala maior a partir do padrão de intervalos</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c02b"><label for="c02b">Diferencio 3M de 3m com 80% de acerto</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c02c"><label for="c02c">Canto escala em solfejo móvel em pelo menos 3 tons</label></div>
+      <div class="checklist-item"><input type="checkbox" id="c02d"><label for="c02d">Sei derivar tríade maior, menor e diminuta por intervalos</label></div>
+    </div>
+
+    <p style="margin-top:1.5rem">
+      <button class="btn" id="mark-module-complete" data-module="02">Marcar módulo como concluído</button>
+    </p>
+
+    <div class="nav-footer">
+      <a href="01-pipeline-mental.html">← Pipeline mental</a>
+      <a href="03-campo-harmonico.html">Próximo: Campo harmônico →</a>
+    </div>
+  </main>
+</div>
+<script src="js/chords-dict.js"></script>
+<script src="js/chord-diagrams.js"></script>
+<script src="js/chord-auto.js"></script>
+<script src="js/theory-data.js"></script>
+<script src="js/curso.js"></script>
+</body>
+</html>

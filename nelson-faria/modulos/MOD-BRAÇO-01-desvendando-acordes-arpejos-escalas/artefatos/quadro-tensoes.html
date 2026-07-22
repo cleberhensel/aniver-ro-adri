@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quadro das tensões | Nelson Faria · MOD-BRAÇO-01</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #f0a030;
+      --accent2: #4ecdc4;
+      --border: #2d3f54;
+      --cell-on: #f4f4f4;
+      --cell-dim: #9aa0a8;
+      --cell-off: #111;
+      --ink: #111;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding: 1.25rem 0.85rem 3rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    header .eyebrow {
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.25rem;
+    }
+    header h1 { font-size: 1.4rem; font-weight: 800; }
+    header p { color: var(--muted); font-size: 0.9rem; margin-top: 0.3rem; }
+    nav { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1rem; }
+    nav a {
+      color: var(--accent); text-decoration: none; font-size: 0.78rem;
+      padding: 0.3rem 0.55rem; border: 1px solid var(--border); border-radius: 5px;
+    }
+    .callout {
+      background: var(--surface);
+      border-left: 3px solid var(--accent2);
+      padding: 0.75rem 0.9rem;
+      border-radius: 0 8px 8px 0;
+      margin: 0 0 1.15rem;
+      font-size: 0.88rem;
+    }
+    .callout .label {
+      display: block; font-size: 0.65rem; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.25rem;
+    }
+    h2 {
+      font-size: 1.05rem; color: var(--accent2);
+      margin: 1.5rem 0 0.65rem; font-weight: 800;
+    }
+    .poster {
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 0.85rem 1.1rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .poster-title {
+      text-align: center;
+      font-weight: 900;
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      color: #fff;
+      margin-bottom: 0.85rem;
+      text-transform: uppercase;
+    }
+    .tension-map {
+      display: grid;
+      grid-template-columns: repeat(13, minmax(0, 1fr));
+      gap: 3px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .cell {
+      aspect-ratio: 1.15;
+      min-height: 2.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: clamp(0.62rem, 1.8vw, 0.92rem);
+      border-radius: 3px;
+      user-select: none;
+    }
+    .cell.off { background: var(--cell-off); color: transparent; }
+    .cell.deg {
+      background: var(--cell-on);
+      color: var(--ink);
+    }
+    .cell.deg.dim {
+      background: var(--cell-dim);
+      color: var(--ink);
+    }
+    .cell.tens {
+      background: var(--cell-on);
+      color: var(--ink);
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+    .cell.tens:hover,
+    .cell.tens.active {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .cell.alt {
+      background: var(--cell-on);
+      color: var(--ink);
+      font-size: clamp(0.55rem, 1.5vw, 0.8rem);
+    }
+    .map-legend {
+      display: flex; flex-wrap: wrap; gap: 0.5rem 1.1rem;
+      justify-content: center;
+      margin-top: 0.85rem;
+      font-size: 0.76rem;
+      color: #bbb;
+    }
+    .map-legend i {
+      display: inline-block; width: 12px; height: 12px;
+      border-radius: 2px; vertical-align: -1px; margin-right: 0.3rem;
+    }
+    .map-legend .on { background: var(--cell-on); }
+    .map-legend .dim { background: var(--cell-dim); }
+    .map-legend .off { background: #333; border: 1px solid #555; }
+
+    .pair-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.45rem;
+      margin: 0.75rem 0 1rem;
+    }
+    .pair {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.86rem;
+      cursor: pointer;
+      transition: border-color 0.12s, background 0.12s;
+    }
+    .pair:hover, .pair.active {
+      border-color: var(--accent);
+      background: var(--surface2);
+    }
+    .pair .from {
+      font-family: "SF Mono", Consolas, monospace;
+      font-weight: 800;
+      color: var(--accent2);
+    }
+    .pair .arrow { color: var(--muted); margin: 0 0.35rem; }
+    .pair .to {
+      font-family: "SF Mono", Consolas, monospace;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .pair .hint {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      margin: 0.65rem 0 1rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.55rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: var(--surface2);
+      color: var(--accent2);
+      font-weight: 700;
+    }
+    tr:nth-child(even) td { background: var(--surface); }
+    .mono {
+      font-family: "SF Mono", Consolas, monospace;
+      font-size: 0.88em;
+    }
+    .formula {
+      display: inline-block;
+      font-family: "SF Mono", Consolas, monospace;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.12rem 0.4rem;
+      font-size: 0.82rem;
+      color: var(--accent);
+    }
+
+    .detail {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      margin: 0.75rem 0 1rem;
+      min-height: 4.5rem;
+    }
+    .detail h3 {
+      font-size: 0.95rem;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+    .detail p { font-size: 0.86rem; color: var(--muted); }
+
+    footer {
+      margin-top: 1.75rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--accent); }
+
+    @media (max-width: 560px) {
+      .cell { min-height: 1.85rem; aspect-ratio: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">MOD-BRAÇO-01 · Harmonia · Folha Nelson</div>
+  <h1>Quadro das tensões</h1>
+  <p>
+    Cada tensão (9, 11, 13 e alterações) é o mesmo grau da escala, uma oitava acima —
+    ou um “sinônimo” cromático (ex.: ♭3 ↔ ♯9).
+  </p>
+</header>
+
+<nav>
+  <a href="campo-harmonico-maior.html">Campo harmônico</a>
+  <a href="formacao-acordes-braco.html">28 acordes</a>
+  <a href="estudo-arpejos/07-superposicao.html">Superposição</a>
+  <a href="estudo-arpejos/03-sete-tipos.html">7 tipos</a>
+</nav>
+
+<div class="callout">
+  <span class="label">Como ler</span>
+  Linha do meio = graus (1→8). Linha de baixo = tensão equivalente.
+  Acima do <strong>6</strong> aparece <strong>𝄫7</strong> (bb7) — sinônimo usado no diminuto.
+  Clique numa tensão para ver o detalhe.
+</div>
+
+<section class="poster" aria-label="Quadro das tensões">
+  <div class="poster-title">Quadro das tensões</div>
+  <div class="tension-map" id="tension-map" role="table" aria-label="Mapa grau ↔ tensão"></div>
+  <div class="map-legend">
+    <span><i class="on"></i> grau / tensão</span>
+    <span><i class="dim"></i> grau sem tensão listada (♭2, 2, 8)</span>
+    <span><i class="off"></i> vazio</span>
+  </div>
+</section>
+
+<div class="detail" id="detail">
+  <h3>Selecione uma tensão</h3>
+  <p>Clique em ♭9, 9, ♯9, 11, ♯11, ♭13, 13 ou 𝄫7 no quadro (ou nos cartões abaixo).</p>
+</div>
+
+<h2>Pares grau → tensão</h2>
+<div class="pair-list" id="pair-list"></div>
+
+<h2>Tensões por tipo de acorde</h2>
+<p style="font-size:0.88rem;color:var(--muted);margin-bottom:0.55rem">
+  Disponíveis / mais usadas na prática (Nelson · jazz). “Evitar” = soam como outra função ou embotam o acorde.
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>Tensões naturais</th>
+      <th>Alteradas / cor</th>
+      <th>Evitar (comum)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>7M</strong> (I, IV)</td>
+      <td class="mono">9 · 13</td>
+      <td class="mono">♯11 <span style="color:var(--muted)">(lídio)</span></td>
+      <td class="mono">11</td>
+    </tr>
+    <tr>
+      <td><strong>m7</strong> (ii, iii, vi)</td>
+      <td class="mono">9 · 11 · 13</td>
+      <td class="mono">—</td>
+      <td class="mono">♯11</td>
+    </tr>
+    <tr>
+      <td><strong>7</strong> (V)</td>
+      <td class="mono">9 · 13 · ♯11</td>
+      <td class="mono">♭9 · ♯9 · ♭13</td>
+      <td class="mono">11 natural*</td>
+    </tr>
+    <tr>
+      <td><strong>m7(♭5)</strong> (viiø)</td>
+      <td class="mono">9 · 11 · ♭13</td>
+      <td class="mono">—</td>
+      <td class="mono">13 natural</td>
+    </tr>
+    <tr>
+      <td><strong>°</strong> (dim7)</td>
+      <td class="mono">♭9 / 9 / 11 / ♭13…</td>
+      <td class="mono">simétrico (a cada tom)</td>
+      <td class="mono">—</td>
+    </tr>
+    <tr>
+      <td><strong>m7M</strong></td>
+      <td class="mono">9 · 11 · 13</td>
+      <td class="mono">—</td>
+      <td class="mono">—</td>
+    </tr>
+    <tr>
+      <td><strong>7M(♯5)</strong></td>
+      <td class="mono">9 · ♯11</td>
+      <td class="mono">♯5 = ♭13 (já no acorde)</td>
+      <td class="mono">13</td>
+    </tr>
+  </tbody>
+</table>
+<p style="font-size:0.78rem;color:var(--muted)">
+  *Na dominante, 11 natural soa como 4ª suspensa (sus) — use se quiser cor sus; senão prefira ♯11.
+</p>
+
+<div class="callout" style="border-left-color:var(--accent);margin-top:1rem">
+  <span class="label">Atalho de estudo</span>
+  Memorize o quadro: <span class="formula">♭2=♭9</span>
+  <span class="formula">2=9</span>
+  <span class="formula">♭3=♯9</span>
+  <span class="formula">4=11</span>
+  <span class="formula">♭5=♯11</span>
+  <span class="formula">♯5=♭13</span>
+  <span class="formula">6=13</span>
+  · e <span class="formula">6=𝄫7</span> no diminuto.
+  Depois use <a href="estudo-arpejos/07-superposicao.html">superposição</a> para tocá-las sem grips de 6 cordas.
+</div>
+
+<footer>
+  Folha Nelson Faria / Vitale ·
+  <a href="campo-harmonico-maior.html">Campo harmônico</a> ·
+  <a href="formacao-acordes-braco.html">Formação dos acordes</a> ·
+  <a href="estudo-arpejos/07-superposicao.html">Cap. 07 · Superposição</a>
+</footer>
+
+<script>
+(function () {
+  /**
+   * Colunas 1→13 = graus cromáticos da oitava (folha Nelson).
+   * top / mid / bot — null = célula preta.
+   * midDim = fundo cinza (folha: ♭2, 2, 8).
+   */
+  const COLS = [
+    { mid: '1',   midDim: false, top: null,  bot: null,  note: 'Fundamental — não é tensão.' },
+    { mid: '♭2',  midDim: true,  top: null,  bot: '♭9',  note: '♭2 na oitava de cima vira ♭9. Tensão alterada clássica da dominante (V7alt).' },
+    { mid: '2',   midDim: true,  top: null,  bot: '9',   note: '2 = 9. Nona natural — disponível em 7M, m7 e 7.' },
+    { mid: '♭3',  midDim: false, top: null,  bot: '♯9',  note: '♭3 e ♯9 são o mesmo som (enarmônicos). Em dominante alterada, chama-se ♯9 (ex.: G7♯9).' },
+    { mid: '3',   midDim: false, top: null,  bot: null,  note: 'Terça — chord tone. Não se cifra como tensão.' },
+    { mid: '4',   midDim: false, top: null,  bot: '11',  note: '4 = 11. Em Maj7 costuma-se evitar (conflita com a 3ª); em m7 é tensão natural.' },
+    { mid: '♭5',  midDim: false, top: null,  bot: '♯11', note: '♭5 e ♯11 são o mesmo som. Em dominante/lídio aparece como ♯11; em m7(♭5) é chord tone (♭5).' },
+    { mid: '5',   midDim: false, top: null,  bot: null,  note: 'Quinta justa — chord tone.' },
+    { mid: '♯5',  midDim: false, top: null,  bot: '♭13', note: '♯5 = ♭13 (enarmônicos). Em 7alt cifra-se ♭13; em 7M(♯5) é a própria quinta aumentada do acorde.' },
+    { mid: '6',   midDim: false, top: '𝄫7', bot: '13',  note: '6 = 13 (oitava acima). O mesmo grau, no diminuto, chama-se 𝄫7 (bb7) — sexta maior = sétima diminuta.' },
+    { mid: '♭7',  midDim: false, top: null,  bot: null,  note: 'Sétima menor — chord tone de 7, m7, m7(♭5).' },
+    { mid: '7',   midDim: false, top: null,  bot: null,  note: 'Sétima maior — chord tone de 7M / m7M.' },
+    { mid: '8',   midDim: true,  top: null,  bot: null,  note: 'Oitava da fundamental — fecha o ciclo; não é tensão.' }
+  ];
+
+  const mapEl = document.getElementById('tension-map');
+  const pairEl = document.getElementById('pair-list');
+  const detailEl = document.getElementById('detail');
+  let activeKey = null;
+
+  function cellHtml(row, col, text, kind) {
+    if (!text) return `<div class="cell off" role="cell" aria-hidden="true"></div>`;
+    const dim = kind === 'deg' && col.midDim ? ' dim' : '';
+    const clickable = kind === 'tens' || kind === 'alt';
+    const key = text;
+    return `<div class="cell ${kind}${dim}" role="cell" data-key="${clickable ? key : ''}" ${clickable ? 'tabindex="0"' : ''}>${text}</div>`;
+  }
+
+  function renderMap() {
+    const top = COLS.map(c => cellHtml('top', c, c.top, 'alt')).join('');
+    const mid = COLS.map(c => cellHtml('mid', c, c.mid, 'deg')).join('');
+    const bot = COLS.map(c => cellHtml('bot', c, c.bot, 'tens')).join('');
+    mapEl.innerHTML = top + mid + bot;
+
+    mapEl.querySelectorAll('[data-key]').forEach(el => {
+      if (!el.dataset.key) return;
+      el.addEventListener('click', () => select(el.dataset.key));
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(el.dataset.key); }
+      });
+    });
+  }
+
+  function renderPairs() {
+    const pairs = COLS.filter(c => c.bot || c.top).map(c => {
+      const to = c.bot || c.top;
+      const extra = c.bot && c.top ? ` · também ${c.top}` : '';
+      return { from: c.mid, to: c.bot || c.top, top: c.top, bot: c.bot, note: c.note, extra };
+    });
+
+    // Show unique selectable keys: bot tensions + bb7
+    const cards = [];
+    COLS.forEach(c => {
+      if (c.bot) {
+        cards.push({
+          key: c.bot,
+          from: c.mid,
+          to: c.bot,
+          hint: c.top ? `${c.mid} → ${c.bot} (acima: ${c.top})` : `${c.mid} na oitava de cima`
+        });
+      }
+      if (c.top && !c.bot) {
+        cards.push({ key: c.top, from: c.mid, to: c.top, hint: `sinônimo de ${c.mid}` });
+      }
+    });
+    // Add bb7 as its own card even though 13 is also there
+    const six = COLS.find(c => c.mid === '6');
+    cards.push({
+      key: '𝄫7',
+      from: '6',
+      to: '𝄫7',
+      hint: 'mesmo som que 6 / 13 — nome no acorde °'
+    });
+
+    // de-dupe by key keeping first, but keep both 13 and bb7
+    const seen = new Set();
+    const unique = cards.filter(c => {
+      if (seen.has(c.key)) return false;
+      seen.add(c.key);
+      return true;
+    });
+
+    pairEl.innerHTML = unique.map(c => `
+      <div class="pair" data-key="${c.key}">
+        <span class="from">${c.from}</span><span class="arrow">→</span><span class="to">${c.to}</span>
+        <span class="hint">${c.hint}</span>
+      </div>
+    `).join('');
+
+    pairEl.querySelectorAll('.pair').forEach(el => {
+      el.addEventListener('click', () => select(el.dataset.key));
+    });
+  }
+
+  function findColByKey(key) {
+    return COLS.find(c => c.bot === key || c.top === key);
+  }
+
+  function select(key) {
+    activeKey = key;
+    const col = findColByKey(key);
+    mapEl.querySelectorAll('.cell.tens, .cell.alt').forEach(el => {
+      el.classList.toggle('active', el.dataset.key === key);
+    });
+    pairEl.querySelectorAll('.pair').forEach(el => {
+      el.classList.toggle('active', el.dataset.key === key);
+    });
+
+    if (!col) return;
+    const parts = [];
+    if (col.bot) parts.push(`<strong>${col.mid}</strong> → tensão <strong>${col.bot}</strong>`);
+    if (col.top) parts.push(`<strong>${col.mid}</strong> → também chamado <strong>${col.top}</strong>`);
+    detailEl.innerHTML = `
+      <h3>${key}</h3>
+      <p>${parts.join(' · ')}. ${col.note}</p>
+    `;
+  }
+
+  renderMap();
+  renderPairs();
+})();
+</script>
+
+</body>
+</html>

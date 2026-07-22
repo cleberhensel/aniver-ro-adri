@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Treino de escalas · Eat</title>
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/drill.css">
+  <link rel="stylesheet" href="../css/pickers.css">
+  <link rel="stylesheet" href="../css/neck.css">
+</head>
+<body>
+
+<header>
+  <h1>Treino de escalas</h1>
+  <p>Ginásio · <a href="index.html">hub</a> · <a href="../../MOD-BRAÇO-01-desvendando-acordes-arpejos-escalas/artefatos/escalas-shapes-tonalidade.html">teoria CAGED</a></p>
+</header>
+
+<div class="cockpit" id="cockpit">
+  <aside class="panel col-key">
+    <div class="panel-label">Tom</div>
+    <div class="tonic-big" id="tonic-display">C<small>maior</small></div>
+    <div class="family-select">
+      <select id="family-select" aria-label="Família de escala"></select>
+    </div>
+    <div class="key-grid" id="key-grid"></div>
+  </aside>
+
+  <section class="panel col-shapes" id="drill" aria-label="Treino de shapes">
+    <div class="panel-label">Shapes</div>
+    <div class="shape-slot now idle" id="drill-current">
+      <span class="slot-tag">agora</span>
+      <span class="slot-letter" id="drill-letter">—</span>
+      <div class="slot-copy">
+        <div class="slot-name" id="drill-shape-name">shape</div>
+        <div class="slot-meta" id="drill-meta">Aguardando…</div>
+      </div>
+    </div>
+    <div class="shape-slot next empty" id="drill-next">
+      <span class="slot-tag">próx</span>
+      <span class="slot-letter" id="drill-next-letter">?</span>
+      <div class="slot-copy">
+        <div class="slot-name" id="drill-next-name">—</div>
+        <div class="slot-meta" id="drill-next-meta">surpresa</div>
+        <div class="queue-extra" id="drill-queue"></div>
+      </div>
+    </div>
+    <div class="drill-status" id="drill-status">parado</div>
+  </section>
+
+  <aside class="panel col-metro">
+    <div class="panel-label">Pulso</div>
+    <div class="metro-head">
+      <div class="vol-pot">
+        <button type="button" class="vol-pot-btn" id="drill-mute" title="Mutar">
+          <svg class="ico-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a9 9 0 010 12.73"/></svg>
+          <svg class="ico-mute" hidden viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        </button>
+        <input type="range" id="drill-volume" min="0" max="100" value="70">
+        <span class="vol-pct" id="drill-volume-pct">70</span>
+      </div>
+    </div>
+    <div class="metro-block">
+      <div class="metro-viz">
+        <span class="drill-pulse" id="drill-pulse"></span>
+        <div class="drill-beats" id="drill-beats"></div>
+      </div>
+      <div class="drill-timer" id="drill-timer">—</div>
+    </div>
+    <div class="icon-btns">
+      <button type="button" class="icon-btn primary" id="drill-start" title="Iniciar">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button type="button" class="icon-btn" id="drill-next-btn" disabled title="Próximo (Espaço)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4l10 8-10 8V4z"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+      </button>
+      <button type="button" class="icon-btn danger" id="drill-stop" disabled title="Parar">
+        <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+      </button>
+    </div>
+    <div class="drill-controls">
+      <select id="drill-mode" aria-label="Modo">
+        <option value="bag">Saco embaralhado</option>
+        <option value="pure">Aleatório puro</option>
+        <option value="neighbor">Vizinhos CAGED</option>
+      </select>
+      <select id="drill-seconds" aria-label="Tempo por shape">
+        <option value="15">15 s</option>
+        <option value="30" selected>30 s</option>
+        <option value="45">45 s</option>
+        <option value="60">60 s</option>
+        <option value="0">∞</option>
+      </select>
+      <select id="drill-preview" aria-label="Preview">
+        <option value="0">Sem preview</option>
+        <option value="1" selected>1 próximo</option>
+        <option value="2">2 próximos</option>
+      </select>
+      <select id="drill-bpm" aria-label="BPM">
+        <option value="60">60</option>
+        <option value="80" selected>80</option>
+        <option value="100">100</option>
+        <option value="120">120</option>
+      </select>
+    </div>
+  </aside>
+</div>
+
+<section class="neck-section">
+  <div class="neck-head">
+    <h2>Mapa do braço</h2>
+    <div class="legend-shapes" id="shape-legend"></div>
+  </div>
+  <div class="neck-wrap" id="neck-map"></div>
+</section>
+
+<footer>
+  <a href="index.html">← Hub</a> ·
+  <a href="validador.html">Validador</a> ·
+  <a href="sessao.html">Sessão</a>
+</footer>
+
+<script src="../js/data/meta/tuning.js"></script>
+<script src="../js/data/meta/caged.js"></script>
+<script src="../js/data/scales/families.js"></script>
+<script src="../js/data/scales/shapes/major-caged.js"></script>
+<script src="../js/data/scales/shapes/natural-minor-a.js"></script>
+<script src="../js/data/scales/shapes/harmonic-minor-a.js"></script>
+<script src="../js/data/scales/shapes/melodic-minor-a.js"></script>
+<script src="../js/data/scales/index.js"></script>
+<script src="../js/data/arpeggios/qualities.js"></script>
+<script src="../js/data/arpeggios/progressions/ii-V-I-major.js"></script>
+<script src="../js/data/arpeggios/index.js"></script>
+<script src="../js/placement.js"></script>
+<script src="../js/data/catalog.js"></script>
+<script src="../vendor/practice-tools.js"></script>
+<script src="../js/drill-session.js"></script>
+<script src="../js/key-picker.js"></script>
+<script src="../js/scale-family-picker.js"></script>
+<script src="../js/neck.js"></script>
+<script src="../js/metro-compact.js"></script>
+<script src="../js/eat.js"></script>
+<script src="../js/pages/drill-escala-app.js"></script>
+</body>
+</html>

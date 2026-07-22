@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apêndice — Ozeias Rodrigues: Harmonia do básico ao avançado (5 acordes)</title>
+  <link rel="stylesheet" href="css/curso.css">
+  <style>
+    .video-meta { display:flex; flex-wrap:wrap; gap:1rem; margin:1rem 0; }
+    .video-meta a { color:var(--accent); font-weight:600; }
+    .video-embed { position:relative; padding-bottom:56.25%; height:0; margin:1.5rem 0; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
+    .video-embed iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+    .toc-apendice a { display:block; padding:0.35rem 1.25rem; font-size:0.85rem; color:var(--text-muted); text-decoration:none; }
+    .toc-apendice a:hover { color:var(--accent); background:var(--accent-soft); }
+    .toc-apendice .toc-section { font-weight:700; color:var(--text); padding-top:0.75rem; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em; }
+    .five-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin:1.25rem 0; }
+    .five-card { padding:1rem; border-radius:var(--radius); border:1px solid var(--border); background:var(--bg-card); }
+    .five-card h4 { margin:0 0 0.5rem; font-size:0.95rem; }
+    .five-card ul { margin:0; padding-left:1.1rem; font-size:0.88rem; }
+    .lang-ladder { counter-reset: step; list-style:none; padding:0; }
+    .lang-ladder li { counter-increment:step; margin:0.75rem 0; padding:0.75rem 1rem 0.75rem 3rem; position:relative; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; }
+    .lang-ladder li::before { content:counter(step); position:absolute; left:0.75rem; top:0.75rem; width:1.6rem; height:1.6rem; background:var(--accent); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; }
+    .transcript-wrap { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem 1.5rem; margin-top:1rem; }
+    .transcript-section { margin-bottom:1.75rem; padding-bottom:1.25rem; border-bottom:1px dashed var(--border); }
+    .transcript-section:last-child { border-bottom:none; }
+    .transcript-section h3 { font-size:1rem; color:var(--accent); margin:0 0 0.75rem; }
+    .transcript-section p { font-size:0.92rem; color:var(--text-muted); line-height:1.7; }
+    .compare-table td:first-child { font-weight:600; white-space:nowrap; }
+    .nav-back { display:block; padding:0.5rem 1.25rem; font-size:0.85rem; color:var(--accent); }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h1>Apêndice Ozeias</h1>
+      <p>5 acordes · MPB · Samba · Bossa</p>
+    </div>
+    <a class="nav-back" href="index.html">← Voltar ao curso</a>
+    <nav class="toc-apendice">
+      <div class="toc-section">Análise</div>
+      <a href="#visao">Visão geral</a>
+      <a href="#linguagem">Teoria vs linguagem</a>
+      <a href="#campo-estilo">Campo por estilo</a>
+      <a href="#escada">Escada de embelezamentos</a>
+      <a href="#funcoes">Funções harmônicas</a>
+      <a href="#cinco">Os 5 acordes</a>
+      <a href="#extensoes">Extensões naturais / alteradas</a>
+      <a href="#falso-dom">Falso dominante</a>
+      <a href="#mpb">Samba · Choro · Bossa · MPB</a>
+      <a href="#allofme">Exemplo All of Me</a>
+      <a href="#velha-guarda">Velha Guarda e oralidade</a>
+      <div class="toc-section">Transcrição</div>
+      <a href="#transcricao">Transcrição completa</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="hero">
+      <h1>Harmonia do básico ao avançado — análise completa</h1>
+      <p class="lead">Apêndice teórico baseado na aula de <strong>Ozeias Rodrigues</strong> (Jazz Guitar Academy): uma linha crescente de embelezamentos harmônicos — do folk triádico ao “Dó do Toninho Horta” — convergindo para um sistema mental de <strong>cinco tipos de acorde</strong>, especialmente útil para samba, choro, bossa nova e MPB.</p>
+    </header>
+
+    <div class="video-meta">
+      <span>⏱ 43:28</span>
+      <span>📅 mar/2025</span>
+      <a href="https://www.youtube.com/watch?v=fYdk9UE1Waw" target="_blank" rel="noopener">Assistir no YouTube ↗</a>
+    </div>
+
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/fYdk9UE1Waw" title="Harmonia do básico ao avançado — Ozeias Rodrigues" allowfullscreen loading="lazy"></iframe>
+    </div>
+
+    <section id="visao">
+      <h2>1. Tese central: cinco acordes, não vinte modos</h2>
+      <p>Ozeias propõe abandonar, na prática improvisatória, o labirinto de “empréstimo modal”, “substituição por trítono” e graus de escalas paralelas. Em substituição, tudo se reduz a <strong>cinco arquétipos sonoros</strong>, cada um com embelezamentos fixos (nona, quarta, sexta, sétima maior…). Harmonizadores da Velha Guarda, João Bosco, Dominguinhos e Toninho Horta operariam assim — não por nomenclatura acadêmica, mas por <em>memória auditiva e oral</em>.</p>
+      <blockquote>O mesmo símbolo “C” ou “Dó maior” não soa igual em MPB, folk, samba ou jazz. A teoria explica até certo ponto; depois entra a <strong>linguagem estética</strong> do gênero.</blockquote>
+
+      <div class="five-grid">
+        <div class="five-card card-fn-T">
+          <h4>① Acorde maior (I / IV)</h4>
+          <ul>
+            <li>7M, 9, #11, 6</li>
+            <li>Modo: Lídio → Lídio #5</li>
+            <li>Repouso maior · subdominante plena</li>
+          </ul>
+        </div>
+        <div class="five-card card-fn-SD">
+          <h4>② Acorde menor (ii / vi / iii*)</h4>
+          <ul>
+            <li>m7, 9, 11, 6 (ou 6↓)</li>
+            <li>Modo: Dórico → Dórico 7M</li>
+            <li>SD ou tônica relativa</li>
+          </ul>
+        </div>
+        <div class="five-card card-fn-D">
+          <h4>③ Dominante (V)</h4>
+          <ul>
+            <li>7, 9, 13, sus4</li>
+            <li>Extensões naturais p/ maior</li>
+            <li>Alteradas p/ preparar menor</li>
+          </ul>
+        </div>
+        <div class="five-card card-fn-D">
+          <h4>④ m7(b5) — “dois do menor”</h4>
+          <ul>
+            <li>Embelezamento: 11 (quarta)</li>
+            <li>Às vezes 9 (Lydian 9 / Locrian nat.9)</li>
+            <li>Função SD do centro menor</li>
+          </ul>
+        </div>
+        <div class="five-card" style="border-color:var(--dom);background:var(--dom-bg)">
+          <h4>⑤ Falso dominante (Lydian b7)</h4>
+          <ul>
+            <li>7(9) b13 #11 — não resolve</li>
+            <li>Substituição por trítono = este tipo</li>
+            <li>Ab7, Db7 em tom de Dó…</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="linguagem">
+      <h2>2. Teoria vs linguagem harmônica</h2>
+      <p>A crítica inicial do vídeo é pedagógica: livros de harmonia descrevem o campo diatônico com <code>Cmaj7</code> no grau I porque isso é verdadeiro no jazz americano. Porém, se você pede a um violonista de <strong>samba</strong> ou de <strong>MPB roots</strong> um Dó maior, ele tende a entregar uma <strong>tríade aberta</strong> — não um maj7 “coat” de pop sofisticado.</p>
+
+      <table class="compare-table">
+        <tr><th>Linguagem</th><th>Dó “tônico” típico</th><th>Estética</th><th>Referência MPB</th></tr>
+        <tr><td>Folk / choro antigo</td><td>C (tríade)</td><td>Singela, lúdica, folclórica</td><td>Choro de rodas, violão raiz</td></tr>
+        <tr><td>Pop / MPB 70–80</td><td>Cadd9, Cmaj7</td><td>Sofisticado, “Ivan Lins”</td><td>Jorge Ben, pop erudito popular</td></tr>
+        <tr><td>Samba / partido alto</td><td>C6, C69</td><td>Evita 7M na melodia-fundamental</td><td>Cartola, Noel Rosa (harmonia cuidadosa)</td></tr>
+        <tr><td>Bossa / MPB jazz</td><td>Cmaj7, C6/9, CΔ#11</td><td>Voice leading, quartas</td><td>Tom Jobim, Toninho Horta</td></tr>
+        <tr><td>Jazz moderno BR</td><td>CΔ#11, C Lydian #5</td><td>Quartas aumentadas, movimento</td><td>João Bosco (fase jazzística)</td></tr>
+      </table>
+
+      <div class="warn"><strong>Implicação para ouvido:</strong> identificar “Dó maior” pelo timbre não basta — é preciso saber <em>qual Dó</em> o contexto pede. Na bossa, maj7 no I é regra; no samba de roda, 6/9 ou tríade é regra. Errar a qualidade é errar o gênero.</div>
+    </section>
+
+    <section id="campo-estilo">
+      <h2>2b. Campo harmônico interativo — tônica × estilo</h2>
+      <p>Escolha a tônica e a linguagem estética (conforme a aula). Cada cartão mostra o acorde sugerido, a função harmônica e o diagrama de violão. Formas marcadas <span class="campo-estilo-src campo-estilo-src--ozeias">Ozeias</span> seguem voicings citados ou demonstrados no vídeo (referência em Dó; outros tons usam formas móveis transpostas).</p>
+
+      <div class="interactive" id="campo-estilo-tool">
+        <h3>Explorar campo harmônico</h3>
+        <div class="campo-estilo-controls">
+          <div class="field">
+            <label for="ce-key">Tônica (tom maior)</label>
+            <select id="ce-key"></select>
+          </div>
+          <div class="field">
+            <label for="ce-style">Estilo / linguagem</label>
+            <select id="ce-style"></select>
+          </div>
+        </div>
+        <p id="ce-desc" class="campo-estilo-desc"></p>
+        <div id="ce-grid" class="campo-estilo-grid" aria-live="polite"></div>
+      </div>
+
+      <div class="tip">Funções (visão Ozeias): <span class="fn-badge fn-badge-T">T</span> I e vi · <span class="fn-badge fn-badge-SD">SD</span> ii e IV · <span class="fn-badge fn-badge-D">D</span> só V · <span class="fn-badge fn-badge-T">T*</span> iii como substituto de I.</div>
+    </section>
+
+    <section id="escada">
+      <h2>3. Escada crescente de embelezamentos (tom de Dó)</h2>
+      <p>O método do vídeo não salta direto para jazz. Cada camada adiciona uma extensão empilhando terças sobre a tríade, mas respeitando o que soa em cada linguagem.</p>
+
+      <ol class="lang-ladder">
+        <li><strong>Tríades diatônicas</strong> — C, Dm, Em, F, G, Am, Bdim (b5). O vii° “não aparece” na estética folk; Bdim só em passagem folclórica.</li>
+        <li><strong>Nonas (add9)</strong> — primeiro “embelezamento” pop/folk: Cadd9, Dm(add9), Fadd9… O iii recebe b9 (E-F semitom) — <em>evitada</em> no iii; mineiros usam F# no Em7 como substituto de CΔ#11.</li>
+        <li><strong>Sétimas (tetrações)</strong> — Cmaj7, Dm7, Fmaj7, G7… Estética pop sofisticado (Jorge Ben, Ivan Lins). Nonas mantidas onde já existiam.</li>
+        <li><strong>Quartas</strong> — #11 no I (F#) tira repouso “puro”; sus4 no V (Gsus) suaviza dominante “brega”; quarta no iii e vi enriquece bossa.</li>
+        <li><strong>Sextas → 6/9</strong> — C6, C69: <strong>samba</strong> e vertente melódica folclórica (melodia na fundamental vs 7M em choque). Am6 com 6↓ (F) incomodaria — corrige-se para F# (6M), paralelo ao #11 no maior.</li>
+      </ol>
+
+      <p><strong>Campo com nonas em Dó:</strong></p>
+      <div class="chord-pills">
+        <span class="chord-pill">Cadd9</span>
+        <span class="chord-pill">Dm9</span>
+        <span class="chord-pill">Em7</span>
+        <span class="chord-pill">Fadd9</span>
+        <span class="chord-pill">Gadd9</span>
+        <span class="chord-pill">Am9</span>
+      </div>
+      <div class="progression-diagram" data-chords="Cmaj7,Dm7,Em7,Fmaj7,G7,Am7,Bm7b5"></div>
+    </section>
+
+    <section id="funcoes">
+      <h2>4. Funções harmônicas — visão funcional simplificada</h2>
+      <p>Ozeias reduz as funções para facilitar cifragem e improvisação ao vivo:</p>
+
+      <table>
+        <tr><th>Função</th><th>Graus (campo)</th><th>Em Dó</th><th>Papel</th><th>Nota MPB</th></tr>
+        <tr><td><span class="fn-badge fn-badge-T">T maior</span></td><td>I</td><td>C / Cmaj7 / C6</td><td>Repouso em tom maior</td><td>Final de frase, bossa estável</td></tr>
+        <tr><td><span class="fn-badge fn-badge-T">T menor</span></td><td>vi</td><td>Am / Am6 / Am7</td><td>Repouso relativo</td><td>Refrão melancólico, samba-canção</td></tr>
+        <tr><td><span class="fn-badge fn-badge-SD">SD</span></td><td>ii, IV</td><td>Dm7, Fmaj7</td><td>Movimento, preparação</td><td>ii–V–I bossa; IV plena samba</td></tr>
+        <tr><td><span class="fn-badge fn-badge-D">D</span></td><td>V apenas</td><td>G7, Gsus</td><td>Tensão → T</td><td>G7→Cmaj7; G7→Am (decepção)</td></tr>
+        <tr><td>SD do menor</td><td>viiø / ii de Am</td><td>Bm7b5</td><td>Prepara Am</td><td>Dispositivo Jobim, choro avançado</td></tr>
+      </table>
+
+      <h3>iii = I com baixo invertido (não tônica autônoma)</h3>
+      <p>Em7/C soa como Cmaj9 — por isso mineiros resolvem ii–V em <strong>Em7</strong> (com F#) em vez de CΔ. No tonalismo clássico, ir ao iii pode implicar <strong>modulação</strong> ao terceiro grau.</p>
+
+      <h3>Cifragem funcional vs campo “plano”</h3>
+      <p>Em vez de <code>Bm7b5 → E7 → Am</code> escrito como três acordes diatônicos + E7 estranho, Ozeias prefere:</p>
+      <div class="progression-diagram" data-chords="Bm7b5,E7,Am7"></div>
+      <p>…deixando explícito: Bm7b5 = SD do Am; E7 = dominante (V de Am, não Em7 do campo!). O Em7 diatônico <strong>não domina</strong> porque falta o trítono Fa–Si.</p>
+
+      <h3>Dominante alterado para centro menor</h3>
+      <p>Para ii–V–i em Am: Bm7b5 → <strong>E7</strong> (não Em7). Se necessário, G→G# no V cria trítono contra C (3ª de Am). Paralelo: preparar C maior com Dm7 → G7 → C.</p>
+    </section>
+
+    <section id="cinco">
+      <h2>5. Convergência: cada grau ganha uma “história” fixa</h2>
+      <p>Após empilhar nona, quarta e sexta, os graus convergem em <strong>dois modos principais</strong> + dominante + m7b5 + falso dominante:</p>
+
+      <table>
+        <tr><th>Tipo</th><th>Notas-alvo (sobre fundamental)</th><th>Modo associado</th><th>Graus em Dó</th></tr>
+        <tr><td>Maior “Lídio”</td><td>3M, 7M, 9, #11, 6</td><td>Lídio → Lídio #5</td><td>C, F (+ sofisticação)</td></tr>
+        <tr><td>Menor “Dórico”</td><td>3m, 7m, 9, 11, 6</td><td>Dórico → Dórico 7M</td><td>Dm, Am (+ Em como I inv.)</td></tr>
+        <tr><td>Dominante</td><td>3M, 7m, 9, 13 / sus4</td><td>Mixolídio / alterado</td><td>G7, E7 (V/vi)</td></tr>
+        <tr><td>m7(b5)</td><td>3m, b5, 7m, 11, (9)</td><td>Locrian / Locrian nat.9</td><td>Bm7b5</td></tr>
+      </table>
+
+      <div class="tip"><strong>Regra prática:</strong> acorde <em>maior</em> pede extensões <strong>naturais</strong> (9, #11, 6). Acorde <em>menor tônico</em> pede extensões <strong>alteradas</strong> (9+, b9, b13) para preparação — especialmente em baladas MPB e standards reharmonizados.</div>
+    </section>
+
+    <section id="extensoes">
+      <h2>6. Extensões naturais vs não naturais</h2>
+      <p>Empilhando terças acima da 7ª: 9 → 11 → 13. No acorde <strong>maior objetivo</strong>, extensões diatônicas soam “dentro”. Alterações (b9, #9, b13, #11 como Lydian) criam tensão direcional.</p>
+
+      <table>
+        <tr><th>Extensão</th><th>Natural (maior)</th><th>Alterada (prep. menor)</th><th>Uso MPB</th></tr>
+        <tr><td>9</td><td>9M (Ré em C)</td><td>9+ (Sol em Em7→Am)</td><td>9+ em Em7: dispositivo mineiro/Jobim</td></tr>
+        <tr><td>11</td><td>#11 (Fa# em C)</td><td>11 natural (Ré em Am)</td><td>#11: bossa moderna, Toninho</td></tr>
+        <tr><td>13</td><td>13M (Lá em C)</td><td>b13 (Dó em Em7)</td><td>b13: balada, corte melódico</td></tr>
+      </table>
+
+      <p><strong>Gsus (V):</strong> tríade de F com baixo em Sol — “dominante meio subdominante”, alternativa sofisticada ao G7 “brega” em pop. Muito comum quando se quer tensão leve antes de C ou Am.</p>
+      <div class="chord-pills"><span class="chord-pill">G7</span><span class="chord-pill">G13</span><span class="chord-pill">F</span></div>
+    </section>
+
+    <section id="falso-dom">
+      <h2>7. Falso dominante (substituição por trítono reexplicada)</h2>
+      <p>Em vez de memorizar “Db7 substitui G7”, Ozeias classifica <strong>Ab7, Db7, F#7…</strong> como dominantes que <em>apontam para tonalidades fora do centro</em> — logo, não resolvem onde o ouvido espera. Exemplos citados:</p>
+      <ul>
+        <li><strong>Ab7</strong> em tom de Dó → apontaria Mi♭ (não está no tom) → <em>Lydian b7</em> / falso dominante</li>
+        <li><strong>Db7</strong> (trítono de G) → resolveria Sol♭ — fora do tom de Dó</li>
+        <li><strong>F7</strong> em progressão Dó → “IV menor” ou dominante de B♭ — coloração, não cadência plena</li>
+      </ul>
+      <p>Em bossa, Ab7→Cmaj7 é Neapolitana reharmonizada; no sistema dos 5 acordes, pense: <strong>tipo ⑤</strong> com #11, não “modo locrian emprestado”.</p>
+      <div class="progression-diagram" data-chords="Ab7,Cmaj7"></div>
+    </section>
+
+    <section id="mpb">
+      <h2>8. Samba, choro, bossa nova e MPB — leitura aplicada</h2>
+
+      <h3>8.1 Samba</h3>
+      <ul>
+        <li><strong>Tríades e 6/9</strong> no I: evita choque melodia-fundamental vs 7M (argumento histórico-melódico do vídeo).</li>
+        <li><strong>C6 / Am6</strong> com 6 corrigida (#5 ou 6M) quando função tônica — paralelo ao #11 no maior.</li>
+        <li>Progressões SD→D→T com <strong>IV–V–I</strong> triádico ainda vigentes (Cartola, samba de partido).</li>
+        <li>Dominante pode ser <strong>G7</strong> ou <strong>G6</strong> dependendo da linha vocal.</li>
+      </ul>
+      <div class="progression-diagram" data-chords="F,G,C6"></div>
+
+      <h3>8.2 Choro</h3>
+      <ul>
+        <li>Base <strong>triádica</strong> + passagens diminutas (Bdim, B°7 entre Imaj7 e iim7 — citado como dispositivo Jobim/choro).</li>
+        <li>Cadência <strong>ii–V–I</strong> com 7ªs quando o choro se aproxima do jazz (Jacob do Bandolim, later choro).</li>
+        <li>m7(b5) como ii de tonalidade menor momentânea — preparação para subdominante menor.</li>
+      </ul>
+
+      <h3>8.3 Bossa nova</h3>
+      <ul>
+        <li>I como <strong>maj7</strong> ou <strong>6/9</strong> — raramente tríade seca (diferença central vs pop).</li>
+        <li><strong>ii–V–I</strong> com Dm7–G7–Cmaj7 = espinha dorsal (Garota de Ipanema, Insensatez).</li>
+        <li><strong>Em7</strong> com 9+ / F# como proxy de CΔ#11 — “mineiro” citado no vídeo.</li>
+        <li>Resolução em <strong>Am6</strong> ou Am7(6) — 6M estabiliza tônica menor (bossa melancólica).</li>
+      </ul>
+      <div class="progression-diagram" data-chords="Dm7,G7,Cmaj7"></div>
+      <div class="progression-diagram" data-chords="Bm7b5,E7,Am7"></div>
+
+      <h3>8.4 MPB (Toninho Horta, João Bosco, Dominguinhos)</h3>
+      <p>O “Dó do Toninho Horta” do vídeo = maj7 + #11 + movimento interno (Lydian #5) — harmonia como <strong>linha de vozes</strong>, não acorde estático. João Bosco (fase jazzística) usa #11 e sus no V; Dominguinhos opera oralmente o mesmo repertório de extensões sem nomes latinos de modos.</p>
+
+      <table>
+        <tr><th>Artista / estilo</th><th>Centro tonal típico</th><th>Dispositivo Ozeias equivalente</th></tr>
+        <tr><td>Tom Jobim</td><td>Cmaj7, Dm7, G7</td><td>5 acordes + dim passagem</td></tr>
+        <tr><td>Toninho Horta</td><td>CΔ#11, C Lydian #5</td><td>Maior tipo ① sofisticado</td></tr>
+        <tr><td>João Bosco (jazz)</td><td>Em7(F#), Gsus, CΔ#11</td><td>iii como I; sus V</td></tr>
+        <tr><td>Velha Guarda samba</td><td>C6, F, G7, Am6</td><td>Tríade + 6/9; menor 6M</td></tr>
+      </table>
+    </section>
+
+    <section id="allofme">
+      <h2>9. Exemplo integrado: <em>All of Me</em> (ápice tonal no vídeo)</h2>
+      <p>Ozeias demonstra uma reharmonização “limite” antes de sair do tonalismo — todos os embelezamentos dos 5 tipos:</p>
+      <ol>
+        <li><strong>Dm7</strong> (ii, dórico) — SD</li>
+        <li><strong>G7</strong> (V) — extensões naturais/alteradas conforme destino</li>
+        <li><strong>Cmaj7</strong> → <strong>C Lydian #5</strong> (I sofisticado)</li>
+        <li><strong>Fmaj7</strong> → <strong>F Lydian #5</strong> (IV sofisticado)</li>
+        <li><strong>Bm7b5</strong> + 11 — ii de Am</li>
+        <li><strong>Em7</strong> com 9+, b9, b13 — V de Am alterado</li>
+        <li><strong>Am7</strong> com 9, quarta — tônica menor dórica</li>
+      </ol>
+      <div class="progression-diagram" data-chords="Dm7,G7,Cmaj7,Fmaj7,Bm7b5,Em7,Am7"></div>
+      <p>Isso é o “teto” do tonalismo funcional no pensamento do vídeo — além disso, começa “a brincadeira” composicional (música com os tipos, não mais teoria de modos).</p>
+    </section>
+
+    <section id="velha-guarda">
+      <h2>10. Velha Guarda, oralidade e o fim do “jogo acadêmico”</h2>
+      <p>A conclusão política-pedagógica: Dominguinhos, João Bosco e Toninho Horta <strong>conheciam</strong> esse universo — não via termos como “Lydian #5”, mas via timbre, canto e violão. O conhecimento acadêmico não é inimigo; o problema é acreditar que só existe a versão do livro (Cmaj7 no I universal).</p>
+      <blockquote>“Quando chega aqui é que começa a brincadeira — fazer música com isso. O jogo não terminou; começou agora.”</blockquote>
+      <p>Para o curso de harmonia funcional deste repositório, este apêndice complementa os módulos 04–10: funções T/SD/D permanecem, mas a <strong>escolha de qualidade e extensão</strong> passa a ser filtrada pelo gênero (samba ≠ bossa ≠ pop triádico).</p>
+    </section>
+
+    <section id="transcricao">
+      <h2>Apêndice A — Transcrição completa (YouTube, PT)</h2>
+      <p class="tip">Transcrição automática do YouTube, revisada na divisão por seções. Marcações <em>[demonstração musical]</em> indicam trechos instrumentais no vídeo original.</p>
+      <div class="transcript-wrap">
+<section class="transcript-section" id="trans-intro">
+<h3>Introdução — teoria, linguagem e tese dos 5 acordes</h3>
+<p>Olá pessoal sejam bem-vindos a mais um vídeo Uma das coisas que mais complica no processo de ensino e aprendizado em música é que a teoria musical ela explica Ou pelo menos tenta explicar a música até um ponto porém existe outro ponto chamado linguagem que é extremamente importante e nós também temos uma linguagem harmônica quando você pede para alguém que toca RM ou tocar um dó maior provavelmente vai ser esse dó maior alguém que toca folk esse dó maior alguém que toca samba Esse é o dó o dó do Toninho Horta é esse dó logo a ideia do vídeo é traçar uma linha crescente de como a gente vai acrescentando esses embelezamentos dentro de cada linguagem de chegar de bitol at Toninho Horta e vocês vão ver que no final na verdade eu resumo tudo a cinco acordes e eu não penso mais em empréstimo modal substituição por trítono porque na verdade vou sempre enxergar tudo dentro desses cinco acordes é assim que esses grandes harmonizadores pensam e com assim que a galera Improvisa também a galera da Velha Guarda né resume tudo a cinco acordes</p>
+</section>
+<section class="transcript-section" id="trans-triades">
+<h3>Tríades e campo harmônico</h3>
+<p>Então logo primeiramente Como surgem os acordes se eu pegar a escala de dó maior dó ré mi fa sol lá si se eu pegar a primeira nota da escala que é o dó dó pulo ré pego mi pulo fá pego sol eu tenho dó mi sol logo quando eu faço esse acorde de dó maior tudo que tá acontecendo aqui são essas três notas dó mi sol e se eu fizer o mesmo processo a partir do ré segunda nota da escala ré pula o mi pega o fá pulo sol pego o lá eu tenho essas três notas por isso a corde de Tríade somente três notas logo vai me gerar essas notas ré fa lá o Acorde de ré menor o segundo grau do campo harmônico se eu fizer o mesmo processo a partir do mi vai me girar mi menor a partir do Fá vai me girar fá maior a partir do sol sol maior a partir do lá lá menor e a partir do si si menor com a quinta Bemol que dentro dessa linguagem esse acorde nem aparece logo quando eu tô numa situação Aonde a música peça essa coisa meio folclórica é esse tipo de acorde que eu vou tocar <em>[demonstração musical]</em> porque tem essa coisa singela da Tríade certo essa coisa meio lúdica Se eu colocar uma sétima maior acrescentou aqui um embelezamento que não Não convence né não tá de acordo com a estética a estética pede <em>[demonstração musical]</em> essa coisa da Tríade mesmo certo então por isso que é importante ter essa consciência Ah mas eu aprendi no livro que o primeiro grau do campo harmônico é dó com sétima maior nessa linguagem não somente Tríade</p>
+</section>
+<section class="transcript-section" id="trans-nonas">
+<h3>Embelezamento 1: nonas (add9)</h3>
+<p>aí você pensa OK Agora vamos começar a colocar embelezamento nesse campo harmônico logo pela lógica dó pulo ré pego mi pulo fá pego o sol pulo lá pego o si dó com s maior mas para mim não o primeiro embelezamento que eu vou colocar tá um pouco mais na frente que é a nona logo si pulo dó pego o ré esse para mim é o primeira embelezamento aonde você vai ter essa estética sonora um pouco mais folk pop já um pouco mais sofisticado se eu fizer o mesmo processo a partir do ré ré pulo mi pego o fa pulo sol pego o lá pulo si pego dó dó é a Sétima do ré vou pular Só que eu não quero a sétima eu quero a nona pulo o ré pego mi mi é a nona do <em>[demonstração musical]</em> ré agora interessante que se eu fizer isso a partir do Terceiro Grau o mi nota em que mi pulo fá pego sol pulo lá pego si pulo dó pego ré achei a sétima Mas eu quero a nona pulo mi pego o fá notem que fa mi e Fá tem uma distância de semitom logo o terceiro grau vai ter a nona Bemol que é uma nota que funciona de passagem mas se eu colocar essa nona Bemol no terceiro grau não rola não fica legal por isso o terceiro grau não vai ter nona logo o mesmo processo a partir do quarto grau vai ter a nona nona do fa é o sol notem Tríade de fá com o sol na ponta Eu também gosto de fazer esse aqui fa maior tiro o dedo dois fá com a nona e sol vai ter a nona que é a nota lá coloquei o lá aqui com o dedo dois e o lá menor também vai ter a nona que é o si e esse si menor com a quinta Bemol Nessa onda mais folk não rola também mas pop né ou seja meu campo harmônico dó no dó com a nona dd9 né dó com a nona adicionada por isso Tríade addd no que é a Tríade adicionando a nona ré menor com a Nona a dd9 fá com a nona adicionada sol com a no adicionada lá menor com a no adicionada notem que já tem totalmente a <em>[demonstração musical]</em> linguagem já soua bem dentro dessa linguagem folk pop né Essa nona</p>
+</section>
+<section class="transcript-section" id="trans-setimas">
+<h3>Embelezamento 2: sétimas (tetrações)</h3>
+<p>Agora sim vem a sétima que já é uma onda o qu Vamos pensar que nós estamos numa gig mas de Avan na fase pop Jorge versilo logo como é que eu vou descobrir as sétimas mesmo processo dó pulo ré pego o mi pulo fá pego o sol pulo lá pego o si tenho dó com Sé a maior notem que aonde eu tinha a Nona a nona se mantém porque Clichê eu colocar já séa maior com a nona not tem aqui dó mi si que é sétima maior ré que é a nona Ou <em>[demonstração musical]</em> seja notem que super dentro dessa linguagem de Avan Jorge versil uma coisa mais pop sofisticado né Nel sou também acontece muito isso logo se eu fizer o mesmo processo com o ré eu vou descobrir que o ré é menor com sétima e ele possui a nona certo ré fa dó mi Ou seja notem que já sou a sofisticado som interessante já o terceiro grau não vai ganhar a nona ainda somente sétima ou seja mi menor com sétima já o fa com sétima maior vai ganhar a nona se eu é o mesmo processo fa pulo sol pego lá pulo si pego dó pulo ré pego mi fá com Sé maior E como eu falei a nona se mantém aliás eu posso tocar S fá com Sé maior obviamente e com a nona mesma coisa com o dó ré menor com sétima coloca a nona o sol com s o sol o quinto grau vai ser Sol com sétima e eu posso manter a nona notem aqui sol si fa lá Sol com sétima e nona E se eu colocar aqui também Sol com sétima e nona sol fa lá si o sexto grau o lá menor Vai ser lá menor com sétima e também vai ganhar a nona como a gente viu já tinha nona Eu gosto muito de fazer esse formato aqui aqui eu toco com o Polegar a fundamental Pestana com o dedo um na corda qu 3 e dois e a nona na ponta ou eu venho com o dedo dois aqui na fundamental faço a Pestana com o dedo três e coloco a nona aqui na ponta outro que eu gosto também esse aqui lá menor com sétima e nona lá sol si dó e já o Acorde de sétimo grau agora vai ganhar a sétima C menor com sétima e quinta Bemol logo meu campo harmônico notem que você já sente a estética sonora <em>[demonstração musical]</em> <em>[demonstração musical]</em> você já sente essa estética sonora de um Pop sofisticado já um Pop Mais é coat uma coisa mais diferente né</p>
+</section>
+<section class="transcript-section" id="trans-funcoes">
+<h3>Funções harmônicas (visão Ozeias)</h3>
+<p>agora nesse momento é interessante agora nesse momento para entender os outros embelezamentos é importante entender função harmônica então se eu tenho o campo harmônico de dó maior agora em tetra de dó com Sé a maior ré menor7 mi menor sete fa com sétima maior Sol com sétima lá menor com sétima e si menor com sétima e quinta Bemol certo para mim tem dois acordes aqui apenas com função tônica Geralmente os livros abordam que os acordes com função tônica são o primeiro grau o terceiro grau e o sexto grau Porém para mim eu só vejo como função tônica o primeiro e o sexto O primeiro é responsável pela função tônica ou seja pelo repouso da música no tom maior e o sexto grau ele é responsável pelo repouso da música no tom menor o terceiro geralmente ele aparece no tonalismo substituindo o primeiro Por exemplo quando você tem o famoso 25 1 2 5 em vez de pro um vai pro três certo porque quando você tem uma música que vai pro terceiro grau no tonalismo ela modula ela vai pro terceiro grau certo então para mim função tônica maior primeiro grau função tônica menor sexto grau o terceiro apenas seria eu vejo como um com baixo invertido porque se você faz o mi menor com sétima e coloca o baixo em dó é um dó com sete maior e nona certo então função tônica função de repouso maior e menor subdominante o 2 R menor 7 e o 4 fa com Sé maior função subdominante função intermediária não exerce repouso e também não exerce tensão agora o dominante para mim é só o quinto grau alguns livros trazem que o dominante é o quinto e o sétimo eu não gosto de ver dessa forma por quê Porque eu jamais cifrar ré menor 7 si menor com sétimo e quinta Bemol dó com sétimo maior jamais cifrar dessa forma eu cifrar com certeza ré menor 7 sol com 7 nona com o baixo em si porque eu já deixo claro a função harmônica Então para mim a corde dominante é só o quinto grau o sétimo grau eu vou utilizar ele sendo subdominante para ir pro acorde menor como o dois do menor certo no caso lá menor é o nosso dois então eu pego o c menor com Sé e quinta Bemol que é o dois do lá menor</p>
+</section>
+<section class="transcript-section" id="trans-cadencias">
+<h3>Cadências maior e menor</h3>
+<p>agora notem aqui que eu consigo preparar a chegada do Tom Maior porque eu tenho o dois o subdominante eu tenho o cinco o dominante resolve ou seja sensação intermediária gera tensão para ter na função tônica a resolução só que eu tenho que preparar também a tonalidade menor certo logo se eu preciso de um 2 5 1 para chegar no lá menor quem é o dois do lá é o si si menor com séa e quinta Bemol e quem é o cinco do lá é o mi porém lembra que no campo harmônico O Mi é menor com sétima logo o Acorde menor com sétima ele não tem função dominante porque ele não tem o trítono distância de três tons quando eu observo aqui no sol se o que faz com que o sol se Gere tensão é a distância entre faz se o trítono já esse acorde não tem essa distância de três tons agora se eu transformar o sol em sol sustenido agora eu tenho um mi com sétima que vai preparar a chegada do lá menor logo eu consigo montar uma Cadência onde eu tenho a preparação pro Tom Maior e consigo preparar o Tom menor certo com os embelezamentos certo</p>
+</section>
+<section class="transcript-section" id="trans-quarta">
+<h3>Embelezamento 3: quarta e #11</h3>
+<p>agora que começa por que que eu falei da função harmônica o próximo embelezado vai ser a quarta logo dó pulo ré pego o mi pulo fá pego o sol Tríade pula o lá peg o si T pula o dó pego o ré primeiro embelezamento pula o mi pego o f essa nota a quarta ela tira a sensação de repouso do acorde com função tônica por isso que ela é evitada quando eu faço dois preparo maior quando chega não chegou essa nota tem que fugir dela logo quando eu vou colocar uma quarta no primeiro grau eu vou colocar a quarta aumentada notem aqui por exemplo que vai manter dó mi si ré faço cenido que é a quarta aumentada Ou seja eu consegui trazer mais um embelezamento esse tipo de Guig aqui já mais sofisticada a galera já já estamos falando João Bosco di avana fase um pouco mais jazzística né estamos falando de uma coisa mais sofisticada Jazz moderno onde entra essa quarta aumentada notem que agora eu tenho meu do certo eu gosto muito de usar aqui também a Tríade de ré com o baixo em dó esse faç ser quarta aumentada ou esse trad do ré dó mi nota <em>[demonstração musical]</em> interessante certo por isso quarta aumentada</p>
+</section>
+<section class="transcript-section" id="trans-terceiro">
+<h3>Terceiro grau, mineiros e F#</h3>
+<p>agora nós vamos colocar a nona nós vamos voltar na nona do terceiro grau Por que que o terceiro grau não recebeu nona E por que que os mineiros fazem direto isso aqui no tom de dó quando eu vi isso a primeira vez eu pensei Nossa isso tá errado não pode eles estão colocando a nona no terceiro grau os mineiros usam muito isso notem que quando eu coloco fa sustenido aqui esse faç sustenido quando eu faço esse mi menor com Sé nona é como se fosse novamente como eu sempre falo o três substitui o um É como se eu fosse pro dó com essa quarta aumentada tá aqui porque a nona do mi vai ser a quarta aumentada do dó notem aqui se eu pensar esse acorde como dó terça do dó quinta nona quarta aumentada logo do <em>[demonstração musical]</em> C daí que vem a ideia dos Mineiros em vez de pro um eu vou pro três já com embelezamento do fa do F sustenido tirei o f natural certo já o terceiro grau vai receber a quarta soua lindo acorde menor soua linda a quarta é um excelente belezao porque novamente Como surge mi pulo fá pego o sol pulo lá pego o si pulo dó pego o ré pula o mi pega o fa cenido fa eu não quero para esse acorde pula o sol pega o lá olha que interessante do C aqui eu já transformei o se ind dominante para preparar a chegada do dois certo então seguindo o quinto grau também vai ter a quarta o sol o famoso suis que é uma excelente alternativa no pop quando você quer deixar o quinto grau porque o sol se ele soa meio brega Nessa onda mais sofisticada então é muito comum o SUS aonde eu tenho sétima que é o fa a nona que é o lá e a quarta que é o dó ou seja Olha a diferença ele é um dominante leve o suiz porque ele é meio que uma mistura do subdominante é a Tríade do fá com o baixo no dominante que é o sol ele é um dominante meio subdominante eu gosto de pensar nele dessa forma olha interessante quarta aumentada vamos no <em>[demonstração musical]</em> Mineiro viram novamente substituir um pelo três logo se eu for no sexto grau acorde menor quarta sou alindo a quarta do lá é o ré lá menor com séa troca a quinta pela quarta certo e o si menor com s e qu Bemol o embelezamento dele é a quarta sou lindo a quarta para esse acorda ou seja Olha que interessante se eu fizer do C pro maior do C pro menor notem que no mi7 você pensa Ah o que que eu vou colocar no mi 7 preparando o lá menor é só você manter as outras notas da escala porque lembra que aqui o sol virou sustenido mas se eu quiser manter o sol que pertence ao meu centro tonal é a nona aumentada do mi sou alindo PR acorde menor se eu quis Man noa Bemol fá tá na escala de dó se eu quiser manter o dó tá na escala de dó certo então vai ser as melhores escolhas para quando eu preparo um acorde menor dó que vai ser a 13ª Bemol do mi Sol é nona aumentada fá é nona Bemol ou <em>[demonstração musical]</em> seja certo então já começo aqui a ficar bem sofisticado né já acrescentando essa quarta novamente acrescentando as quartas</p>
+</section>
+<section class="transcript-section" id="trans-prep-menor">
+<h3>Preparação de tonalidade menor</h3>
+<p>Então eu tenho Imaginem ré menor com a quarta nona quarta quarta aumentada já bem sofisticado</p>
+</section>
+<section class="transcript-section" id="trans-sexta">
+<h3>Embelezamento 4: sexta e 6/9 (samba)</h3>
+<p>agora um intervalo bem interessante também é a sexta se eu fizer o mesmo processo dó pulo ré pego o mi pulo fá pego sol pulo lá pego si pulo dó pego ré pula o mi pego o fa sustenido pulo o sol pego o lá lá é a sexta do dó logo é interessante porque em algumas linguagens Como por exemplo o samba a sétima maior não soua legal é mais comum no samba o 69 certo notem aqui dó mi lá ré famoso 69 e a razão disso no dips jazz também se ou 69 não rola sétima maior no dipsy jazz e uma das razões é que essas músicas tem muito da vertente folclórica na parte melódica então era muito comum a melodia terminar na Fundamental e quando <em>[aplausos]</em> você choca com a sétima melodia na fundamental então quando eu faço <em>[demonstração musical]</em> o 69 ajuda mais a estabilizar a melodia né então mas eu posso intercalar s a maior com <em>[demonstração musical]</em> sexta fica excelente já o segundo grau também vai receber sexta o ré menor a sexta do ré vai ser o si a nesse acorde às vezes ela não soa muito legal porque ela entrega o som do acorde dominante que é o sol sete notem quando eu faço por exemplo é como se eu já ouvisse sol se mas até rola a gente acaba tocando mas ela tem esse esse tem que ter esse cuidado porque já dá muito a cara do sol se mas rola já no terceiro grau novamente lembra que eu falo falo que para mim ele é igual um ele é um aliás um com baixo invertido né Se eu tocar a sexta do mi O Mi vai ter a sexta Bemol notem que é o dó que já é aquele famoso acorde Mineiro novamente do <em>[risadas]</em> C ó mi menor sexa Bemol que vai ser o dó já o fa também vai ter sexta sexta do fá ré já o sol S também vai ter sexta que comumente no dominante nós chamamos de 13ª 1 oitava acima no caso aqui o mi e o sexto grau novamente Olha que interessante no sexto o sexto grau vai ter sexta Bemol que é a nota fa certo lembra que esse acorde que eu falei que esse acorde é um acorde com função tônica logo o Fá vai incomodar aqui também porque eu faço dois <em>[demonstração musical]</em> C quando repousa novamente o fa incomodou assim como o fa incomodou no acorde maior com função tônica vai incomodar no acorde menor com função tônica Porém você tem que ter consciência que aqui o fa é a quarta e aqui o qu o fa é a sexta Bemol logo que a gente fez no dó a gente transformou o fa em fa sustenido a mesma coisa aqui agora sim eu tenho um lá menor com a se nesse momento agora certo faltou o séo grau aqui nesse cara aqui a sexta também não é comum seria a sexta Bemol mas não é muito comum porque já vai caracterizar como se fosse um sol não é interessante Então para esse acorde a a sexta que seria a sexta Bemol</p>
+</section>
+<section class="transcript-section" id="trans-cinco">
+<h3>Convergência nos 5 acordes</h3>
+<p>agora nesse momento é interessante a gente pensar no que que tá acontecendo aqui notem que toda a história do acorde um quantos acordes com sete maior eu tenho no campo harmônico do 1 e qu notem como é que ficou toda a história do acorde um fundamental terça quinta sétima maior nona quarta aumentada e sexta como é que ficou toda a história do quarto grau fundamental terça quinta sétima maior nona quarta aumentada e sexta Ou seja é maior acorde maior certo então por isso que eu digo que vou resumir tudo as cinco acordes notem como é que ficou o Acorde dois fundamental terça menor quinta sétima menor nona quarta e sexta que nós chamamos de modo dórico nesse primeiro aqui maior a gente chama de modo Lídio virou Lídio dó Lídio fío aqui virou R menor dórico novamente fundamental terça quinta sétima menor nona quarta e sexta dórico como é que ficou o sexto grau fundamental terça menor quinta sétima menor nona quarta e sexta ficou igual ao segundo ou seja dórico logo para mim é acorde menor acorde maior acorde menor porque eles vão ganhar a mesma história com essa correção que a gente faz eles vão ficando os dois acordes com a mesma história por exemplo muito comum em Bossa Nova quando resolve no acorde menor com função tônica olha aqui a sexta faço cenido novamente se eu colocar a cesta bemol <em>[demonstração musical]</em> de novo a sexta maior traz estabilidade pro acorde menor com função tônica certo então Ou seja eu resumi tudo maior e menor</p>
+</section>
+<section class="transcript-section" id="trans-extensoes">
+<h3>Extensões naturais vs não naturais</h3>
+<p>agora dominante para mim o dominante tem o dominante que tem extensões naturais e não naturais quando você prepara um acorde maior o acorde maior ele pode aceitar extensões naturais Quem são as extensões naturais nós acabemos de ver as extensões é o que tá acima da tetrade eu tenho sol pulo lá pego si pulo dó pego ré pulo mi pego fa agora pulo sol pego o lá nona pulo si pega o dó 11ª pula o ré pega o mi 13ª extensões naturais então o acorde maior ele pede extensões naturais ou e também aceita bem o acorde maiores ex tensões não naturais se a 13ª é uma extensão natural lógico a 13ª bmol é não natural assim como se a 11ª é natural aa aumentada é não natural se a nona é uma extensão natural a non Bemol é uma extensão não natural a nona aumentada também é uma extensão não natural certo logo o acorde maior por exemplo eu tô no tom de dó aí eu vou pro quarto grau que é um acorde maior extensões naturais do acorde não naturais resolve já o Acorde menor ele pede as extensões não naturais certo vamos vamos eu quero preparar ao lá menor por exemplo nona aumentada como eu falei nona bemol nona aumentada é o sol nona Bemol o fá 13ª Bemol extensão no natural o dó e dessa primeira aumentada o lá sustenido ou C Bemol porém as mais comuns que preparam um acorde menor é a 13ª Bemol nona aumentada nona Bemol resolve certo porque se eu colocasse aqui dessa primeira aumentada já daria a escala alterada que a gente vai chegar nela agora</p>
+</section>
+<section class="transcript-section" id="trans-allofme">
+<h3>Exemplo: All of Me (ápice tonal)</h3>
+<p>Então quer dizer que seria o ápice do meu tonalismo vamos supor por exemplo que eu vou tocar Alon lives no tom de no tom de dó certo esse seria o ápis por <em>[demonstração musical]</em> exemplo vou preparar PR maior <em>[demonstração musical]</em> né novamente al lives ré menor segundo grau do capo harmônico de dó sol com séo ou quinto grau extensões naturais não naturais prepara um dó com Sé maior lío quarta aumentada vai pro quarto grau fa com Sé maior Lídio agora Vou preparar a chegada do lá menor dois do lá menor C menor com S5 Bemol coloquei a quarta excelente embelezamento mi7 vai preparar a chegada do nosso centro tonal menor o lá menor nona aumentada nona Bemol prepara o lá menor aqui com a quarta então quer dizer que esse é o ápice novamente eu resumi as cinco acordes dois maiores menor dominante para maior dominante que pode ser para maior ou para menor e Menor com séa e quinta Bemol esses cinco acordes certo</p>
+</section>
+<section class="transcript-section" id="trans-modos">
+<h3>Lídio #5, Locrian 9, falso dominante</h3>
+<p>logo esse seria o limite então o ápice notem que no nosso cálculo o acorde um ele ganhou o som Lídio existe mais um um nível ainda de sofisticação que eu colocar o lídio 5 mais que é quando eu vou pegar da escala menor melódica logo eu vou enxergar esse acorde como sendo o terceiro grau da escala menor melódica logo lá menor melódica Lembra eu tenho o acorde a o dó Lídio ele virou Lídio primeiro grau depois mais uma sofisticação Lídio C mais e é o mesmo sabor que eu vou dar pro quarto grau onde eu tinha Lídio agora Lídio 5 mais certo notem que o dórico que é o do e o seis mais uma sofisticação o dórico sete mais eu vou colocar sétima maior que vem lá da primeiro grau da escala menor melódica certo tanto esse como esse ou seja vou pegar o lá e vou colocar Sé a maior Sé maior do lá sol sustenido Sé a maior do ré dó sustenido e aqui a quinta aumentada do dó vai ser o sol sustenido esse Voice é um grande representante do famoso líde 5 mais eu tenho aqui dó fa sustenido si mi sol <em>[demonstração musical]</em> suido certo Olha que interessante sete maior aqui já estamos chegando numa coisa meio Ton orta uma coisa que eu gosto de fazer é movimento Olha <em>[demonstração musical]</em> só cinco mais C menor com 75 Bemol Sé maior extensões naturais não naturais resolve dó Lídio lío 5 mais fa Lídio lío 5 mais agora agora eu vou pegar mais um embelezamento na menor melódica que é o famoso Loo no que o embelezamento pro acorde menor com Sé e quinta Bemol quinta Bemol é a nona que eu vou colocar aqui nona dó sustenido certo s super legal esse embelezamento pro menor com Sé e qu Bemol porque ele cria essa voz aqui ó C menor com s e qu Bemol troca a terça menor pela nona vai criar essa voz ou seja C menor com Sé qu <em>[demonstração musical]</em> Bemol mi com a nona aumentada e 13ª Bemol resolvendo no lá menor já coloquei a séa maior com a nona Ou <em>[demonstração musical]</em> seja já um 251 para menor extremamente sofisticado si L 9 ou seja ele passa a ser eu passo a enxergar ele como sexto grau da escala menor melódica nesse caso o si vai ser ré menor melódica só que eu não penso assim para mim é um acorde menor com séa e quta Bemol e eu tenho os embelezamentos dele acorde Menor Os embelezamentos quem é quarta sétima maior sexta acorde menor eu não penso mais tá o grau da menor melódica Porque para mim é acorde menor embelezamento quarta sétima maior dominante extensões naturais não natural resolve acorde maior embelezamento lío cinco mais quarto grau lío cinco mais dois embelezamento para acorde menor com Sé qu bol é a nona acorde menor embelezamento a s maior a quarta dominante então não sei se deu para entender isso é que eu não penso mais tal grau da menor melódica tal grau da menor harmônica e quando certo eu tô pensando em empréstimo modal por exemplo vamos pegar no tom de dó Tom e dó vai pro quarto grau quando vem para esse acorde se Bemol set que a gente chama de empréstimo modal a gente pegou emprestado o sétimo grau de dó menor para mim é um dominante que não resolve esse dominante que não resolve ele tá lá na escala menor melódica que é o quarto grau famoso Lídio b7 logo para mim quando eu vejo esse dominante eu t tom de dó esse dominante ele aponta para cá ele aponta para mi bemol que não tá no tom de Dom Bemol logo ele é um falso dominante porque ele aponta para uma direção que não vai não tem na música Aquela direção ali certo então quando eu vejo esse dominante logo já penso líde b7 que é o que é o dominante lembra que o nosso dominante as extensões naturais eram nona 11ª e 13ª só que esse a gente vai colocar 11ª aumentada que som mais interessante ou seja eu tenho aqui Si Bemol lá Bemol dó e mi Então para mim Já nem penso em em préstimo modal eu penso falso dominante tem essa situação t em dó vai pro quatro porque se você colocar tensão nesse acorde sou super estranho por porque ele não vai resolver você tá gerando tensão só que não vai ter a resolução certo por isso falso dominante por exemplo outro exemplo aqui estamos tocando em dó aí tem famoso esse acorde aqui ah empréstimo modal para mim acorde menor com s e qu B meus embelezamentos para eles são quarta nona quando tem esse aqui por exemplo no tom de dó ah empréstimo modal para mim acorde com sétima maior Ou seja eu tenho Lídio ou Lídio 5 mais meus embelezamentos tô tocando aqui quem é o embelezamento para acorde maior nona quarta aumentada sexta ou seja não penso mais ah esse acorde veio de tal modo de tal escala não para mim acorde com sétima maior né outras situações Vamos pensar aqui ah por exemplo também clássico tô no tom de dó vai pro quarto grau vira menor para mim é menor que para mim o que que tem um acorde menor o Acorde menor para mim ele tem nona quarta sexta e último embelezamento sete a maior Ou seja quando eu tô tocando aqui prepara o quatro vai pro quatro vira <em>[demonstração musical]</em> menor substituição por trítono certo re Bemol 7 onde é que esse acorde vai resolver R Bemol 7 sol Bemol sol Bemol não tá no tom de dó não tem então esse acorde é um falso dominante novamente falso dominante lío b7 ou seja o que que o lídio b7 tem R Bemol 79 13ª 11ª aumentada nona Então para mim substituição por trítono é uma o falso dominante sabe porque é um dominante que não vai ter não vai resolver então para mim ficou muito mais fácil quando eu tô tocando eu penso nisso por exemplo ã próprio PR lives novamente acorde menor quarta S <em>[demonstração musical]</em> maior novamente extensões naturais não naturais vai pro um acorde com s maior Quais são as extensões para mim nona aumentada <em>[demonstração musical]</em> se mais ainda se eu quiser mais um embelezamento quarto grau Quais são as extensões nona D primeira aumentada sexta ou L 5 mais menor com s qu Bemol embelezamentos para ele nona acorde menor embelezamento Sé maior quarta ou seja <em>[demonstração musical]</em> <em>[demonstração musical]</em> preparar a acorde menor nona aumentada bmol 1ª bmol <em>[demonstração musical]</em> né</p>
+</section>
+<section class="transcript-section" id="trans-modal">
+<h3>Empréstimo modal vs 5 acordes</h3>
+<p>Então para mim é tudo assim eu consigo enxergar hoje eu visualizo tudo Dessa forma não consigo não fico pensando tocar tal escala veio de tal modo veio de tal local não para mim são isso são cinco acordes aí você pensa né que pô então Zerou o joguinho do tonalismo</p>
+</section>
+<section class="transcript-section" id="trans-conclusao">
+<h3>Conclusão — oralidade brasileira</h3>
+<p>basicamente hoje eu penso o seguinte quando chega aqui é que começa a brincadeira é fazer música com isso né Então para mim não terminou o jogo ele começou agora agora que começou o jogo aí você se pergunta ah mas o Dominguinhos o João Bosco Eles não sabiam nada disso sabiam tudo isso aqui a gente tem o problema de ver que o conhecimento é uma coisa acadêmica né o papel e tal isso é um problemão porque se você parar para pensar o Dominguinhos João Bosco conhece tudo isso aqui que eu tô falando o Toninho muito bem só que conhecem da maneira deles que é o quê Tá tudo na cabeça só que eles conhecem isso não da forma acadêmica né Tem gente que pensa Ah esses grandes Mestres os caras não sabiam nada disso sabiam sim a maneira deles não não essa forma academicista Valeu galera espero que eu tenha conseguido passar essa ideia uma ideia meio extensa né complexa mas espero que eu tenha conseguido transmitir como eu gosto de pensar hoje Harmonia Valeu galera forte abraço s</p>
+</section>
+
+      </div>
+    </section>
+
+    <footer class="module-nav">
+      <a href="index.html">← Curso principal</a>
+      <a href="10-mpb-bossa.html">Módulo MPB/Bossa →</a>
+    </footer>
+  </main>
+</div>
+
+<script src="js/chords-dict.js"></script>
+<script src="js/chord-diagrams.js"></script>
+<script src="js/chord-auto.js"></script>
+<script src="js/theory-data.js"></script>
+<script src="js/ozeias-voicings.js"></script>
+<script src="js/campo-estilo.js"></script>
+</body>
+</html>

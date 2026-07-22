@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campo harmônico · tons maiores | MOD-BRAÇO-01</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #f0a030;
+      --accent2: #4ecdc4;
+      --border: #2d3f54;
+      --fn-t: #69db7c;
+      --fn-sd: #4ecdc4;
+      --fn-d: #f0a030;
+      --fn-pd: #a78bfa;
+      --col-7M: rgba(105, 219, 124, 0.12);
+      --col-m7: rgba(78, 205, 196, 0.12);
+      --col-7: rgba(240, 160, 48, 0.15);
+      --col-m7b5: rgba(167, 139, 250, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding: 1.25rem 0.85rem 3rem;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1rem; }
+    header .eyebrow {
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.25rem;
+    }
+    header h1 { font-size: 1.4rem; font-weight: 800; }
+    header p { color: var(--muted); font-size: 0.9rem; margin-top: 0.3rem; }
+    nav { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1rem; }
+    nav a {
+      color: var(--accent); text-decoration: none; font-size: 0.78rem;
+      padding: 0.3rem 0.55rem; border: 1px solid var(--border); border-radius: 5px;
+    }
+    .callout {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 0.9rem;
+      border-radius: 0 6px 6px 0;
+      margin: 0 0 1rem;
+      font-size: 0.86rem;
+    }
+    .toolbar {
+      display: flex; flex-wrap: wrap; gap: 0.65rem; align-items: center;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.7rem 0.85rem; margin-bottom: 0.85rem;
+    }
+    .toolbar label { font-size: 0.72rem; color: var(--muted); margin-right: 0.3rem; }
+    .key-btn, .mode-btn, .form-btn {
+      padding: 0.35rem 0.55rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700;
+      border: 1px solid var(--border); background: var(--surface2); color: var(--text);
+      cursor: pointer;
+    }
+    .key-btn.active, .mode-btn.active, .form-btn.active {
+      background: var(--accent); color: #111; border-color: var(--accent);
+    }
+    .key-btn:hover, .mode-btn:hover, .form-btn:hover { border-color: var(--accent2); }
+    .legend {
+      display: flex; flex-wrap: wrap; gap: 0.45rem 1rem;
+      font-size: 0.76rem; color: var(--muted); margin-bottom: 0.75rem;
+    }
+    .legend span { display: inline-flex; align-items: center; gap: 0.3rem; }
+    .fn {
+      font-size: 0.65rem; font-weight: 800; padding: 0.1rem 0.3rem;
+      border-radius: 4px;
+    }
+    .fn-T { background: rgba(105,219,124,0.25); color: var(--fn-t); }
+    .fn-SD { background: rgba(78,205,196,0.25); color: var(--fn-sd); }
+    .fn-D { background: rgba(240,160,48,0.25); color: var(--fn-d); }
+    .fn-PD { background: rgba(167,139,250,0.25); color: var(--fn-pd); }
+    .dot-demo {
+      display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+      vertical-align: -1px; margin-right: 0.2rem;
+    }
+    .dot-demo.root { background: #fff; box-shadow: 0 0 0 1.5px #111; }
+    .dot-demo.filled { background: #111; box-shadow: 0 0 0 1px #888; }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    }
+    .harm-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      min-width: 720px;
+    }
+    .harm-table th,
+    .harm-table td {
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.55rem;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .harm-table thead th {
+      background: #0a0e14;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+    .harm-table thead th:first-child { text-align: left; min-width: 6.5rem; }
+    .harm-table tbody th {
+      background: #0a0e14;
+      color: #fff;
+      font-weight: 700;
+      text-align: left;
+      font-size: 0.82rem;
+    }
+    .harm-table tbody tr { cursor: pointer; }
+    .harm-table tbody tr:hover td { background: rgba(78, 205, 196, 0.08); }
+    .harm-table tbody tr.selected td,
+    .harm-table tbody tr.selected th { background: rgba(240, 160, 48, 0.12); }
+    .harm-table tbody tr.selected th { background: rgba(240, 160, 48, 0.35); color: #111; }
+    .harm-table td { background: var(--surface); font-weight: 700; }
+    .harm-table td.col-7M { background: var(--col-7M); }
+    .harm-table td.col-m7 { background: var(--col-m7); }
+    .harm-table td.col-7 { background: var(--col-7); }
+    .harm-table td.col-m7b5 { background: var(--col-m7b5); }
+    .harm-table td.highlight { outline: 2px solid var(--accent); outline-offset: -2px; }
+    .harm-table .chord { font-family: "SF Mono", Consolas, monospace; }
+
+    body.poster-mode .table-wrap { background: #fff; border-color: #ccc; }
+    body.poster-mode .harm-table th,
+    body.poster-mode .harm-table td { border-color: #bbb; }
+    body.poster-mode .harm-table thead th,
+    body.poster-mode .harm-table tbody th { background: #111; color: #fff; }
+    body.poster-mode .harm-table tbody tr.selected th { background: #333; color: #fff; }
+    body.poster-mode .harm-table td { background: #fff; color: #111; }
+    body.poster-mode .harm-table td.col-7M,
+    body.poster-mode .harm-table td.col-m7,
+    body.poster-mode .harm-table td.col-7,
+    body.poster-mode .harm-table td.col-m7b5 { background: #fff; }
+    body.poster-mode .harm-table tbody tr:hover td { background: #f5f5f5; }
+    body.poster-mode .harm-table tbody tr.selected td { background: #fff8e6; }
+
+    .poster-title {
+      display: none;
+      text-align: center; font-weight: 800; font-size: 1rem;
+      margin-bottom: 0.65rem; color: #111;
+    }
+    body.poster-mode .poster-title { display: block; }
+
+    .detail-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 1rem;
+    }
+    .detail-panel h2 {
+      font-size: 0.92rem; color: var(--accent2); margin-bottom: 0.45rem;
+    }
+    .detail-key {
+      font-size: 1.4rem; font-weight: 800; color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+    .chain {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem;
+      margin: 0.4rem 0 0.65rem;
+    }
+    .chord-pill {
+      padding: 0.32rem 0.55rem; border-radius: 7px; font-weight: 800;
+      font-family: "SF Mono", Consolas, monospace; font-size: 0.82rem;
+      border: 1px solid var(--border); background: var(--surface2);
+    }
+    .chord-pill.tonic { border-color: var(--fn-t); color: var(--fn-t); }
+    .chord-pill.subdom { border-color: var(--fn-sd); color: var(--fn-sd); }
+    .chord-pill.domin { border-color: var(--fn-d); color: var(--fn-d); }
+    .chord-pill.predom { border-color: var(--fn-pd); color: var(--fn-pd); }
+    .arrow { color: var(--muted); font-size: 0.8rem; }
+    .prog-row { margin-top: 0.35rem; font-size: 0.82rem; color: var(--muted); }
+    .prog-row strong { color: var(--text); }
+
+    .diagrams-head {
+      display: flex; flex-wrap: wrap; align-items: baseline;
+      gap: 0.4rem 0.75rem; margin: 1rem 0 0.55rem;
+      padding-top: 0.75rem; border-top: 1px solid var(--border);
+    }
+    .diagrams-head h3 {
+      font-size: 0.9rem; color: var(--accent2); font-weight: 800;
+    }
+    .diagrams-head .meta { font-size: 0.74rem; color: var(--muted); }
+    .form-row { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+    .chords-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 0.35rem;
+    }
+    .chord-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.28rem 0.2rem 0.3rem;
+      text-align: center;
+      min-width: 0;
+    }
+    .chord-card .deg {
+      font-size: 0.62rem; font-weight: 800; color: var(--muted);
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .chord-card h4 {
+      font-size: 0.78rem; font-weight: 800; margin: 0.05rem 0 0.05rem;
+      font-family: "SF Mono", Consolas, monospace;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .chord-card .fret-hint {
+      font-size: 0.58rem; color: var(--accent); margin-bottom: 0.15rem;
+    }
+    .chord-card svg {
+      width: 100%; max-width: 104px; height: auto;
+      display: block; margin: 0 auto;
+    }
+
+    @media (max-width: 900px) {
+      .chords-grid {
+        display: flex; gap: 0.35rem; overflow-x: auto;
+        padding-bottom: 0.3rem; -webkit-overflow-scrolling: touch;
+      }
+      .chord-card { flex: 0 0 96px; }
+      .chord-card svg { max-width: 88px; }
+    }
+
+    footer {
+      margin-top: 1.5rem; padding-top: 0.85rem; border-top: 1px solid var(--border);
+      font-size: 0.75rem; color: var(--muted);
+    }
+    footer a { color: var(--accent); }
+
+    @media print {
+      body { background: #fff; color: #111; padding: 0.5rem; }
+      nav, .toolbar, .callout, footer { display: none; }
+      body.poster-mode .poster-title { display: block; }
+      .table-wrap { box-shadow: none; border: none; }
+      .harm-table thead th, .harm-table tbody th {
+        background: #111 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">MOD-BRAÇO-01 · Harmonia · Folha Nelson</div>
+  <h1>Campos harmônicos (tons mais usados)</h1>
+  <p>I7M · IIm7 · IIIm7 · IV7M · V7 · VIm7 · VIIm7(♭5) — tabela + grips no braço</p>
+</header>
+
+<nav>
+  <a href="formacao-acordes-braco.html">28 acordes</a>
+  <a href="campos-harmonicos-menor-pentatonica.html">Campo menor + penta</a>
+  <a href="quadro-tensoes.html">Quadro das tensões</a>
+  <a href="estudo-arpejos/03-sete-tipos.html">7 tipos</a>
+  <a href="arpejos-ii-V-I.html">Arpejos ii–V–I</a>
+  <a href="escalas-shapes-tonalidade.html">Escalas</a>
+</nav>
+
+<div class="callout">
+  Clique num tom para ver funções, progressões e os <strong>7 diagramas</strong> na formação escolhida.
+  Bolinha branca = fundamental. Casas absolutas no topo do diagrama.
+</div>
+
+<div class="toolbar">
+  <span><label>Tom:</label></span>
+  <div id="key-quick" style="display:flex;flex-wrap:wrap;gap:0.3rem"></div>
+  <span style="margin-left:auto"></span>
+  <button type="button" class="mode-btn" id="btn-poster">Modo folha</button>
+  <button type="button" class="mode-btn" id="btn-highlight-ii-v-i">Destacar ii–V–I</button>
+</div>
+
+<div class="legend">
+  <span><span class="fn fn-T">T</span> tônica</span>
+  <span><span class="fn fn-SD">SD</span> subdominante</span>
+  <span><span class="fn fn-D">D</span> dominante</span>
+  <span><span class="fn fn-PD">PD</span> pré-dominante</span>
+  <span><i class="dot-demo root"></i> fundamental</span>
+  <span><i class="dot-demo filled"></i> chord tone</span>
+</div>
+
+<div class="poster-title">Campos harmônicos (tons mais usados)</div>
+
+<div class="table-wrap">
+  <table class="harm-table" id="harm-table">
+    <thead>
+      <tr>
+        <th>Tons / Graus</th>
+        <th>I7M</th>
+        <th>IIm7</th>
+        <th>IIIm7</th>
+        <th>IV7M</th>
+        <th>V7</th>
+        <th>VIm7</th>
+        <th>VIIm7(♭5)</th>
+      </tr>
+    </thead>
+    <tbody id="harm-body"></tbody>
+  </table>
+</div>
+
+<section class="detail-panel" id="detail-panel">
+  <h2>Tom selecionado</h2>
+  <div class="detail-key" id="detail-key">C maior</div>
+  <p style="font-size:0.84rem;color:var(--muted);margin-bottom:0.4rem" id="detail-desc">
+    Campo harmônico diatônico — acordes construídos sobre a escala maior.
+  </p>
+  <div class="chain" id="detail-chain"></div>
+  <div class="prog-row">
+    <strong>ii–V–I:</strong> <span id="detail-iivi"></span>
+  </div>
+  <div class="prog-row">
+    <strong>I–VI–II–V:</strong> <span id="detail-1625"></span>
+  </div>
+
+  <div class="diagrams-head">
+    <h3>Diagramas no braço</h3>
+    <span class="meta" id="form-meta">Formação 1–7–3–5 · fund. na 6ª</span>
+    <div class="form-row" id="form-picker" style="margin-left:auto"></div>
+  </div>
+  <div class="chords-grid" id="chord-diagrams"></div>
+</section>
+
+<footer>
+  Folha Nelson Faria ·
+  <a href="formacao-acordes-braco.html">Formação dos 28 acordes</a> ·
+  <a href="arpejos-ii-V-I.html">Arpejos ii–V–I</a> ·
+  <a href="escalas-shapes-tonalidade.html">Tonalidade no braço</a>
+</footer>
+
+<script>
+(function () {
+  const STRING_LABELS = ['e', 'B', 'G', 'D', 'A', 'E'];
+  const OPEN = [4, 11, 7, 2, 9, 4]; // e B G D A E (pitch class)
+  const FRETS = 5;
+  const NOTE_PC = {
+    C: 0, 'C#': 1, Db: 1, D: 2, 'D#': 3, Eb: 3, E: 4, F: 5,
+    'F#': 6, Gb: 6, G: 7, 'G#': 8, Ab: 8, A: 9, 'A#': 10, Bb: 10, B: 11
+  };
+
+  const DEGREES = [
+    { roman: 'I',   qual: '7M',     fn: 'T',  cls: 'col-7M',   pill: 'tonic' },
+    { roman: 'II',  qual: 'm7',     fn: 'SD', cls: 'col-m7',   pill: 'subdom' },
+    { roman: 'III', qual: 'm7',     fn: 'T',  cls: 'col-m7',   pill: 'tonic' },
+    { roman: 'IV',  qual: '7M',     fn: 'SD', cls: 'col-7M',   pill: 'subdom' },
+    { roman: 'V',   qual: '7',      fn: 'D',  cls: 'col-7',    pill: 'domin' },
+    { roman: 'VI',  qual: 'm7',     fn: 'T',  cls: 'col-m7',   pill: 'tonic' },
+    { roman: 'VII', qual: 'm7(b5)', fn: 'D',  cls: 'col-m7b5', pill: 'predom' },
+  ];
+
+  const KEYS = [
+    { id: 'C',  label: 'C maior',  chords: ['C7M',  'Dm7',  'Em7',  'F7M',  'G7',  'Am7',  'Bm7(♭5)'] },
+    { id: 'G',  label: 'G maior',  chords: ['G7M',  'Am7',  'Bm7',  'C7M',  'D7',  'Em7',  'F#m7(♭5)'] },
+    { id: 'D',  label: 'D maior',  chords: ['D7M',  'Em7',  'F#m7', 'G7M',  'A7',  'Bm7',  'C#m7(♭5)'] },
+    { id: 'A',  label: 'A maior',  chords: ['A7M',  'Bm7',  'C#m7', 'D7M',  'E7',  'F#m7', 'G#m7(♭5)'] },
+    { id: 'E',  label: 'E maior',  chords: ['E7M',  'F#m7', 'G#m7', 'A7M',  'B7',  'C#m7', 'D#m7(♭5)'] },
+    { id: 'B',  label: 'B maior',  chords: ['B7M',  'C#m7', 'D#m7', 'E7M',  'F#7', 'G#m7', 'A#m7(♭5)'] },
+    { id: 'F',  label: 'F maior',  chords: ['F7M',  'Gm7',  'Am7',  'Bb7M', 'C7',  'Dm7',  'Em7(♭5)'] },
+    { id: 'Bb', label: 'Bb maior', chords: ['Bb7M', 'Cm7',  'Dm7',  'Eb7M', 'F7',  'Gm7',  'Am7(♭5)'] },
+    { id: 'Eb', label: 'Eb maior', chords: ['Eb7M', 'Fm7',  'Gm7',  'Ab7M', 'Bb7', 'Cm7',  'Dm7(♭5)'] },
+  ];
+
+  /** Shapes relativos (o = casas vs fundamental) — mesmos da folha de formação */
+  const SHAPES = {
+    f41: {
+      id: 'f41', label: '4.1', meta: '1–7–3–5 · fund. na 6ª', rootString: 5,
+      quals: {
+        '7M':     [{ s: 5, o: 0, r: 1 }, { s: 3, o: 1 }, { s: 2, o: 1 }, { s: 1, o: 0 }],
+        'm7':     [{ s: 5, o: 0, r: 1 }, { s: 3, o: 0 }, { s: 2, o: 0 }, { s: 1, o: 0 }],
+        'm7(b5)': [{ s: 5, o: 0, r: 1 }, { s: 3, o: 0 }, { s: 2, o: 0 }, { s: 1, o: -1 }],
+        '7':      [{ s: 5, o: 0, r: 1 }, { s: 3, o: 0 }, { s: 2, o: 1 }, { s: 1, o: 0 }]
+      }
+    },
+    f42: {
+      id: 'f42', label: '4.2', meta: '1–5–7–3 · fund. na 4ª', rootString: 3,
+      quals: {
+        '7M':     [{ s: 3, o: 0, r: 1 }, { s: 2, o: 2 }, { s: 1, o: 2 }, { s: 0, o: 2 }],
+        'm7':     [{ s: 3, o: 0, r: 1 }, { s: 2, o: 2 }, { s: 1, o: 1 }, { s: 0, o: 1 }],
+        'm7(b5)': [{ s: 3, o: 0, r: 1 }, { s: 2, o: 1 }, { s: 1, o: 1 }, { s: 0, o: 1 }],
+        '7':      [{ s: 3, o: 0, r: 1 }, { s: 2, o: 2 }, { s: 1, o: 1 }, { s: 0, o: 2 }]
+      }
+    },
+    f43: {
+      id: 'f43', label: '4.3', meta: '1–3–5–7 · fund. na 5ª', rootString: 4,
+      quals: {
+        '7M':     [{ s: 4, o: 0, r: 1 }, { s: 3, o: -1 }, { s: 2, o: -3 }, { s: 1, o: -3 }],
+        'm7':     [{ s: 4, o: 0, r: 1 }, { s: 3, o: -2 }, { s: 2, o: -3 }, { s: 1, o: -4 }],
+        'm7(b5)': [{ s: 4, o: 0, r: 1 }, { s: 3, o: -2 }, { s: 2, o: -4 }, { s: 1, o: -4 }],
+        '7':      [{ s: 4, o: 0, r: 1 }, { s: 3, o: -1 }, { s: 2, o: -3 }, { s: 1, o: -4 }]
+      }
+    },
+    f44: {
+      id: 'f44', label: '4.4', meta: '1–5–7–3 · fund. na 5ª', rootString: 4,
+      quals: {
+        '7M':     [{ s: 4, o: 0, r: 1 }, { s: 3, o: 2 }, { s: 2, o: 1 }, { s: 1, o: 2 }],
+        'm7':     [{ s: 4, o: 0, r: 1 }, { s: 3, o: 2 }, { s: 2, o: 0 }, { s: 1, o: 1 }],
+        'm7(b5)': [{ s: 4, o: 0, r: 1 }, { s: 3, o: 1 }, { s: 2, o: 0 }, { s: 1, o: 1 }],
+        '7':      [{ s: 4, o: 0, r: 1 }, { s: 3, o: 2 }, { s: 2, o: 0 }, { s: 1, o: 2 }]
+      }
+    }
+  };
+
+  let selectedId = 'C';
+  let selectedForm = 'f41';
+  let highlightIiVi = false;
+
+  const tbody = document.getElementById('harm-body');
+  const keyQuick = document.getElementById('key-quick');
+  const formPicker = document.getElementById('form-picker');
+
+  function parseChord(name) {
+    const clean = name.replace('♭', 'b').replace('♯', '#');
+    const m = clean.match(/^([A-G](?:#|b)?)(.*)$/);
+    if (!m) return null;
+    const root = m[1];
+    let qual = m[2];
+    if (qual === 'm7(b5)' || qual === 'm7b5') qual = 'm7(b5)';
+    return { root, pc: NOTE_PC[root], qual };
+  }
+
+  function findRootFret(si, pc) {
+    for (let f = 0; f <= 15; f++) {
+      if ((OPEN[si] + f) % 12 === pc) return f;
+    }
+    return 0;
+  }
+
+  function placeChord(notes, rootFret) {
+    const absNotes = notes.map(n => ({
+      s: n.s,
+      abs: rootFret + n.o,
+      r: !!n.r
+    }));
+    let minAbs = Math.min(...absNotes.map(n => n.abs));
+    let maxAbs = Math.max(...absNotes.map(n => n.abs));
+    if (minAbs < 0) {
+      const bump = -minAbs;
+      absNotes.forEach(n => { n.abs += bump; });
+      minAbs += bump;
+      maxAbs += bump;
+    }
+    let ws = minAbs;
+    if (maxAbs - ws + 1 < FRETS) {
+      const rootAbs = absNotes.find(n => n.r).abs;
+      ws = Math.max(0, rootAbs - 2);
+      if (maxAbs > ws + FRETS - 1) ws = maxAbs - FRETS + 1;
+      if (ws < 0) ws = 0;
+    }
+    const we = ws + FRETS - 1;
+    return { notes: absNotes, ws, we };
+  }
+
+  function renderChordSVG(placement) {
+    const { notes, ws, we } = placement;
+    const W = 100, H = 96;
+    const padL = 12, padT = 16, padR = 4, padB = 5;
+    const fretW = (W - padL - padR) / FRETS;
+    const strH = (H - padT - padB) / 5;
+
+    let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">`;
+
+    for (let i = 0; i < FRETS; i++) {
+      const abs = ws + i;
+      const x = padL + (i + 0.5) * fretW;
+      svg += `<text x="${x}" y="10" text-anchor="middle" font-size="7" fill="#f0a030" font-weight="700" font-family="system-ui">${abs}</text>`;
+    }
+
+    if (ws === 0) {
+      svg += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT + 5 * strH}" stroke="#ccc" stroke-width="2.5"/>`;
+    } else {
+      svg += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT + 5 * strH}" stroke="#888" stroke-width="2"/>`;
+    }
+
+    for (let i = 1; i < FRETS; i++) {
+      const x = padL + i * fretW;
+      svg += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + 5 * strH}" stroke="#555" stroke-width="1"/>`;
+    }
+
+    for (let s = 0; s < 6; s++) {
+      const y = padT + s * strH;
+      svg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#666" stroke-width="${s === 5 ? 1.4 : 0.9}"/>`;
+      svg += `<text x="2" y="${y + 2.5}" font-size="6.5" fill="#888" font-family="system-ui">${STRING_LABELS[s]}</text>`;
+    }
+
+    notes.forEach(n => {
+      if (n.abs < ws || n.abs > we) return;
+      const x = padL + (n.abs - ws + 0.5) * fretW;
+      const y = padT + n.s * strH;
+      if (n.r) {
+        svg += `<circle cx="${x}" cy="${y}" r="4.2" fill="#fff" stroke="#111" stroke-width="1.5"/>`;
+      } else {
+        svg += `<circle cx="${x}" cy="${y}" r="3.7" fill="#111" stroke="#ccc" stroke-width="0.5"/>`;
+      }
+    });
+
+    svg += '</svg>';
+    return svg;
+  }
+
+  function renderTable() {
+    tbody.innerHTML = KEYS.map((key) => {
+      const cells = key.chords.map((chord, i) => {
+        const deg = DEGREES[i];
+        const hi = highlightIiVi && (i === 1 || i === 4 || i === 0) ? ' highlight' : '';
+        return `<td class="${deg.cls}${hi}"><span class="chord">${chord}</span></td>`;
+      }).join('');
+      const sel = key.id === selectedId ? ' selected' : '';
+      return `<tr data-key="${key.id}" class="${sel}"><th>${key.label}</th>${cells}</tr>`;
+    }).join('');
+
+    tbody.querySelectorAll('tr').forEach((tr) => {
+      tr.addEventListener('click', () => selectKey(tr.dataset.key));
+    });
+  }
+
+  function renderQuickKeys() {
+    keyQuick.innerHTML = KEYS.map((k) =>
+      `<button type="button" class="key-btn${k.id === selectedId ? ' active' : ''}" data-key="${k.id}">${k.id}</button>`
+    ).join('');
+    keyQuick.querySelectorAll('.key-btn').forEach((btn) => {
+      btn.addEventListener('click', () => selectKey(btn.dataset.key));
+    });
+  }
+
+  function renderFormPicker() {
+    formPicker.innerHTML = Object.values(SHAPES).map((f) =>
+      `<button type="button" class="form-btn${f.id === selectedForm ? ' active' : ''}" data-form="${f.id}">${f.label}</button>`
+    ).join('');
+    formPicker.querySelectorAll('.form-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        selectedForm = btn.dataset.form;
+        renderFormPicker();
+        renderDiagrams();
+      });
+    });
+  }
+
+  function selectKey(id) {
+    selectedId = id;
+    renderTable();
+    renderQuickKeys();
+    renderDetail();
+  }
+
+  function renderDiagrams() {
+    const key = KEYS.find((k) => k.id === selectedId);
+    const form = SHAPES[selectedForm];
+    document.getElementById('form-meta').textContent = form.meta;
+
+    const grid = document.getElementById('chord-diagrams');
+    grid.innerHTML = key.chords.map((chordName, i) => {
+      const deg = DEGREES[i];
+      const parsed = parseChord(chordName);
+      const notes = form.quals[parsed.qual];
+      if (!notes || parsed.pc == null) {
+        return `<article class="chord-card"><div class="deg">${deg.roman}</div><h4>${chordName}</h4><div class="fret-hint">—</div></article>`;
+      }
+      const rootFret = findRootFret(form.rootString, parsed.pc);
+      const placement = placeChord(notes, rootFret);
+      const rootAbs = placement.notes.find(n => n.r).abs;
+      return `
+        <article class="chord-card">
+          <div class="deg">${deg.roman}${deg.qual === 'm7(b5)' ? 'm7(♭5)' : deg.qual}</div>
+          <h4>${chordName}</h4>
+          <div class="fret-hint">fund. casa ${rootAbs}</div>
+          ${renderChordSVG(placement)}
+        </article>
+      `;
+    }).join('');
+  }
+
+  function renderDetail() {
+    const key = KEYS.find((k) => k.id === selectedId);
+    if (!key) return;
+
+    document.getElementById('detail-key').textContent = key.label;
+    document.getElementById('detail-desc').textContent =
+      '7 graus diatônicos · funções T / SD / D sobre a escala de ' + key.id + ' maior.';
+
+    document.getElementById('detail-chain').innerHTML = key.chords.map((chord, i) => {
+      const d = DEGREES[i];
+      const pill = `<span class="chord-pill ${d.pill}" title="${d.roman} · ${d.fn}">${chord}</span>`;
+      const sep = i < key.chords.length - 1 ? '<span class="arrow">→</span>' : '';
+      return pill + sep;
+    }).join('');
+
+    document.getElementById('detail-iivi').textContent =
+      `${key.chords[1]} → ${key.chords[4]} → ${key.chords[0]}`;
+    document.getElementById('detail-1625').textContent =
+      `${key.chords[0]} → ${key.chords[5]} → ${key.chords[1]} → ${key.chords[4]}`;
+
+    renderDiagrams();
+  }
+
+  document.getElementById('btn-poster').addEventListener('click', function () {
+    document.body.classList.toggle('poster-mode');
+    this.classList.toggle('active');
+    this.textContent = document.body.classList.contains('poster-mode') ? 'Modo escuro' : 'Modo folha';
+  });
+
+  document.getElementById('btn-highlight-ii-v-i').addEventListener('click', function () {
+    highlightIiVi = !highlightIiVi;
+    this.classList.toggle('active');
+    renderTable();
+  });
+
+  renderTable();
+  renderQuickKeys();
+  renderFormPicker();
+  renderDetail();
+})();
+</script>
+</body>
+</html>

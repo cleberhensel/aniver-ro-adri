@@ -1,0 +1,120 @@
+.pl-layout {
+  display: grid;
+  gap: 0.85rem;
+}
+.pl-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(14rem, 1fr);
+  gap: 0.65rem;
+  align-items: start;
+}
+.pl-embed-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.pl-embed-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.pl-now {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.7rem 0.8rem;
+}
+.pl-now h2 {
+  font-size: 1rem;
+  margin: 0.25rem 0 0.2rem;
+}
+.pl-now #pl-meta {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+.pl-prog {
+  font-size: 0.74rem;
+  color: var(--shape-a);
+  line-height: 1.45;
+  margin-bottom: 0.55rem;
+}
+.pl-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.pl-btn {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 0.7rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.pl-btn:hover { border-color: var(--accent); }
+.pl-btn.primary {
+  background: #f0a03022;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.pl-tracklist {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.pl-track-btn {
+  width: 100%;
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  text-align: left;
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 0.45rem 0.55rem;
+  cursor: pointer;
+}
+.pl-track-btn:hover { border-color: var(--accent); }
+.pl-track.active .pl-track-btn {
+  border-color: var(--accent);
+  background: #f0a03014;
+}
+.pl-key {
+  flex: 0 0 2.4rem;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--accent);
+  line-height: 1.2;
+}
+.pl-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+.pl-info strong {
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+.pl-info span {
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+@media (max-width: 800px) {
+  .pl-stage { grid-template-columns: 1fr; }
+}

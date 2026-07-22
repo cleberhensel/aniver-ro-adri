@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transcrições</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; background: #111; color: #eee; margin: 0; padding: 2rem; }
+    h1 { font-size: 1.25rem; font-weight: 600; margin: 0 0 1rem; }
+    ul { list-style: none; padding: 0; margin: 0; max-width: 720px; }
+    li { margin-bottom: .5rem; }
+    a {
+      display: block; padding: .75rem 1rem; background: #1a1f2e; border: 1px solid #2a3348;
+      border-radius: 8px; color: #9ec5fe; text-decoration: none;
+    }
+    a:hover { background: #243049; }
+    .empty { color: #888; }
+  </style>
+</head>
+<body>
+  <h1>Transcrições de violão</h1>
+  <ul id="list"><li class="empty">A carregar…</li></ul>
+  <script>
+    fetch("/api/stems")
+      .then(r => r.json())
+      .then(stems => {
+        const ul = document.getElementById("list");
+        if (!stems.length) {
+          ul.innerHTML = "<li class='empty'>Nenhuma transcrição. Rode transcrever.sh num stem.</li>";
+          return;
+        }
+        ul.innerHTML = stems.map(s =>
+          `<li><a href="/view/${encodeURIComponent(s.id)}">${s.title}</a></li>`
+        ).join("");
+      })
+      .catch(() => {
+        document.getElementById("list").innerHTML =
+          "<li class='empty'>Erro ao listar. O servidor está a correr?</li>";
+      });
+  </script>
+</body>
+</html>
